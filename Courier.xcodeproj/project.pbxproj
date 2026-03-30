@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		198C61B9115B43E14A07DA2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C34D9DA5A69B02A2E9D3EAA /* Assets.xcassets */; };
+		3AB3D5BFDAA237317128657F /* CourierTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2966F52EE5E164C6A998B77 /* CourierTextView.swift */; };
 		4DA3A80A9C60FC26385B47F2 /* LauncherWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA7CB3C725F043E8EE5F831 /* LauncherWindowController.swift */; };
 		4E6263F72DCE8548BCEBE428 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895714AF57464A156FAFCE79 /* MenuBarView.swift */; };
 		51A3B9886563D5B70D234226 /* LauncherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E32568662C61373356FD0E6 /* LauncherViewModel.swift */; };
@@ -47,6 +48,7 @@
 		C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyProvider.swift; sourceTree = "<group>"; };
 		DDC435963B019B86A15BEB91 /* CourierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CourierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC6041C861A9354FEC75C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F2966F52EE5E164C6A998B77 /* CourierTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierTextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 		2A18A9B86F43185F254BEA07 /* Launcher */ = {
 			isa = PBXGroup;
 			children = (
+				F2966F52EE5E164C6A998B77 /* CourierTextView.swift */,
 				B52F5A980156215207341A21 /* LauncherPanel.swift */,
 				B324B7F92A57F99B1A802452 /* LauncherView.swift */,
 				8E32568662C61373356FD0E6 /* LauncherViewModel.swift */,
@@ -269,6 +272,7 @@
 				D0E90CB825437967F5757C59 /* AccessibilityPermission.swift in Sources */,
 				AE847B898CEDE103FAB6274B /* AppDelegate.swift in Sources */,
 				AE5A66CE1E06980B039A2040 /* CourierApp.swift in Sources */,
+				3AB3D5BFDAA237317128657F /* CourierTextView.swift in Sources */,
 				B59EAF2463BE3CDA9EEC1853 /* HotKeyProvider.swift in Sources */,
 				CA85E52F510E78574776C365 /* LauncherPanel.swift in Sources */,
 				C7356D4B21BC5025E2C17590 /* LauncherView.swift in Sources */,

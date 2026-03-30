@@ -42,9 +42,12 @@ targets:
     platform: macOS
     sources:
       - path: CourierTests
+      # Compile model + service sources directly — avoids BUNDLE_LOADER app-launch issues
+      - path: Courier/Models
+      - path: Courier/Services
     dependencies:
-      - target: Courier
+      - package: KeyboardShortcuts
     settings:
       base:
-        BUNDLE_LOADER: "$(TEST_HOST)"
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Courier.app/Contents/MacOS/Courier"
+        SWIFT_VERSION: "5.9"
+        MACOSX_DEPLOYMENT_TARGET: "14.0"

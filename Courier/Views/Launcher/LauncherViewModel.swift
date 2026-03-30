@@ -35,4 +35,11 @@ final class LauncherViewModel {
         selectedService = service
         settings?.lastUsedService = service
     }
+
+    func cycleService(direction: Int, disabledServices: Set<ServiceType> = []) {
+        let enabled = ServiceType.displayOrder.filter { !disabledServices.contains($0) }
+        guard let currentIndex = enabled.firstIndex(of: selectedService) else { return }
+        let newIndex = (currentIndex + direction + enabled.count) % enabled.count
+        selectService(enabled[newIndex])
+    }
 }

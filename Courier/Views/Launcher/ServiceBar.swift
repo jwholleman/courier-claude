@@ -57,20 +57,5 @@ struct ServiceBar: View {
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 12)
-        .onKeyPress(.leftArrow) {
-            cycleService(direction: -1)
-            return .handled
-        }
-        .onKeyPress(.rightArrow) {
-            cycleService(direction: 1)
-            return .handled
-        }
-    }
-
-    private func cycleService(direction: Int) {
-        let enabled = ServiceType.displayOrder.filter { !disabledServices.contains($0) }
-        guard let currentIndex = enabled.firstIndex(of: viewModel.selectedService) else { return }
-        let newIndex = (currentIndex + direction + enabled.count) % enabled.count
-        viewModel.selectService(enabled[newIndex])
     }
 }

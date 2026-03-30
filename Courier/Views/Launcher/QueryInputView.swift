@@ -105,7 +105,13 @@ struct QueryInputView: NSViewRepresentable {
 
         func textView(_ textView: NSTextView, doCommandBy selector: Selector) -> Bool {
             if selector == #selector(NSResponder.insertNewline(_:)) {
-                // Enter -> submit (debounced, blocked on empty/whitespace)
+                // Cmd+Return or Shift+Return -> insert literal newline instead of submitting
+                let modifiers = NSApp.currentEvent?.modifierFlags ?? []
+                if modifiers.contains(.command) || modifiers.contains(.shift) {
+                    textView.insertNewlineIgnoringFieldEditor(nil)
+                    return true
+                }
+                // Plain Return -> submit (debounced, blocked on empty/whitespace)
                 guard !hasSubmitted else { return true }
                 let trimmed = textView.string.trimmingCharacters(in: .whitespacesAndNewlines)
                 guard !trimmed.isEmpty else { return true }
@@ -114,8 +120,18 @@ struct QueryInputView: NSViewRepresentable {
                 return true
             }
             if selector == #selector(NSResponder.insertNewlineIgnoringFieldEditor(_:)) {
-                // Cmd+Enter / Shift+Enter -> literal newline
+                // Option+Return -> literal newline
                 textView.insertNewlineIgnoringFieldEditor(nil)
+                return true
+            }
+            if selector == #selector(NSResponder.insertTab(_:)) {
+                // Tab -> cycle service selection forward
+                parent.viewModel?.cycleService(direction: 1)
+                return true
+            }
+            if selector == #selector(NSResponder.insertBacktab(_:)) {
+                // Shift+Tab -> cycle service selection backward
+                parent.viewModel?.cycleService(direction: -1)
                 return true
             }
             if selector == #selector(NSResponder.cancelOperation(_:)) {

@@ -25,6 +25,10 @@ final class LauncherViewModel {
         isSlashMode = false
         slashPrefix = ""
         hasSubmitted = false
+        // Restore last-used service from settings (always-selected invariant)
+        if let settings {
+            selectedService = settings.effectiveSelectedService
+        }
     }
 
     func selectService(_ service: ServiceType) {

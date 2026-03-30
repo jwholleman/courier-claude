@@ -24,7 +24,11 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
     override init() {
         let panelRect = NSRect(x: 0, y: 0, width: 680, height: 80)
         panel = LauncherPanel(contentRect: panelRect)
+
+        let settings = AppSettings()
         viewModel = LauncherViewModel()
+        viewModel.settings = settings
+        viewModel.selectedService = settings.effectiveSelectedService
 
         // Create stub root view pre-super.init; closures capturing self are set post-super.init
         let rootView = LauncherView(viewModel: viewModel, onSubmit: nil, onDismiss: nil)

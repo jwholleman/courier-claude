@@ -14,6 +14,7 @@ struct LauncherView: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            // Query text input
             QueryInputView(
                 text: Binding(
                     get: { viewModel.queryText },
@@ -30,17 +31,31 @@ struct LauncherView: View {
             .frame(height: viewModel.contentHeight)
             .padding(.horizontal, 16)
             .padding(.top, 12)
-            .padding(.bottom, isOverLimit ? 4 : 12)
+            .padding(.bottom, isOverLimit ? 4 : 0)
 
+            // Inline char-limit warning
             if isOverLimit {
                 Text("Query will be truncated to \(charLimit) characters")
                     .font(.system(size: 11))
                     .foregroundStyle(Color(nsColor: .systemOrange))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
+                    .padding(.bottom, 6)
                     .transition(.opacity)
             }
+
+            // Separator
+            Rectangle()
+                .fill(Color(nsColor: .separatorColor))
+                .frame(height: 1)
+                .padding(.horizontal, 8)
+
+            // Service bar + Deliver button
+            ServiceBar(
+                viewModel: viewModel,
+                disabledServices: [],  // Wired to AppSettings in Task 2.3 follow-up
+                onSubmit: { onSubmit?() }
+            )
         }
         .frame(width: 680)
         .animation(.easeInOut(duration: 0.15), value: isOverLimit)

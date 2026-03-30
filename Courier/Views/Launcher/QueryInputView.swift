@@ -30,19 +30,6 @@ struct QueryInputView: NSViewRepresentable {
         context.coordinator.textView = textView
         viewModel?.queryTextView = textView
 
-        // Wire callbacks that bypass doCommandBy: in NSTextView
-        let coordinator = context.coordinator
-        textView.onCmdReturn = { [weak coordinator, weak textView] in
-            guard let coordinator, let textView else { return }
-            coordinator.handleCmdOrShiftReturn(textView)
-        }
-        textView.onTabForward = { [weak coordinator] in
-            coordinator?.parent.viewModel?.cycleService(direction: 1)
-        }
-        textView.onTabBackward = { [weak coordinator] in
-            coordinator?.parent.viewModel?.cycleService(direction: -1)
-        }
-
         let scrollView = NSScrollView()
         scrollView.documentView = textView
         scrollView.hasVerticalScroller = true
@@ -116,19 +103,11 @@ struct QueryInputView: NSViewRepresentable {
             return true
         }
 
-        func handleCmdOrShiftReturn(_ textView: NSTextView) {
-            textView.insertNewlineIgnoringFieldEditor(nil)
-        }
-
         func textView(_ textView: NSTextView, doCommandBy selector: Selector) -> Bool {
             if selector == #selector(NSResponder.insertNewline(_:)) {
-                // Shift+Return -> insert literal newline (use live NSEvent.modifierFlags,
-                // not NSApp.currentEvent which can be nil by the time doCommandBy: fires)
-                if NSEvent.modifierFlags.contains(.shift) {
-                    textView.insertNewlineIgnoringFieldEditor(nil)
-                    return true
-                }
                 // Plain Return -> submit (debounced, blocked on empty/whitespace)
+                // Cmd+Return and Shift+Return are intercepted in CourierTextView.keyDown
+                // before they reach doCommandBy:, so they never arrive here.
                 guard !hasSubmitted else { return true }
                 let trimmed = textView.string.trimmingCharacters(in: .whitespacesAndNewlines)
                 guard !trimmed.isEmpty else { return true }

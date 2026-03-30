@@ -4,11 +4,6 @@ final class CourierTextView: NSTextView {
 
     var placeholder: String = "Type your message or \"/\" to switch destination"
 
-    // Set by QueryInputView Coordinator after makeNSView
-    var onCmdReturn: (() -> Void)?
-    var onTabForward: (() -> Void)?
-    var onTabBackward: (() -> Void)?
-
     // MARK: - Placeholder
 
     override func draw(_ dirtyRect: NSRect) {
@@ -32,22 +27,17 @@ final class CourierTextView: NSTextView {
 
     // MARK: - Key handling
 
-    /// Cmd+key combos come through performKeyEquivalent, not doCommandBy:
-    override func performKeyEquivalent(with event: NSEvent) -> Bool {
-        if event.keyCode == 36 /* Return */ && event.modifierFlags.contains(.command) {
-            onCmdReturn?()
-            return true
+    /// intercept Cmd+Return and Shift+Return in keyDown, where event.modifierFlags is
+    /// guaranteed to reflect the actual key state at press time — before interpretKeyEvents
+    /// strips or loses modifier context.
+    override func keyDown(with event: NSEvent) {
+        let modifiers = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+        if event.keyCode == 36 /* kVK_Return */ {
+            if modifiers.contains(.command) || modifiers.contains(.shift) {
+                insertNewlineIgnoringFieldEditor(nil)
+                return
+            }
         }
-        return super.performKeyEquivalent(with: event)
-    }
-
-    /// NSTextView calls insertTab(_:) directly — does not route through delegate doCommandBy:
-    override func insertTab(_ sender: Any?) {
-        onTabForward?()
-    }
-
-    /// Shift+Tab
-    override func insertBacktab(_ sender: Any?) {
-        onTabBackward?()
+        super.keyDown(with: event)
     }
 }

@@ -30,6 +30,19 @@ struct QueryInputView: NSViewRepresentable {
         context.coordinator.textView = textView
         viewModel?.queryTextView = textView
 
+        // Wire callbacks that bypass doCommandBy: in NSTextView
+        let coordinator = context.coordinator
+        textView.onCmdReturn = { [weak coordinator, weak textView] in
+            guard let coordinator, let textView else { return }
+            coordinator.handleCmdOrShiftReturn(textView)
+        }
+        textView.onTabForward = { [weak coordinator] in
+            coordinator?.parent.viewModel?.cycleService(direction: 1)
+        }
+        textView.onTabBackward = { [weak coordinator] in
+            coordinator?.parent.viewModel?.cycleService(direction: -1)
+        }
+
         let scrollView = NSScrollView()
         scrollView.documentView = textView
         scrollView.hasVerticalScroller = true
@@ -103,11 +116,15 @@ struct QueryInputView: NSViewRepresentable {
             return true
         }
 
+        func handleCmdOrShiftReturn(_ textView: NSTextView) {
+            textView.insertNewlineIgnoringFieldEditor(nil)
+        }
+
         func textView(_ textView: NSTextView, doCommandBy selector: Selector) -> Bool {
             if selector == #selector(NSResponder.insertNewline(_:)) {
-                // Cmd+Return or Shift+Return -> insert literal newline instead of submitting
-                let modifiers = NSApp.currentEvent?.modifierFlags ?? []
-                if modifiers.contains(.command) || modifiers.contains(.shift) {
+                // Shift+Return -> insert literal newline (use live NSEvent.modifierFlags,
+                // not NSApp.currentEvent which can be nil by the time doCommandBy: fires)
+                if NSEvent.modifierFlags.contains(.shift) {
                     textView.insertNewlineIgnoringFieldEditor(nil)
                     return true
                 }
@@ -122,16 +139,6 @@ struct QueryInputView: NSViewRepresentable {
             if selector == #selector(NSResponder.insertNewlineIgnoringFieldEditor(_:)) {
                 // Option+Return -> literal newline
                 textView.insertNewlineIgnoringFieldEditor(nil)
-                return true
-            }
-            if selector == #selector(NSResponder.insertTab(_:)) {
-                // Tab -> cycle service selection forward
-                parent.viewModel?.cycleService(direction: 1)
-                return true
-            }
-            if selector == #selector(NSResponder.insertBacktab(_:)) {
-                // Shift+Tab -> cycle service selection backward
-                parent.viewModel?.cycleService(direction: -1)
                 return true
             }
             if selector == #selector(NSResponder.cancelOperation(_:)) {

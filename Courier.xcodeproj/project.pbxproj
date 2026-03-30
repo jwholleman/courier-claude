@@ -10,10 +10,13 @@
 		198C61B9115B43E14A07DA2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C34D9DA5A69B02A2E9D3EAA /* Assets.xcassets */; };
 		4DA3A80A9C60FC26385B47F2 /* LauncherWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA7CB3C725F043E8EE5F831 /* LauncherWindowController.swift */; };
 		4E6263F72DCE8548BCEBE428 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895714AF57464A156FAFCE79 /* MenuBarView.swift */; };
+		51A3B9886563D5B70D234226 /* LauncherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E32568662C61373356FD0E6 /* LauncherViewModel.swift */; };
 		69B82B8E20190732BE7E7254 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 673FF32B1E8DE8E261D97327 /* KeyboardShortcuts */; };
 		812A96E13E3A3D7EC075A538 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC24D44D603D16958C27C4 /* NotificationHelper.swift */; };
 		AE5A66CE1E06980B039A2040 /* CourierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CF1B696C1CB7B47451B1A /* CourierApp.swift */; };
 		AE847B898CEDE103FAB6274B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1919C1D565FF29394C6278 /* AppDelegate.swift */; };
+		C7356D4B21BC5025E2C17590 /* LauncherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B324B7F92A57F99B1A802452 /* LauncherView.swift */; };
+		CA85E52F510E78574776C365 /* LauncherPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52F5A980156215207341A21 /* LauncherPanel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,7 +37,10 @@
 		7C34D9DA5A69B02A2E9D3EAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		895714AF57464A156FAFCE79 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		8DA7CB3C725F043E8EE5F831 /* LauncherWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherWindowController.swift; sourceTree = "<group>"; };
+		8E32568662C61373356FD0E6 /* LauncherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherViewModel.swift; sourceTree = "<group>"; };
 		97EC24D44D603D16958C27C4 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
+		B324B7F92A57F99B1A802452 /* LauncherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherView.swift; sourceTree = "<group>"; };
+		B52F5A980156215207341A21 /* LauncherPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherPanel.swift; sourceTree = "<group>"; };
 		DDC435963B019B86A15BEB91 /* CourierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CourierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC6041C861A9354FEC75C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,6 +68,9 @@
 		2A18A9B86F43185F254BEA07 /* Launcher */ = {
 			isa = PBXGroup;
 			children = (
+				B52F5A980156215207341A21 /* LauncherPanel.swift */,
+				B324B7F92A57F99B1A802452 /* LauncherView.swift */,
+				8E32568662C61373356FD0E6 /* LauncherViewModel.swift */,
 				8DA7CB3C725F043E8EE5F831 /* LauncherWindowController.swift */,
 			);
 			path = Launcher;
@@ -245,6 +254,9 @@
 			files = (
 				AE847B898CEDE103FAB6274B /* AppDelegate.swift in Sources */,
 				AE5A66CE1E06980B039A2040 /* CourierApp.swift in Sources */,
+				CA85E52F510E78574776C365 /* LauncherPanel.swift in Sources */,
+				C7356D4B21BC5025E2C17590 /* LauncherView.swift in Sources */,
+				51A3B9886563D5B70D234226 /* LauncherViewModel.swift in Sources */,
 				4DA3A80A9C60FC26385B47F2 /* LauncherWindowController.swift in Sources */,
 				4E6263F72DCE8548BCEBE428 /* MenuBarView.swift in Sources */,
 				812A96E13E3A3D7EC075A538 /* NotificationHelper.swift in Sources */,

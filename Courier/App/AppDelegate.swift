@@ -39,7 +39,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             KeyboardShortcuts.setShortcut(.init(.space, modifiers: .option), for: .toggleCourier)
         }
         KeyboardShortcuts.onKeyUp(for: .toggleCourier) { [weak self] in
-            self?.windowController?.toggle()
+            Task { @MainActor in
+                self?.windowController?.toggle()
+            }
         }
 
         // Accessibility permission check — prompt on first launch
@@ -66,7 +68,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Panel
 
     func togglePanel() {
-        windowController?.toggle()
+        Task { @MainActor in
+            windowController?.toggle()
+        }
     }
 
     func openSettings() {

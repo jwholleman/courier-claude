@@ -68,6 +68,26 @@ struct QueryInputView: NSViewRepresentable {
             guard !isUpdatingFromSwiftUI, let textView else { return }
             parent.text = textView.string
             textView.needsDisplay = true  // Toggle placeholder visibility
+            recalculateHeightIfNeeded(textView)
+        }
+
+        private var lastLineCount: Int = 0
+
+        private func recalculateHeightIfNeeded(_ textView: NSTextView) {
+            guard let layoutManager = textView.layoutManager,
+                  let textContainer = textView.textContainer else { return }
+            layoutManager.ensureLayout(for: textContainer)
+            let usedRect = layoutManager.usedRect(for: textContainer)
+            // Estimate line count to debounce — only recalc on line count change
+            let lineHeight: CGFloat = textView.font?.capHeight ?? 12
+            let currentLineCount = max(1, Int(usedRect.height / max(lineHeight, 1)))
+            guard currentLineCount != lastLineCount else { return }
+            lastLineCount = currentLineCount
+            let newHeight = min(max(usedRect.height + 32, 80), 320)
+            // Publish via binding so LauncherWindowController's observation fires
+            DispatchQueue.main.async { [weak self] in
+                self?.parent.height = newHeight
+            }
         }
 
         func textView(_ textView: NSTextView,

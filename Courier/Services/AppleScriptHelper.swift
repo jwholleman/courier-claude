@@ -260,6 +260,11 @@ enum AppleScriptHelper {
 
     // MARK: - Clipboard save/restore
 
+    /// Public access for browser-fallback path in LLMService.
+    static func saveClipboardContents(_ pasteboard: NSPasteboard) -> [[(NSPasteboard.PasteboardType, Data)]]? {
+        saveClipboard(pasteboard)
+    }
+
     private static func saveClipboard(_ pasteboard: NSPasteboard) -> [[(NSPasteboard.PasteboardType, Data)]]? {
         // Skip if clipboard is empty
         guard pasteboard.changeCount > 0, let items = pasteboard.pasteboardItems, !items.isEmpty else {

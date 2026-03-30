@@ -8,9 +8,6 @@ final class LLMService: ServiceProvider {
     let defaultSlashCommands: [String]
     let appendsQueryToURL: Bool
 
-    /// How long (seconds) to wait after sending Cmd+N before pasting.
-    var newConversationDelay: TimeInterval = 0.3
-
     init(
         type: ServiceType,
         browserURL: String,
@@ -28,7 +25,6 @@ final class LLMService: ServiceProvider {
     func dispatch(query: String) async throws {
         let truncated = String(query.prefix(8000))
 
-        // Check if native app is installed (cached at launch, refreshed on app notifications)
         if let bundleID = bundleIdentifier,
            let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) {
             try await dispatchNative(query: truncated, bundleID: bundleID, appURL: appURL)
@@ -41,7 +37,7 @@ final class LLMService: ServiceProvider {
 
     private func dispatchBrowser(query: String) async throws {
         if appendsQueryToURL {
-            // Search-style URL (Perplexity browser)
+            // URL-based submission (Perplexity) — query is in the URL, no clipboard needed
             guard let url = SearchService.buildURL(base: browserURL, query: query) else {
                 await copyToClipboardAndNotify(query: query, reason: "Couldn't build URL.")
                 return
@@ -51,32 +47,48 @@ final class LLMService: ServiceProvider {
                 await copyToClipboardAndNotify(query: query, reason: "Couldn't open browser.")
             }
         } else {
-            // LLM-style: open base URL, copy query to clipboard, then paste after page load
+            // LLM-style: open base URL, save clipboard, write query, paste after page load, restore
             guard let url = URL(string: browserURL) else { return }
+
+            let pasteboard = NSPasteboard.general
+            let savedClipboard = AppleScriptHelper.saveClipboardContents(pasteboard)
+
+            // Resolve the default browser app URL before opening — reliable regardless of
+            // focus changes. previousApp.activate() fires at ~150ms and would corrupt
+            // any frontmost-app polling approach.
+            let browserAppURL = NSWorkspace.shared.urlForApplication(toOpen: url)
+
             let opened = NSWorkspace.shared.open(url)
-            NSPasteboard.general.clearContents()
-            NSPasteboard.general.setString(query, forType: .string)
-            if opened {
-                // Capture browser app after it becomes frontmost, then paste after page load.
-                // Cannot rely on frontmost app at paste time — hide() restores previousApp focus
-                // at ~150ms, which would receive the paste instead of the browser.
+            pasteboard.clearContents()
+            pasteboard.setString(query, forType: .string)
+
+            if opened, let browserAppURL {
+                let savedClipboardCopy = savedClipboard
                 Task.detached {
-                    // Wait for browser to steal focus back from previousApp (up to 3s)
-                    var browserApp: NSRunningApplication?
-                    for _ in 0..<30 {
-                        try? await Task.sleep(nanoseconds: 100_000_000) // 0.1s each
-                        let front = await MainActor.run { NSWorkspace.shared.frontmostApplication }
-                        if front?.bundleIdentifier != Bundle.main.bundleIdentifier {
-                            browserApp = front
-                            break
-                        }
-                    }
-                    // Wait for page to fully load
-                    try? await Task.sleep(nanoseconds: 3_000_000_000) // 3s
-                    // Re-activate browser in case focus drifted, then paste
-                    browserApp?.activate()
-                    try? await Task.sleep(nanoseconds: 300_000_000) // 0.3s
+                    // Wait for page to load
+                    try? await Task.sleep(nanoseconds: 4_000_000_000)
+
+                    // Re-activate the browser by app URL — no polling, no race condition
+                    let config = NSWorkspace.OpenConfiguration()
+                    config.activates = true
+                    let sem = DispatchSemaphore(value: 0)
+                    NSWorkspace.shared.openApplication(at: browserAppURL, configuration: config) { _, _ in sem.signal() }
+                    sem.wait()
+
+                    try? await Task.sleep(nanoseconds: 300_000_000)
                     await AppleScriptHelper.pasteAndSubmitInFrontmostApp(after: 0)
+
+                    // Restore clipboard after paste
+                    try? await Task.sleep(nanoseconds: 500_000_000)
+                    if let saved = savedClipboardCopy {
+                        pasteboard.clearContents()
+                        let newItems = saved.map { pairs -> NSPasteboardItem in
+                            let item = NSPasteboardItem()
+                            for (type, data) in pairs { item.setData(data, forType: type) }
+                            return item
+                        }
+                        if !newItems.isEmpty { pasteboard.writeObjects(newItems) }
+                    }
                 }
             } else {
                 await NotificationHelper.showToast("Couldn't open browser. Query copied to clipboard.")

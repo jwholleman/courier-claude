@@ -32,7 +32,7 @@ final class ServiceRegistry {
         map[.perplexity] = LLMService(
             type: .perplexity,
             browserURL: "https://www.perplexity.ai/search?q=",
-            bundleIdentifier: "ai.perplexity.mac",
+            bundleIdentifier: nil,  // URL-based browser submission works reliably; native app has AX issues
             slashCommands: ["/p", "/perplexity"],
             appendsQueryToURL: true
         )

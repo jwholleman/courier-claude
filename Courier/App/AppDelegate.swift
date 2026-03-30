@@ -40,6 +40,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
 
+        // Request notification authorization — required for toasts to appear
+        NotificationHelper.requestAuthorization()
+
         // Accessibility permission check — prompt on first launch
         AccessibilityPermission.requestIfNeeded()
 

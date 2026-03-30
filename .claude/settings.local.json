@@ -4,7 +4,9 @@
       "Bash(python3 -c \":*)",
       "Bash(xcodegen generate:*)",
       "Bash(xcodebuild -scheme Courier -destination 'platform=macOS' build)",
-      "Bash(xcodebuild -scheme CourierTests -destination 'platform=macOS' test)"
+      "Bash(xcodebuild -scheme CourierTests -destination 'platform=macOS' test)",
+      "Bash(pkill -x Courier)",
+      "Bash(open \"/Users/John Holleman/Library/Developer/Xcode/DerivedData/Courier-bbrhvhebpowvzugpkzewsghgmepa/Build/Products/Debug/Courier.app\")"
     ]
   }
 }

@@ -23,11 +23,7 @@ enum AppleScriptHelper {
         serviceType: ServiceType,
         browserFallback: @escaping () async throws -> Void
     ) async throws {
-        guard AXIsProcessTrusted() else {
-            await NotificationHelper.postAccessibilityRevoked()
-            try await browserFallback()
-            return
-        }
+        print("[Courier] Attempting native dispatch to \(bundleID)")
 
         do {
             try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
@@ -45,19 +41,67 @@ enum AppleScriptHelper {
                     }
                 }
             }
+        } catch AppleScriptError.accessibilityDenied {
+            print("[Courier] Accessibility denied — keystrokes blocked, falling back to browser")
+            try await browserFallback()
         } catch AppleScriptError.automationDenied(let appName) {
-            await NotificationHelper.postAutomationDenied(appName: appName)
+            print("[Courier] Automation denied for \(appName)")
+            await showAutomationAlert(appName: appName)
             try await browserFallback()
         } catch AppleScriptError.appLaunchTimeout {
             let appName = serviceType.displayName
+            print("[Courier] App launch timeout for \(appName)")
             await NotificationHelper.showToast("'\(appName)' took too long to launch. Query copied to clipboard.")
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(query, forType: .string)
             try await browserFallback()
         } catch {
             let appName = serviceType.displayName
+            print("[Courier] Dispatch error for \(appName): \(error)")
             await NotificationHelper.showToast("Couldn't paste into \(appName). Query copied to clipboard. Opening in browser.")
             try await browserFallback()
+        }
+    }
+
+    // MARK: - Permission alerts
+
+    @MainActor
+    private static func showAccessibilityAlert() {
+        let alert = NSAlert()
+        alert.messageText = "Accessibility Permission Needed"
+        alert.informativeText = """
+        Courier needs Accessibility access to send keystrokes.
+
+        To fix this:
+        1. Open System Settings → Privacy & Security → Accessibility
+        2. Remove ALL existing "Courier" entries (select each and click –)
+        3. Relaunch Courier — it will prompt you to add itself
+        4. Enable the new entry
+
+        This is a one-time setup. Development builds can leave stale entries that shadow the active one.
+        """
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "Open Accessibility Settings")
+        alert.addButton(withTitle: "OK")
+        NSApp.activate(ignoringOtherApps: true)
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
+        }
+    }
+
+    @MainActor
+    private static func showAutomationAlert(appName: String) {
+        let alert = NSAlert()
+        alert.messageText = "Automation Permission Required"
+        alert.informativeText = "Courier needs permission to control System Events to paste into apps.\n\nOpen System Settings → Privacy & Security → Automation, then enable \"System Events\" under Courier."
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "Open System Settings")
+        alert.addButton(withTitle: "Use Browser Instead")
+        NSApp.activate(ignoringOtherApps: true)
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Automation")!)
         }
     }
 
@@ -100,31 +144,33 @@ enum AppleScriptHelper {
         let keystroke = serviceType.newConversationKeystroke
 
         if keystroke != .none {
-            let cmdNScript = keystrokeScript(key: keystroke.key, modifiers: ["command"], appName: appName)
-            try runScript(cmdNScript, appName: appName)
+            let newChatScript = keystrokeScript(key: keystroke.key, modifiers: keystroke.modifiers, appName: appName)
+            try runScript(newChatScript, appName: appName)
             Thread.sleep(forTimeInterval: 0.3) // Wait for new conversation UI
         }
 
         let pasteScript = keystrokeScript(key: "v", modifiers: ["command"], appName: appName)
         try runScript(pasteScript, appName: appName)
+
+        // Step 5b — Submit the pasted query (key code 36 = Return)
+        Thread.sleep(forTimeInterval: serviceType.submitDelay)
+        let returnScript = keyCodeScript(code: 36, modifiers: [])
+        try runScript(returnScript, appName: appName)
     }
 
     // MARK: - App activation
 
+    /// Uses NSWorkspace.openApplication for both warm and cold launches.
+    /// NSRunningApplication.activate() is deprecated in macOS 14 and silently fails
+    /// from a non-activating panel. openApplication handles both cases correctly.
     private static func activateApp(bundleID: String, appURL: URL, isColdLaunch: Bool) throws {
-        if !isColdLaunch {
-            if let app = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).first {
-                app.activate()
-            }
-        } else {
-            let config = NSWorkspace.OpenConfiguration()
-            config.activates = true
-            let semaphore = DispatchSemaphore(value: 0)
-            NSWorkspace.shared.openApplication(at: appURL, configuration: config) { _, _ in
-                semaphore.signal()
-            }
-            semaphore.wait()
+        let config = NSWorkspace.OpenConfiguration()
+        config.activates = true
+        let semaphore = DispatchSemaphore(value: 0)
+        NSWorkspace.shared.openApplication(at: appURL, configuration: config) { _, _ in
+            semaphore.signal()
         }
+        semaphore.wait()
     }
 
     // MARK: - Wait for frontmost
@@ -151,6 +197,26 @@ enum AppleScriptHelper {
         // For warm launch timeout, proceed anyway — the app is running, focus may have raced
     }
 
+    // MARK: - Browser paste (best-effort, for LLMs without URL-based submission)
+
+    /// Waits for a browser page to load, then pastes from clipboard and submits.
+    /// Best-effort: if the user switches away in the delay window the paste goes elsewhere.
+    static func pasteAndSubmitInFrontmostApp(after delay: TimeInterval) async {
+        try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+        var error: NSDictionary?
+        let script = NSAppleScript(source: """
+        tell application "System Events"
+            keystroke "v" using command down
+            delay 0.2
+            key code 36
+        end tell
+        """)
+        script?.executeAndReturnError(&error)
+        if let error {
+            print("[Courier] Browser paste error: \(error[NSAppleScript.errorMessage] ?? "?")")
+        }
+    }
+
     // MARK: - AppleScript execution
 
     /// Build a keystroke script using System Events. Never interpolates user text —
@@ -164,6 +230,16 @@ enum AppleScriptHelper {
         """
     }
 
+    /// Build a key code script using System Events. Use for special keys like Return (36).
+    private static func keyCodeScript(code: Int, modifiers: [String]) -> String {
+        let modExpr = modifiers.isEmpty ? "" : " using {\(modifiers.map { "\($0) down" }.joined(separator: ", "))}"
+        return """
+        tell application "System Events"
+            key code \(code)\(modExpr)
+        end tell
+        """
+    }
+
     private static func runScript(_ source: String, appName: String) throws {
         var error: NSDictionary?
         let script = NSAppleScript(source: source)
@@ -171,9 +247,12 @@ enum AppleScriptHelper {
 
         if let error {
             let msg = error[NSAppleScript.errorMessage] as? String ?? "Unknown error"
-            // Automation denial produces error -1743
             if let code = error[NSAppleScript.errorNumber] as? Int, code == -1743 {
                 throw AppleScriptError.automationDenied(appName: appName)
+            }
+            // "not allowed to send keystrokes" = Accessibility permission denied
+            if msg.contains("not allowed to send keystrokes") {
+                throw AppleScriptError.accessibilityDenied
             }
             throw AppleScriptError.scriptError(msg)
         }

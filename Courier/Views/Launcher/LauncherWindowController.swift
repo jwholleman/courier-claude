@@ -127,6 +127,10 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
         previousApp = NSWorkspace.shared.frontmostApplication
         positionPanel()
 
+        // Activate Courier before showing the panel — steals focus from any app
+        // (e.g. ChatGPT) that also owns Option+Space, causing their launcher to close.
+        NSApp.activate(ignoringOtherApps: true)
+
         // makeKey BEFORE animation — input works immediately during animatingIn
         panel.makeKeyAndOrderFront(nil)
         DispatchQueue.main.async { [weak self] in

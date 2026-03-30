@@ -47,6 +47,10 @@ struct QueryInputView: NSViewRepresentable {
             textView.string = text
             context.coordinator.isUpdatingFromSwiftUI = false
             textView.needsDisplay = true
+            // Reset submit debounce when text is cleared by the ViewModel (panel hide/reopen cycle)
+            if text.isEmpty {
+                context.coordinator.resetSubmitState()
+            }
         }
         // Keep viewModel reference up to date
         context.coordinator.parent = self

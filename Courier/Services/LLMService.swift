@@ -51,13 +51,33 @@ final class LLMService: ServiceProvider {
                 await copyToClipboardAndNotify(query: query, reason: "Couldn't open browser.")
             }
         } else {
-            // LLM-style: open base URL, copy query to clipboard
+            // LLM-style: open base URL, copy query to clipboard, then paste after page load
             guard let url = URL(string: browserURL) else { return }
             let opened = NSWorkspace.shared.open(url)
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(query, forType: .string)
             if opened {
-                await NotificationHelper.showToast("Query copied to clipboard — paste into the conversation.")
+                // Capture browser app after it becomes frontmost, then paste after page load.
+                // Cannot rely on frontmost app at paste time — hide() restores previousApp focus
+                // at ~150ms, which would receive the paste instead of the browser.
+                Task.detached {
+                    // Wait for browser to steal focus back from previousApp (up to 3s)
+                    var browserApp: NSRunningApplication?
+                    for _ in 0..<30 {
+                        try? await Task.sleep(nanoseconds: 100_000_000) // 0.1s each
+                        let front = await MainActor.run { NSWorkspace.shared.frontmostApplication }
+                        if front?.bundleIdentifier != Bundle.main.bundleIdentifier {
+                            browserApp = front
+                            break
+                        }
+                    }
+                    // Wait for page to fully load
+                    try? await Task.sleep(nanoseconds: 3_000_000_000) // 3s
+                    // Re-activate browser in case focus drifted, then paste
+                    browserApp?.activate()
+                    try? await Task.sleep(nanoseconds: 300_000_000) // 0.3s
+                    await AppleScriptHelper.pasteAndSubmitInFrontmostApp(after: 0)
+                }
             } else {
                 await NotificationHelper.showToast("Couldn't open browser. Query copied to clipboard.")
             }

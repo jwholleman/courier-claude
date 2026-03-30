@@ -19,13 +19,24 @@ struct ServiceButton: View {
                 .clipShape(RoundedRectangle(cornerRadius: 6))
         }
         .buttonStyle(.plain)
-        .help("Send to \(service.displayName)")
         .accessibilityLabel("Send to \(service.displayName)")
+        .overlay(alignment: .bottom) {
+            if isHovered {
+                Text(service.displayName)
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundStyle(Color(nsColor: .secondaryLabelColor))
+                    .fixedSize()
+                    .offset(y: 18)
+                    .transition(.opacity)
+                    .allowsHitTesting(false)
+            }
+        }
         .onHover { hovered in
             withAnimation(.easeInOut(duration: 0.1)) {
                 isHovered = hovered
             }
         }
+        .zIndex(isHovered ? 1 : 0)
     }
 
     private var backgroundFill: Color {

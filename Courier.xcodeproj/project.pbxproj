@@ -15,8 +15,10 @@
 		812A96E13E3A3D7EC075A538 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC24D44D603D16958C27C4 /* NotificationHelper.swift */; };
 		AE5A66CE1E06980B039A2040 /* CourierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CF1B696C1CB7B47451B1A /* CourierApp.swift */; };
 		AE847B898CEDE103FAB6274B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1919C1D565FF29394C6278 /* AppDelegate.swift */; };
+		B59EAF2463BE3CDA9EEC1853 /* HotKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */; };
 		C7356D4B21BC5025E2C17590 /* LauncherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B324B7F92A57F99B1A802452 /* LauncherView.swift */; };
 		CA85E52F510E78574776C365 /* LauncherPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52F5A980156215207341A21 /* LauncherPanel.swift */; };
+		D0E90CB825437967F5757C59 /* AccessibilityPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,8 @@
 		97EC24D44D603D16958C27C4 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		B324B7F92A57F99B1A802452 /* LauncherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherView.swift; sourceTree = "<group>"; };
 		B52F5A980156215207341A21 /* LauncherPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherPanel.swift; sourceTree = "<group>"; };
+		BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityPermission.swift; sourceTree = "<group>"; };
+		C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyProvider.swift; sourceTree = "<group>"; };
 		DDC435963B019B86A15BEB91 /* CourierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CourierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC6041C861A9354FEC75C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +94,7 @@
 			children = (
 				57C8EC6E55DCC0D75C42AA72 /* Courier.entitlements */,
 				CDE38737FD13FB87803715F3 /* App */,
+				91E732F82B16E9A652D50941 /* HotKey */,
 				CB0FDDF4C1AF5BB1B735AB8E /* Resources */,
 				F682B6B32EAF6DD31314CFB0 /* Utilities */,
 				C42C90EBCF09EB3BF43D737E /* Views */,
@@ -102,6 +107,14 @@
 			children = (
 			);
 			path = CourierTests;
+			sourceTree = "<group>";
+		};
+		91E732F82B16E9A652D50941 /* HotKey */ = {
+			isa = PBXGroup;
+			children = (
+				C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */,
+			);
+			path = HotKey;
 			sourceTree = "<group>";
 		};
 		C42C90EBCF09EB3BF43D737E /* Views */ = {
@@ -143,6 +156,7 @@
 		F682B6B32EAF6DD31314CFB0 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */,
 				97EC24D44D603D16958C27C4 /* NotificationHelper.swift */,
 			);
 			path = Utilities;
@@ -252,8 +266,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0E90CB825437967F5757C59 /* AccessibilityPermission.swift in Sources */,
 				AE847B898CEDE103FAB6274B /* AppDelegate.swift in Sources */,
 				AE5A66CE1E06980B039A2040 /* CourierApp.swift in Sources */,
+				B59EAF2463BE3CDA9EEC1853 /* HotKeyProvider.swift in Sources */,
 				CA85E52F510E78574776C365 /* LauncherPanel.swift in Sources */,
 				C7356D4B21BC5025E2C17590 /* LauncherView.swift in Sources */,
 				51A3B9886563D5B70D234226 /* LauncherViewModel.swift in Sources */,

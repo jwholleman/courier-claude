@@ -1,5 +1,4 @@
 import AppKit
-import Carbon
 import KeyboardShortcuts
 
 extension KeyboardShortcuts.Name {
@@ -9,9 +8,9 @@ extension KeyboardShortcuts.Name {
 final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // Strong references — keep window controller and panel alive for app lifetime.
-    // Populated in applicationDidFinishLaunching; nil until then.
     var windowController: LauncherWindowController?
 
+    private let hotKeyProvider: HotKeyProvider = KeyboardShortcutsProvider()
     private var activityToken: NSObjectProtocol?
     private var accessibilityTimer: Timer?
 
@@ -31,28 +30,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             reason: "Listening for global hotkey"
         )
 
-        // Create and retain the window controller (panel + view model pre-created)
+        // Create and retain the window controller (panel + view model pre-created at launch)
         windowController = LauncherWindowController()
 
-        // Register global hotkey (default: Option+Space)
-        if KeyboardShortcuts.getShortcut(for: .toggleCourier) == nil {
-            KeyboardShortcuts.setShortcut(.init(.space, modifiers: .option), for: .toggleCourier)
-        }
-        KeyboardShortcuts.onKeyUp(for: .toggleCourier) { [weak self] in
+        // Register global hotkey via provider
+        hotKeyProvider.register { [weak self] in
             Task { @MainActor in
                 self?.windowController?.toggle()
             }
         }
 
         // Accessibility permission check — prompt on first launch
-        let promptKey = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
-        let options = [promptKey: true] as CFDictionary
-        AXIsProcessTrustedWithOptions(options)
+        AccessibilityPermission.requestIfNeeded()
 
         // Start periodic monitoring (60s interval)
         startMonitoringTimer()
 
-        // Check on wake from sleep
+        // Also check on wake from sleep — sleep/wake can reset trust state
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didWake),
@@ -77,7 +71,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Settings window implemented in Phase 6
     }
 
-    // MARK: - Accessibility & Secure Input Monitoring
+    // MARK: - Permission Monitoring
 
     private func startMonitoringTimer() {
         accessibilityTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
@@ -90,10 +84,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func checkPermissions() {
-        if !AXIsProcessTrusted() {
+        if !AccessibilityPermission.isTrusted {
             NotificationHelper.postAccessibilityRevoked()
         }
-        if IsSecureEventInputEnabled() {
+        if AccessibilityPermission.isSecureInputActive {
             NotificationHelper.postSecureInputActive()
         }
     }

@@ -15,6 +15,7 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
     private(set) var viewModel: LauncherViewModel
     private let hostingView: NSHostingView<LauncherView>
     private let visualEffectView: NSVisualEffectView
+    private let dispatcher: ServiceDispatcher
 
     private var state: PanelState = .hidden
     private var pendingToggle = false
@@ -29,6 +30,7 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
         viewModel = LauncherViewModel()
         viewModel.settings = settings
         viewModel.selectedService = settings.effectiveSelectedService
+        dispatcher = ServiceDispatcher()
 
         // Create stub root view pre-super.init; closures capturing self are set post-super.init
         let rootView = LauncherView(viewModel: viewModel, onSubmit: nil, onDismiss: nil)
@@ -102,8 +104,22 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
     // MARK: - Private
 
     private func handleSubmit() {
-        // Dismiss immediately; dispatch happens in ServiceDispatcher (Phase 3)
+        let query = viewModel.queryText.trimmingCharacters(in: .whitespacesAndNewlines)
+        let serviceType = viewModel.selectedService
+        guard !query.isEmpty else { return }
+
+        // Save last-used service before dismissing
+        viewModel.settings?.lastUsedService = serviceType
+
         hide()
+
+        Task {
+            do {
+                try await dispatcher.dispatch(query: query, serviceType: serviceType)
+            } catch {
+                await NotificationHelper.showToast("Dispatch failed: \(error.localizedDescription)")
+            }
+        }
     }
 
     private func show() {

@@ -7,44 +7,59 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0775A1A1E11D26B159BBBD17 /* ServiceDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71519206C85015FE0A5F756 /* ServiceDispatcher.swift */; };
 		08FFD206CDDE79EA0FC0A6D6 /* SlashCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA36970EBAC5529CEC978813 /* SlashCommand.swift */; };
+		0DB904F6ECD5D5F908CC29FF /* URLEncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333C9A158A37FBD974CFA0B /* URLEncodingTests.swift */; };
 		0E88981E00E3CFA0375E7AA1 /* SlashCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA36970EBAC5529CEC978813 /* SlashCommand.swift */; };
 		198C61B9115B43E14A07DA2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C34D9DA5A69B02A2E9D3EAA /* Assets.xcassets */; };
 		1AC819B3CC0E600D49753B95 /* DeliverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA6D2B70B210FC41A49C3A4 /* DeliverButton.swift */; };
 		3AB3D5BFDAA237317128657F /* CourierTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2966F52EE5E164C6A998B77 /* CourierTextView.swift */; };
+		3AF4324D428C40BD1C8CDDAF /* DispatchChainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AA0F043469499A6179DEA8 /* DispatchChainTests.swift */; };
 		4DA3A80A9C60FC26385B47F2 /* LauncherWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA7CB3C725F043E8EE5F831 /* LauncherWindowController.swift */; };
 		4E6263F72DCE8548BCEBE428 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895714AF57464A156FAFCE79 /* MenuBarView.swift */; };
+		50227300DC93BE43FCFE95EF /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */; };
 		51A3B9886563D5B70D234226 /* LauncherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E32568662C61373356FD0E6 /* LauncherViewModel.swift */; };
+		55E68424FD2EE2D8F47AF90F /* ServiceDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71519206C85015FE0A5F756 /* ServiceDispatcher.swift */; };
+		5800C8EE277D3C06C4CECCF4 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48345AD7CBBC3F15D92CE9AB /* LLMService.swift */; };
 		69B82B8E20190732BE7E7254 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 673FF32B1E8DE8E261D97327 /* KeyboardShortcuts */; };
 		6B1824268A2352F2B25C93B8 /* ServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA96E39F011A2BD69DC0B1 /* ServiceType.swift */; };
 		703551CEBCD7F0D5D2675611 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75603284C3E3297DEE0A917F /* main.swift */; };
+		7ACA3C0AE3EBCE1DB349E6D6 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */; };
 		7D2F92A2A14CAEF64555EFB1 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4306791EEC24A5DB3A5CC3A /* AppSettings.swift */; };
 		7F6CE4FD178464DE9744F8A1 /* ServiceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B8115768923F6E0A57CEE /* ServiceRegistry.swift */; };
 		812A96E13E3A3D7EC075A538 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC24D44D603D16958C27C4 /* NotificationHelper.swift */; };
 		84A7FDA9DBE3AE6A95644233 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 40A6A677D7FA4E3D9460167B /* KeyboardShortcuts */; };
 		8C3744F6D4A6EACE499E1656 /* ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A633BAC19461299308D6A373 /* ServiceProtocol.swift */; };
 		93022E48CAEC6C63F44E83A9 /* ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A633BAC19461299308D6A373 /* ServiceProtocol.swift */; };
+		AB0E50E5C451B342B4184C58 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48345AD7CBBC3F15D92CE9AB /* LLMService.swift */; };
 		AE5A66CE1E06980B039A2040 /* CourierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CF1B696C1CB7B47451B1A /* CourierApp.swift */; };
 		AE847B898CEDE103FAB6274B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1919C1D565FF29394C6278 /* AppDelegate.swift */; };
 		B0A08F14BA36162D30CE70A6 /* AppSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E854495BD67BDD665F5A8 /* AppSettingsTests.swift */; };
 		B0FBF1AC261F72F936E8F9F2 /* ServiceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B8115768923F6E0A57CEE /* ServiceRegistry.swift */; };
 		B59EAF2463BE3CDA9EEC1853 /* HotKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */; };
+		B9084402F16872A4AB4A72E1 /* AppleScriptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013DCAEE921EF01A35C316EF /* AppleScriptHelper.swift */; };
 		B913B345FC157125235451C8 /* ServiceRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BD37508C8391419F6F2196 /* ServiceRegistryTests.swift */; };
 		C07C15B449FFC0088BA9D165 /* ServiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615498E1897DEFA1446B2C9D /* ServiceButton.swift */; };
 		C7356D4B21BC5025E2C17590 /* LauncherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B324B7F92A57F99B1A802452 /* LauncherView.swift */; };
 		C7C068A6FD866BD21C25C286 /* QueryInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F239051016D81D03687F5AEF /* QueryInputView.swift */; };
+		CA3F00C51BF340C0D453CE9F /* AccessibilityPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */; };
 		CA85E52F510E78574776C365 /* LauncherPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52F5A980156215207341A21 /* LauncherPanel.swift */; };
 		D0E90CB825437967F5757C59 /* AccessibilityPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */; };
 		D227644F7DABD7A18C5291B2 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4306791EEC24A5DB3A5CC3A /* AppSettings.swift */; };
 		D7B0F28A10FA332656C8B6E7 /* ServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA96E39F011A2BD69DC0B1 /* ServiceType.swift */; };
 		EF46B3FE35D456C009F2A0D3 /* ServiceBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623A720E6BD4D32A0BEC52DC /* ServiceBar.swift */; };
+		F913283E60F2F20C97E083D0 /* AppleScriptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013DCAEE921EF01A35C316EF /* AppleScriptHelper.swift */; };
+		FFF67BECD8C01B40FE4AD0D8 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC24D44D603D16958C27C4 /* NotificationHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		013DCAEE921EF01A35C316EF /* AppleScriptHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScriptHelper.swift; sourceTree = "<group>"; };
 		024E854495BD67BDD665F5A8 /* AppSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsTests.swift; sourceTree = "<group>"; };
 		0C1919C1D565FF29394C6278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A4CF1B696C1CB7B47451B1A /* CourierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierApp.swift; sourceTree = "<group>"; };
+		48345AD7CBBC3F15D92CE9AB /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
 		57C8EC6E55DCC0D75C42AA72 /* Courier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Courier.entitlements; sourceTree = "<group>"; };
+		5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		615498E1897DEFA1446B2C9D /* ServiceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceButton.swift; sourceTree = "<group>"; };
 		623A720E6BD4D32A0BEC52DC /* ServiceBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBar.swift; sourceTree = "<group>"; };
 		6D4B3CBCF4A53A44DFA16BB5 /* Courier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Courier.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,7 +76,10 @@
 		BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityPermission.swift; sourceTree = "<group>"; };
 		BD7B8115768923F6E0A57CEE /* ServiceRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRegistry.swift; sourceTree = "<group>"; };
 		C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyProvider.swift; sourceTree = "<group>"; };
+		C333C9A158A37FBD974CFA0B /* URLEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncodingTests.swift; sourceTree = "<group>"; };
+		C7AA0F043469499A6179DEA8 /* DispatchChainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchChainTests.swift; sourceTree = "<group>"; };
 		DDC435963B019B86A15BEB91 /* CourierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CourierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E71519206C85015FE0A5F756 /* ServiceDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDispatcher.swift; sourceTree = "<group>"; };
 		E8BD37508C8391419F6F2196 /* ServiceRegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRegistryTests.swift; sourceTree = "<group>"; };
 		EAC6041C861A9354FEC75C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EEA6D2B70B210FC41A49C3A4 /* DeliverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliverButton.swift; sourceTree = "<group>"; };
@@ -143,7 +161,9 @@
 			isa = PBXGroup;
 			children = (
 				024E854495BD67BDD665F5A8 /* AppSettingsTests.swift */,
+				C7AA0F043469499A6179DEA8 /* DispatchChainTests.swift */,
 				E8BD37508C8391419F6F2196 /* ServiceRegistryTests.swift */,
+				C333C9A158A37FBD974CFA0B /* URLEncodingTests.swift */,
 			);
 			path = CourierTests;
 			sourceTree = "<group>";
@@ -151,6 +171,10 @@
 		848D6637D5BC06D596491D00 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				013DCAEE921EF01A35C316EF /* AppleScriptHelper.swift */,
+				48345AD7CBBC3F15D92CE9AB /* LLMService.swift */,
+				5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */,
+				E71519206C85015FE0A5F756 /* ServiceDispatcher.swift */,
 				A633BAC19461299308D6A373 /* ServiceProtocol.swift */,
 				BD7B8115768923F6E0A57CEE /* ServiceRegistry.swift */,
 			);
@@ -319,13 +343,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA3F00C51BF340C0D453CE9F /* AccessibilityPermission.swift in Sources */,
 				D227644F7DABD7A18C5291B2 /* AppSettings.swift in Sources */,
 				B0A08F14BA36162D30CE70A6 /* AppSettingsTests.swift in Sources */,
+				F913283E60F2F20C97E083D0 /* AppleScriptHelper.swift in Sources */,
+				3AF4324D428C40BD1C8CDDAF /* DispatchChainTests.swift in Sources */,
+				AB0E50E5C451B342B4184C58 /* LLMService.swift in Sources */,
+				FFF67BECD8C01B40FE4AD0D8 /* NotificationHelper.swift in Sources */,
+				50227300DC93BE43FCFE95EF /* SearchService.swift in Sources */,
+				0775A1A1E11D26B159BBBD17 /* ServiceDispatcher.swift in Sources */,
 				93022E48CAEC6C63F44E83A9 /* ServiceProtocol.swift in Sources */,
 				B0FBF1AC261F72F936E8F9F2 /* ServiceRegistry.swift in Sources */,
 				B913B345FC157125235451C8 /* ServiceRegistryTests.swift in Sources */,
 				D7B0F28A10FA332656C8B6E7 /* ServiceType.swift in Sources */,
 				08FFD206CDDE79EA0FC0A6D6 /* SlashCommand.swift in Sources */,
+				0DB904F6ECD5D5F908CC29FF /* URLEncodingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,10 +368,12 @@
 				D0E90CB825437967F5757C59 /* AccessibilityPermission.swift in Sources */,
 				AE847B898CEDE103FAB6274B /* AppDelegate.swift in Sources */,
 				7D2F92A2A14CAEF64555EFB1 /* AppSettings.swift in Sources */,
+				B9084402F16872A4AB4A72E1 /* AppleScriptHelper.swift in Sources */,
 				AE5A66CE1E06980B039A2040 /* CourierApp.swift in Sources */,
 				3AB3D5BFDAA237317128657F /* CourierTextView.swift in Sources */,
 				1AC819B3CC0E600D49753B95 /* DeliverButton.swift in Sources */,
 				B59EAF2463BE3CDA9EEC1853 /* HotKeyProvider.swift in Sources */,
+				5800C8EE277D3C06C4CECCF4 /* LLMService.swift in Sources */,
 				CA85E52F510E78574776C365 /* LauncherPanel.swift in Sources */,
 				C7356D4B21BC5025E2C17590 /* LauncherView.swift in Sources */,
 				51A3B9886563D5B70D234226 /* LauncherViewModel.swift in Sources */,
@@ -347,8 +381,10 @@
 				4E6263F72DCE8548BCEBE428 /* MenuBarView.swift in Sources */,
 				812A96E13E3A3D7EC075A538 /* NotificationHelper.swift in Sources */,
 				C7C068A6FD866BD21C25C286 /* QueryInputView.swift in Sources */,
+				7ACA3C0AE3EBCE1DB349E6D6 /* SearchService.swift in Sources */,
 				EF46B3FE35D456C009F2A0D3 /* ServiceBar.swift in Sources */,
 				C07C15B449FFC0088BA9D165 /* ServiceButton.swift in Sources */,
+				55E68424FD2EE2D8F47AF90F /* ServiceDispatcher.swift in Sources */,
 				8C3744F6D4A6EACE499E1656 /* ServiceProtocol.swift in Sources */,
 				7F6CE4FD178464DE9744F8A1 /* ServiceRegistry.swift in Sources */,
 				6B1824268A2352F2B25C93B8 /* ServiceType.swift in Sources */,

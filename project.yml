@@ -45,6 +45,7 @@ targets:
       # Compile model + service sources directly — avoids BUNDLE_LOADER app-launch issues
       - path: Courier/Models
       - path: Courier/Services
+      - path: Courier/Utilities
     dependencies:
       - package: KeyboardShortcuts
     settings:

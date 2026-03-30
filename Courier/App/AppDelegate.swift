@@ -85,10 +85,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func checkPermissions() {
         if !AccessibilityPermission.isTrusted {
-            NotificationHelper.postAccessibilityRevoked()
+            Task { @MainActor in await NotificationHelper.postAccessibilityRevoked() }
         }
         if AccessibilityPermission.isSecureInputActive {
-            NotificationHelper.postSecureInputActive()
+            Task { @MainActor in await NotificationHelper.postSecureInputActive() }
         }
     }
 }

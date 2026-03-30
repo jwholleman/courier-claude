@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \":*)",
+      "Bash(xcodegen generate:*)",
+      "Bash(xcodebuild -scheme Courier -destination 'platform=macOS' build)"
+    ]
+  }
+}

@@ -1,10 +1,17 @@
 import SwiftUI
+import AppKit
 
 @main
 struct CourierApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
-        MenuBarExtra("Courier", systemImage: "paperplane") {
-            Text("Courier")
+        MenuBarExtra {
+            MenuBarView(appDelegate: appDelegate)
+        } label: {
+            Image(systemName: "paperplane")
+                .accessibilityLabel("Courier")
         }
+        .menuBarExtraStyle(.menu)
     }
 }

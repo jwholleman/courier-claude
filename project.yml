@@ -1,0 +1,50 @@
+name: Courier
+options:
+  bundleIdPrefix: com.courier
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+
+packages:
+  KeyboardShortcuts:
+    url: https://github.com/sindresorhus/KeyboardShortcuts
+    from: "2.1.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    CODE_SIGN_ENTITLEMENTS: Courier/Courier.entitlements
+    INFOPLIST_FILE: Courier/App/Info.plist
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_HARDENED_RUNTIME: YES
+    PRODUCT_BUNDLE_IDENTIFIER: com.courier.Courier
+
+targets:
+  Courier:
+    type: application
+    platform: macOS
+    sources:
+      - path: Courier
+        excludes:
+          - "**/*Tests*"
+    dependencies:
+      - package: KeyboardShortcuts
+    settings:
+      base:
+        INFOPLIST_FILE: Courier/App/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Courier/Courier.entitlements
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks"
+
+  CourierTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: CourierTests
+    dependencies:
+      - target: Courier
+    settings:
+      base:
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Courier.app/Contents/MacOS/Courier"

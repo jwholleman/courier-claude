@@ -26,7 +26,8 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
         panel = LauncherPanel(contentRect: panelRect)
         viewModel = LauncherViewModel()
 
-        let rootView = LauncherView(viewModel: viewModel)
+        // Create stub root view pre-super.init; closures capturing self are set post-super.init
+        let rootView = LauncherView(viewModel: viewModel, onSubmit: nil, onDismiss: nil)
         hostingView = NSHostingView(rootView: rootView)
         hostingView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -39,6 +40,13 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
         visualEffectView.layer?.masksToBounds = true
 
         super.init()
+
+        // Update rootView with closures now that self is available
+        hostingView.rootView = LauncherView(
+            viewModel: viewModel,
+            onSubmit: { [weak self] in self?.handleSubmit() },
+            onDismiss: { [weak self] in self?.hide() }
+        )
 
         panel.contentView = visualEffectView
         visualEffectView.addSubview(hostingView)
@@ -88,6 +96,11 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
     }
 
     // MARK: - Private
+
+    private func handleSubmit() {
+        // Dismiss immediately; dispatch happens in ServiceDispatcher (Phase 3)
+        hide()
+    }
 
     private func show() {
         state = .animatingIn

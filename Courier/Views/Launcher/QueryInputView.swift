@@ -59,9 +59,14 @@ struct QueryInputView: NSViewRepresentable {
         weak var textView: CourierTextView?
         var isUpdatingFromSwiftUI = false
         var isPasting = false
+        private var hasSubmitted = false
 
         init(parent: QueryInputView) {
             self.parent = parent
+        }
+
+        func resetSubmitState() {
+            hasSubmitted = false
         }
 
         func textDidChange(_ notification: Notification) {
@@ -96,6 +101,30 @@ struct QueryInputView: NSViewRepresentable {
             // Detect paste: replacement string longer than 1 char
             isPasting = (text?.count ?? 0) > 1
             return true
+        }
+
+        func textView(_ textView: NSTextView, doCommandBy selector: Selector) -> Bool {
+            if selector == #selector(NSResponder.insertNewline(_:)) {
+                // Enter -> submit (debounced, blocked on empty/whitespace)
+                guard !hasSubmitted else { return true }
+                let trimmed = textView.string.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !trimmed.isEmpty else { return true }
+                hasSubmitted = true
+                parent.onSubmit()
+                return true
+            }
+            if selector == #selector(NSResponder.insertNewlineIgnoringFieldEditor(_:)) {
+                // Cmd+Enter / Shift+Enter -> literal newline
+                textView.insertNewlineIgnoringFieldEditor(nil)
+                return true
+            }
+            if selector == #selector(NSResponder.cancelOperation(_:)) {
+                // ESC -> dismiss via callback (routes through LauncherWindowController state machine)
+                hasSubmitted = false
+                parent.onDismiss()
+                return true
+            }
+            return false
         }
     }
 }

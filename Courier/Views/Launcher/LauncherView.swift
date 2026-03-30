@@ -3,6 +3,14 @@ import SwiftUI
 /// Root view hosted inside the launcher panel.
 struct LauncherView: View {
     let viewModel: LauncherViewModel
+    var onSubmit: (() -> Void)?
+    var onDismiss: (() -> Void)?
+
+    private let charLimit = 8000
+
+    private var isOverLimit: Bool {
+        viewModel.queryText.count > charLimit
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -15,14 +23,26 @@ struct LauncherView: View {
                     get: { viewModel.contentHeight },
                     set: { viewModel.contentHeight = $0 }
                 ),
-                onSubmit: {},    // Wired in Task 2.1d
-                onDismiss: {},   // Wired in Task 2.4
+                onSubmit: { onSubmit?() },
+                onDismiss: { onDismiss?() },
                 viewModel: viewModel
             )
             .frame(height: viewModel.contentHeight)
             .padding(.horizontal, 16)
-            .padding(.vertical, 12)
+            .padding(.top, 12)
+            .padding(.bottom, isOverLimit ? 4 : 12)
+
+            if isOverLimit {
+                Text("Query will be truncated to \(charLimit) characters")
+                    .font(.system(size: 11))
+                    .foregroundStyle(Color(nsColor: .systemOrange))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
+                    .transition(.opacity)
+            }
         }
         .frame(width: 680)
+        .animation(.easeInOut(duration: 0.15), value: isOverLimit)
     }
 }

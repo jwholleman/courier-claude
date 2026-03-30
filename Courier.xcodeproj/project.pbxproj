@@ -18,6 +18,7 @@
 		AE847B898CEDE103FAB6274B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1919C1D565FF29394C6278 /* AppDelegate.swift */; };
 		B59EAF2463BE3CDA9EEC1853 /* HotKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */; };
 		C7356D4B21BC5025E2C17590 /* LauncherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B324B7F92A57F99B1A802452 /* LauncherView.swift */; };
+		C7C068A6FD866BD21C25C286 /* QueryInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F239051016D81D03687F5AEF /* QueryInputView.swift */; };
 		CA85E52F510E78574776C365 /* LauncherPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52F5A980156215207341A21 /* LauncherPanel.swift */; };
 		D0E90CB825437967F5757C59 /* AccessibilityPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */; };
 /* End PBXBuildFile section */
@@ -48,6 +49,7 @@
 		C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyProvider.swift; sourceTree = "<group>"; };
 		DDC435963B019B86A15BEB91 /* CourierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CourierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC6041C861A9354FEC75C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F239051016D81D03687F5AEF /* QueryInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInputView.swift; sourceTree = "<group>"; };
 		F2966F52EE5E164C6A998B77 /* CourierTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierTextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 				B324B7F92A57F99B1A802452 /* LauncherView.swift */,
 				8E32568662C61373356FD0E6 /* LauncherViewModel.swift */,
 				8DA7CB3C725F043E8EE5F831 /* LauncherWindowController.swift */,
+				F239051016D81D03687F5AEF /* QueryInputView.swift */,
 			);
 			path = Launcher;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				4DA3A80A9C60FC26385B47F2 /* LauncherWindowController.swift in Sources */,
 				4E6263F72DCE8548BCEBE428 /* MenuBarView.swift in Sources */,
 				812A96E13E3A3D7EC075A538 /* NotificationHelper.swift in Sources */,
+				C7C068A6FD866BD21C25C286 /* QueryInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

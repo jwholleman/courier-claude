@@ -1,6 +1,7 @@
 import XCTest
 @testable import Courier
 
+@MainActor
 final class SlashCommandTests: XCTestCase {
 
     var registry: ServiceRegistry!

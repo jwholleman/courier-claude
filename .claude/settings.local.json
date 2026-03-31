@@ -6,7 +6,12 @@
       "Bash(xcodebuild -scheme Courier -destination 'platform=macOS' build)",
       "Bash(xcodebuild -scheme CourierTests -destination 'platform=macOS' test)",
       "Bash(pkill -x Courier)",
-      "Bash(open \"/Users/John Holleman/Library/Developer/Xcode/DerivedData/Courier-bbrhvhebpowvzugpkzewsghgmepa/Build/Products/Debug/Courier.app\")"
+      "Bash(open \"/Users/John Holleman/Library/Developer/Xcode/DerivedData/Courier-bbrhvhebpowvzugpkzewsghgmepa/Build/Products/Debug/Courier.app\")",
+      "Bash(grep -l \"ServiceRegistry\\\\|ServiceType\\\\|AppSettings\" \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/\"*.swift)",
+      "Bash(sed -i '' 's/^final class SlashCommandTests: XCTestCase {/@MainActor\\\\nfinal class SlashCommandTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/SlashCommandTests.swift\")",
+      "Bash(sed -i '' 's/^final class ServiceRegistryTests: XCTestCase {/@MainActor\\\\nfinal class ServiceRegistryTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/ServiceRegistryTests.swift\")",
+      "Bash(sed -i '' 's/^final class DispatchChainTests: XCTestCase {/@MainActor\\\\nfinal class DispatchChainTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/DispatchChainTests.swift\")",
+      "Bash(sed -i '' 's/^final class AppSettingsTests: XCTestCase {/@MainActor\\\\nfinal class AppSettingsTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/AppSettingsTests.swift\")"
     ]
   }
 }

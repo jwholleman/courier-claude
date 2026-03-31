@@ -1,6 +1,7 @@
 import XCTest
 @testable import Courier
 
+@MainActor
 final class DispatchChainTests: XCTestCase {
 
     // MARK: - URL construction

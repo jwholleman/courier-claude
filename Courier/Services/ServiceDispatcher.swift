@@ -9,7 +9,7 @@ final class ServiceDispatcher {
 
     private let registry: ServiceRegistry
 
-    init(registry: ServiceRegistry = ServiceRegistry()) {
+    init(registry: ServiceRegistry) {
         self.registry = registry
     }
 

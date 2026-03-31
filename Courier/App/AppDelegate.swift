@@ -5,10 +5,12 @@ extension KeyboardShortcuts.Name {
     static let toggleCourier = Self("toggleCourier")
 }
 
+@MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // Strong references — keep window controller and panel alive for app lifetime.
     var windowController: LauncherWindowController?
+    private var wizardController: SetupWizardWindowController?
 
     private let hotKeyProvider: HotKeyProvider = KeyboardShortcutsProvider()
     private var activityToken: NSObjectProtocol?
@@ -43,6 +45,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Request notification authorization — required for toasts to appear
         NotificationHelper.requestAuthorization()
 
+        // Sync login item in case system state was lost (e.g. app replaced in /Applications)
+        let settings = windowController?.viewModel.settings
+        LoginItemManager.shared.syncIfNeeded(userIntent: settings?.launchAtLogin ?? false)
+
+        // Show setup wizard on first launch
+        if !(settings?.hasCompletedSetup ?? false) {
+            showSetupWizard()
+        }
+
         // Accessibility permission check — prompt on first launch
         AccessibilityPermission.requestIfNeeded()
 
@@ -72,6 +83,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func openSettings() {
         // Settings window implemented in Phase 6
+    }
+
+    func showSetupWizard() {
+        let settings = windowController?.viewModel.settings ?? AppSettings()
+        if wizardController == nil {
+            wizardController = SetupWizardWindowController(settings: settings)
+        }
+        wizardController?.show()
     }
 
     // MARK: - Permission Monitoring

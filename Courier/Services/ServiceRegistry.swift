@@ -1,9 +1,11 @@
 import Foundation
 
 /// Central registry of all service providers.
+@MainActor
 final class ServiceRegistry {
 
     private let providers: [ServiceType: ServiceProvider]
+    var settings: AppSettings?
 
     init() {
         var map: [ServiceType: ServiceProvider] = [:]
@@ -61,9 +63,22 @@ final class ServiceRegistry {
     }
 
     /// Returns the service type for an exact-match slash command (case-insensitive).
+    /// Checks user-defined custom commands first, then built-in defaults.
     /// "/c" does NOT match "/cl" — matching is exact, not prefix.
     func serviceType(forSlashCommand command: String) -> ServiceType? {
-        let lower = command.lowercased()
+        let lower = command.lowercased(with: Locale(identifier: "en"))
+
+        // Check custom commands first
+        if let custom = settings?.customSlashCommands {
+            for (rawValue, cmds) in custom {
+                if cmds.contains(where: { $0.lowercased(with: Locale(identifier: "en")) == lower }),
+                   let service = ServiceType(rawValue: rawValue) {
+                    return service
+                }
+            }
+        }
+
+        // Fall back to defaults
         return SlashCommand.all.first(where: { $0.command == lower })?.serviceType
     }
 }

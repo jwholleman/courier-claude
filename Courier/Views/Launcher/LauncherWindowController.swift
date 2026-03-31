@@ -30,7 +30,9 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
         viewModel = LauncherViewModel()
         viewModel.settings = settings
         viewModel.selectedService = settings.effectiveSelectedService
-        dispatcher = ServiceDispatcher()
+        let registry = ServiceRegistry()
+        registry.settings = settings
+        dispatcher = ServiceDispatcher(registry: registry)
 
         // Create stub root view pre-super.init; closures capturing self are set post-super.init
         let rootView = LauncherView(viewModel: viewModel, onSubmit: nil, onDismiss: nil)

@@ -28,6 +28,16 @@ final class AppSettings {
         didSet { save() }
     }
 
+    var hasCompletedSetup: Bool {
+        didSet { save() }
+    }
+
+    /// User-overridden slash commands keyed by ServiceType.rawValue.
+    /// nil entry = use defaults from SlashCommand.all.
+    var customSlashCommands: [String: [String]] {
+        didSet { save() }
+    }
+
     // MARK: - Derived
 
     /// The effective selected service — falls back to first enabled if last-used is disabled.
@@ -57,6 +67,8 @@ final class AppSettings {
 
         hotKeyShortcut = Self.defaults.string(forKey: "hotKeyShortcut")
         launchAtLogin = Self.defaults.bool(forKey: "launchAtLogin")
+        hasCompletedSetup = Self.defaults.bool(forKey: "hasCompletedSetup")
+        customSlashCommands = (Self.defaults.dictionary(forKey: "customSlashCommands") as? [String: [String]]) ?? [:]
     }
 
     // MARK: - Persistence
@@ -66,6 +78,8 @@ final class AppSettings {
         Self.defaults.set(disabledServices.map(\.rawValue), forKey: "disabledServices")
         Self.defaults.set(hotKeyShortcut, forKey: "hotKeyShortcut")
         Self.defaults.set(launchAtLogin, forKey: "launchAtLogin")
+        Self.defaults.set(hasCompletedSetup, forKey: "hasCompletedSetup")
+        Self.defaults.set(customSlashCommands, forKey: "customSlashCommands")
         Self.defaults.set(Self.currentVersion, forKey: "settingsVersion")
     }
 

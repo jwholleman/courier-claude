@@ -11,7 +11,8 @@
       "Bash(sed -i '' 's/^final class SlashCommandTests: XCTestCase {/@MainActor\\\\nfinal class SlashCommandTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/SlashCommandTests.swift\")",
       "Bash(sed -i '' 's/^final class ServiceRegistryTests: XCTestCase {/@MainActor\\\\nfinal class ServiceRegistryTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/ServiceRegistryTests.swift\")",
       "Bash(sed -i '' 's/^final class DispatchChainTests: XCTestCase {/@MainActor\\\\nfinal class DispatchChainTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/DispatchChainTests.swift\")",
-      "Bash(sed -i '' 's/^final class AppSettingsTests: XCTestCase {/@MainActor\\\\nfinal class AppSettingsTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/AppSettingsTests.swift\")"
+      "Bash(sed -i '' 's/^final class AppSettingsTests: XCTestCase {/@MainActor\\\\nfinal class AppSettingsTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/AppSettingsTests.swift\")",
+      "Bash(defaults delete:*)"
     ]
   }
 }

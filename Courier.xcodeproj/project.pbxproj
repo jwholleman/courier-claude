@@ -37,6 +37,7 @@
 		B0A08F14BA36162D30CE70A6 /* AppSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E854495BD67BDD665F5A8 /* AppSettingsTests.swift */; };
 		B0FBF1AC261F72F936E8F9F2 /* ServiceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B8115768923F6E0A57CEE /* ServiceRegistry.swift */; };
 		B59EAF2463BE3CDA9EEC1853 /* HotKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */; };
+		B6142CF629F6C1379B9BF43C /* SlashCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A95CC58CC3D54AE3E66D8FD /* SlashCommandTests.swift */; };
 		B9084402F16872A4AB4A72E1 /* AppleScriptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013DCAEE921EF01A35C316EF /* AppleScriptHelper.swift */; };
 		B913B345FC157125235451C8 /* ServiceRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BD37508C8391419F6F2196 /* ServiceRegistryTests.swift */; };
 		C07C15B449FFC0088BA9D165 /* ServiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615498E1897DEFA1446B2C9D /* ServiceButton.swift */; };
@@ -57,6 +58,7 @@
 		024E854495BD67BDD665F5A8 /* AppSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsTests.swift; sourceTree = "<group>"; };
 		0C1919C1D565FF29394C6278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A4CF1B696C1CB7B47451B1A /* CourierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierApp.swift; sourceTree = "<group>"; };
+		3A95CC58CC3D54AE3E66D8FD /* SlashCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlashCommandTests.swift; sourceTree = "<group>"; };
 		48345AD7CBBC3F15D92CE9AB /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
 		57C8EC6E55DCC0D75C42AA72 /* Courier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Courier.entitlements; sourceTree = "<group>"; };
 		5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				024E854495BD67BDD665F5A8 /* AppSettingsTests.swift */,
 				C7AA0F043469499A6179DEA8 /* DispatchChainTests.swift */,
 				E8BD37508C8391419F6F2196 /* ServiceRegistryTests.swift */,
+				3A95CC58CC3D54AE3E66D8FD /* SlashCommandTests.swift */,
 				C333C9A158A37FBD974CFA0B /* URLEncodingTests.swift */,
 			);
 			path = CourierTests;
@@ -357,6 +360,7 @@
 				B913B345FC157125235451C8 /* ServiceRegistryTests.swift in Sources */,
 				D7B0F28A10FA332656C8B6E7 /* ServiceType.swift in Sources */,
 				08FFD206CDDE79EA0FC0A6D6 /* SlashCommand.swift in Sources */,
+				B6142CF629F6C1379B9BF43C /* SlashCommandTests.swift in Sources */,
 				0DB904F6ECD5D5F908CC29FF /* URLEncodingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -24,7 +24,9 @@ struct ServiceBar: View {
                 ForEach(llmServices) { service in
                     ServiceButton(
                         service: service,
-                        isSelected: viewModel.selectedService == service
+                        isSelected: viewModel.selectedService == service,
+                        isSlashMode: viewModel.isSlashMode,
+                        slashPrefix: viewModel.slashPrefix
                     ) {
                         viewModel.selectService(service)
                     }
@@ -44,7 +46,9 @@ struct ServiceBar: View {
                 ForEach(searchServices) { service in
                     ServiceButton(
                         service: service,
-                        isSelected: viewModel.selectedService == service
+                        isSelected: viewModel.selectedService == service,
+                        isSlashMode: viewModel.isSlashMode,
+                        slashPrefix: viewModel.slashPrefix
                     ) {
                         viewModel.selectService(service)
                     }

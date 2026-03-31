@@ -75,9 +75,12 @@ struct QueryInputView: NSViewRepresentable {
 
         func textDidChange(_ notification: Notification) {
             guard !isUpdatingFromSwiftUI, let textView else { return }
-            parent.text = textView.string
+            let newText = textView.string
+            parent.text = newText
             textView.needsDisplay = true  // Toggle placeholder visibility
             recalculateHeightIfNeeded(textView)
+            parent.viewModel?.processTextChange(newText: newText, wasPaste: isPasting)
+            isPasting = false
         }
 
         private var lastLineCount: Int = 0

@@ -31,6 +31,37 @@ final class LauncherViewModel {
         }
     }
 
+    /// Called by QueryInputView.Coordinator on every text change.
+    /// `wasPaste` suppresses slash command detection for pasted text.
+    func processTextChange(newText: String, wasPaste: Bool) {
+        // Slash mode only triggers on typed "/" as the very first character
+        guard !wasPaste, newText.hasPrefix("/") else {
+            isSlashMode = false
+            slashPrefix = ""
+            return
+        }
+
+        // Check if a space was typed — try to resolve the slash command
+        if newText.contains(" ") {
+            let candidate = String(newText.prefix(while: { $0 != " " }))
+                .lowercased(with: Locale(identifier: "en"))
+            if let match = SlashCommand.all.first(where: { $0.command == candidate }) {
+                selectService(match.serviceType)
+                queryText = ""
+                isSlashMode = false
+                slashPrefix = ""
+            } else {
+                // No match — exit slash mode but keep text as-is
+                isSlashMode = false
+                slashPrefix = ""
+            }
+        } else {
+            // Still typing the command — update prefix for overlay highlighting
+            isSlashMode = true
+            slashPrefix = newText.lowercased(with: Locale(identifier: "en"))
+        }
+    }
+
     func selectService(_ service: ServiceType) {
         selectedService = service
         settings?.lastUsedService = service

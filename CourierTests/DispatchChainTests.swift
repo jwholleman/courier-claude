@@ -65,8 +65,8 @@ final class DispatchChainTests: XCTestCase {
     // MARK: - ServiceType configuration
 
     func testNewConversationKeystroke() {
-        XCTAssertEqual(ServiceType.claude.newConversationKeystroke, .cmdN)
-        XCTAssertEqual(ServiceType.chatgpt.newConversationKeystroke, .cmdN)
+        XCTAssertEqual(ServiceType.claude.newConversationKeystroke, .shiftCmdO)  // Verified: Shift+Cmd+O
+        XCTAssertEqual(ServiceType.chatgpt.newConversationKeystroke, .none)      // Opens to new chat automatically
         XCTAssertEqual(ServiceType.perplexity.newConversationKeystroke, .none)
     }
 

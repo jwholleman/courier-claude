@@ -8,6 +8,8 @@ final class LLMService: ServiceProvider {
     let defaultSlashCommands: [String]
     let appendsQueryToURL: Bool
 
+    weak var settings: AppSettings?
+
     init(
         type: ServiceType,
         browserURL: String,
@@ -99,11 +101,14 @@ final class LLMService: ServiceProvider {
     // MARK: - Native app dispatch (AppleScript)
 
     private func dispatchNative(query: String, bundleID: String, appURL: URL) async throws {
+        // Resolve keystroke on MainActor before entering background dispatch
+        let keystroke = await MainActor.run { type.effectiveKeystroke(settings: settings) }
         try await AppleScriptHelper.dispatch(
             query: query,
             bundleID: bundleID,
             appURL: appURL,
             serviceType: type,
+            keystroke: keystroke,
             browserFallback: { [weak self] in
                 guard let self else { return }
                 try await self.dispatchBrowser(query: query)

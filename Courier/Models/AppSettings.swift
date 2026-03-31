@@ -38,6 +38,11 @@ final class AppSettings {
         didSet { save() }
     }
 
+    /// User-overridden keystroke per LLM service. Key = ServiceType.rawValue, value = LLMKeystroke rawValue string.
+    var keystrokeOverrides: [String: String] {
+        didSet { save() }
+    }
+
     // MARK: - Derived
 
     /// The effective selected service — falls back to first enabled if last-used is disabled.
@@ -69,6 +74,7 @@ final class AppSettings {
         launchAtLogin = Self.defaults.bool(forKey: "launchAtLogin")
         hasCompletedSetup = Self.defaults.bool(forKey: "hasCompletedSetup")
         customSlashCommands = (Self.defaults.dictionary(forKey: "customSlashCommands") as? [String: [String]]) ?? [:]
+        keystrokeOverrides = (Self.defaults.dictionary(forKey: "keystrokeOverrides") as? [String: String]) ?? [:]
     }
 
     // MARK: - Persistence
@@ -80,6 +86,7 @@ final class AppSettings {
         Self.defaults.set(launchAtLogin, forKey: "launchAtLogin")
         Self.defaults.set(hasCompletedSetup, forKey: "hasCompletedSetup")
         Self.defaults.set(customSlashCommands, forKey: "customSlashCommands")
+        Self.defaults.set(keystrokeOverrides, forKey: "keystrokeOverrides")
         Self.defaults.set(Self.currentVersion, forKey: "settingsVersion")
     }
 

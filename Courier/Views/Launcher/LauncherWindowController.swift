@@ -82,6 +82,14 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
 
         // Start observing contentHeight so panel resizes with content
         observeContentHeight()
+
+        // Re-position panel when display configuration changes
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(screenParametersChanged),
+            name: NSApplication.didChangeScreenParametersNotification,
+            object: nil
+        )
     }
 
     deinit {
@@ -91,6 +99,10 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
     }
 
     // MARK: - Public
+
+    func checkCrashRecovery() {
+        dispatcher.checkCrashRecovery()
+    }
 
     func toggle() {
         switch state {
@@ -194,6 +206,10 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
         let x = screenFrame.midX - panelSize.width / 2
         let y = screenFrame.maxY - (screen.frame.height * 0.25)
         panel.setFrameTopLeftPoint(NSPoint(x: x, y: y))
+    }
+
+    @objc private func screenParametersChanged() {
+        if panel.isVisible { positionPanel() }
     }
 
     private func drainPendingToggle() {

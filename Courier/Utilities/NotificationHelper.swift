@@ -1,54 +1,59 @@
 import AppKit
 import UserNotifications
 
-/// Delivers in-app toast messages and system-level notifications.
+/// Handles in-app toasts (ToastPanel) and system notifications (UNUserNotificationCenter).
 enum NotificationHelper {
 
-    // MARK: - Toast (in-process, menu-bar popover style)
+    // MARK: - Shared toast panel (pre-created, reused)
 
-    /// Shows a brief toast via NSUserNotificationCenter-style alert.
-    /// Falls back gracefully if notification permission is not granted.
+    static let toastPanel = ToastPanel()
+
+    // MARK: - Toast (transient, no permission required)
+
     @MainActor
     static func showToast(_ message: String) async {
-        let content = UNMutableNotificationContent()
-        content.title = "Courier"
-        content.body = message
-        content.sound = nil
-
-        let request = UNNotificationRequest(
-            identifier: UUID().uuidString,
-            content: content,
-            trigger: nil
-        )
-
-        let center = UNUserNotificationCenter.current()
-        try? await center.add(request)
+        let screen = NSScreen.main
+        toastPanel.show(message, on: screen)
     }
 
-    // MARK: - Permission prompts
+    // MARK: - System notifications (persists in Notification Center, requires permission)
 
-    /// Posts a notification prompting the user to restore Accessibility access.
     @MainActor
     static func postAccessibilityRevoked() async {
-        await showToast("Courier needs Accessibility access. Open System Settings → Privacy & Security → Accessibility.")
+        await postSystemNotification(
+            title: "Accessibility Access Required",
+            body: "Courier needs Accessibility access to paste queries. Click to open System Settings."
+        )
     }
 
-    /// Posts a notification prompting the user to grant Automation access for a specific app.
     @MainActor
     static func postAutomationDenied(appName: String) async {
-        await showToast("Courier needs permission to control \(appName). Open System Settings → Privacy & Security → Automation.")
+        await postSystemNotification(
+            title: "Automation Permission Required",
+            body: "Courier needs permission to control \(appName). Open System Settings → Privacy & Security → Automation."
+        )
     }
 
-    /// Posts a notification warning about Secure Input blocking the hotkey.
     @MainActor
     static func postSecureInputActive() async {
-        await showToast("A secure input field may be blocking Courier's hotkey. Try dismissing password prompts first.")
+        await showToast("A secure input field may be blocking Courier's hotkey.")
     }
 
-    // MARK: - Notification authorization
+    // MARK: - Authorization
 
-    /// Requests authorization to show notifications (call once at launch).
     static func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { _, _ in }
+    }
+
+    // MARK: - Private
+
+    @MainActor
+    private static func postSystemNotification(title: String, body: String) async {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = nil
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
+        try? await UNUserNotificationCenter.current().add(request)
     }
 }

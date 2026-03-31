@@ -5,7 +5,14 @@ import Foundation
 final class ServiceRegistry {
 
     private let providers: [ServiceType: ServiceProvider]
-    var settings: AppSettings?
+    var settings: AppSettings? {
+        didSet {
+            // Propagate settings to all LLMService providers for keystroke overrides
+            for provider in providers.values {
+                (provider as? LLMService)?.settings = settings
+            }
+        }
+    }
 
     init() {
         var map: [ServiceType: ServiceProvider] = [:]

@@ -11,6 +11,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // Strong references — keep window controller and panel alive for app lifetime.
     var windowController: LauncherWindowController?
     private var wizardController: SetupWizardWindowController?
+    private var settingsController: SettingsWindowController?
 
     private let hotKeyProvider: HotKeyProvider = KeyboardShortcutsProvider()
     private var activityToken: NSObjectProtocol?
@@ -34,6 +35,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Create and retain the window controller (panel + view model pre-created at launch)
         windowController = LauncherWindowController()
+
+        // Check if previous session crashed mid-dispatch and inform user
+        windowController?.checkCrashRecovery()
 
         // Register global hotkey via provider
         hotKeyProvider.register { [weak self] in
@@ -82,7 +86,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func openSettings() {
-        // Settings window implemented in Phase 6
+        let settings = windowController?.viewModel.settings ?? AppSettings()
+        if settingsController == nil {
+            settingsController = SettingsWindowController(settings: settings)
+        }
+        settingsController?.show()
     }
 
     func showSetupWizard() {

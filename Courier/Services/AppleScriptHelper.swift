@@ -21,9 +21,11 @@ enum AppleScriptHelper {
         bundleID: String,
         appURL: URL,
         serviceType: ServiceType,
+        keystroke: LLMKeystroke? = nil,
         browserFallback: @escaping () async throws -> Void
     ) async throws {
         print("[Courier] Attempting native dispatch to \(bundleID)")
+        let resolvedKeystroke = keystroke ?? serviceType.newConversationKeystroke
 
         do {
             try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
@@ -33,7 +35,8 @@ enum AppleScriptHelper {
                             query: query,
                             bundleID: bundleID,
                             appURL: appURL,
-                            serviceType: serviceType
+                            serviceType: serviceType,
+                            keystroke: resolvedKeystroke
                         )
                         continuation.resume()
                     } catch {
@@ -111,7 +114,8 @@ enum AppleScriptHelper {
         query: String,
         bundleID: String,
         appURL: URL,
-        serviceType: ServiceType
+        serviceType: ServiceType,
+        keystroke: LLMKeystroke
     ) throws {
         let pasteboard = NSPasteboard.general
 
@@ -141,7 +145,6 @@ enum AppleScriptHelper {
 
         // Step 5 — Send keystrokes
         let appName = serviceType.displayName
-        let keystroke = serviceType.newConversationKeystroke
 
         if keystroke != .none {
             let newChatScript = keystrokeScript(key: keystroke.key, modifiers: keystroke.modifiers, appName: appName)

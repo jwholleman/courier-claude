@@ -53,7 +53,7 @@ struct LauncherView: View {
             // Service bar + Deliver button
             ServiceBar(
                 viewModel: viewModel,
-                disabledServices: [],  // Wired to AppSettings in Task 2.3 follow-up
+                disabledServices: viewModel.settings?.disabledServices ?? [],
                 onSubmit: { onSubmit?() }
             )
         }

@@ -40,13 +40,29 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
     // MARK: - Dispatch configuration
 
     /// Keystroke to open a new conversation before pasting.
-    var newConversationKeystroke: LLMKeystroke {
+    /// Default keystroke — can be overridden per-user in Settings.
+    var defaultNewConversationKeystroke: LLMKeystroke {
         switch self {
-        case .claude:     return .shiftCmdO   // Verified: Shift+Cmd+O opens new conversation
-        case .chatgpt:    return .none         // ChatGPT opens to new conversation automatically
+        case .claude:     return .shiftCmdO
+        case .chatgpt:    return .none
         case .perplexity: return .none
         default:          return .none
         }
+    }
+
+    var newConversationKeystroke: LLMKeystroke {
+        defaultNewConversationKeystroke
+    }
+
+    /// Returns the effective keystroke, respecting user overrides in settings.
+    /// Must be called from @MainActor context (settings is @MainActor).
+    @MainActor
+    func effectiveKeystroke(settings: AppSettings?) -> LLMKeystroke {
+        guard let raw = settings?.keystrokeOverrides[rawValue],
+              let override = LLMKeystroke(rawValue: raw) else {
+            return defaultNewConversationKeystroke
+        }
+        return override
     }
 
     /// How long to wait (seconds) after pasting before sending Return to submit.
@@ -69,11 +85,20 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
 
 // MARK: - LLMKeystroke
 
-enum LLMKeystroke: Equatable {
-    case cmdN        // Cmd+N
-    case cmdL        // Cmd+L
-    case shiftCmdO   // Shift+Cmd+O (Claude)
-    case none
+enum LLMKeystroke: String, Equatable, CaseIterable {
+    case cmdN        = "cmdN"
+    case cmdL        = "cmdL"
+    case shiftCmdO   = "shiftCmdO"
+    case none        = "none"
+
+    var displayName: String {
+        switch self {
+        case .cmdN:      return "Cmd+N (New conversation)"
+        case .cmdL:      return "Cmd+L (Focus input)"
+        case .shiftCmdO: return "Shift+Cmd+O (New conversation)"
+        case .none:      return "None (Just paste)"
+        }
+    }
 
     var key: String {
         switch self {

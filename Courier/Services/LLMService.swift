@@ -68,7 +68,7 @@ final class LLMService: ServiceProvider {
                 let savedClipboardCopy = savedClipboard
                 Task.detached {
                     // Wait for page to load
-                    try? await Task.sleep(nanoseconds: 4_000_000_000)
+                    try? await Task.sleep(nanoseconds: 900_000_000)
 
                     // Re-activate the browser by app URL — no polling, no race condition
                     let config = NSWorkspace.OpenConfiguration()

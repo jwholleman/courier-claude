@@ -65,6 +65,9 @@ final class LLMService: ServiceProvider {
             pasteboard.setString(query, forType: .string)
 
             if opened, let browserAppURL {
+                if savedClipboard != nil {
+                    ServiceDispatcher.markClipboardRestorePending()
+                }
                 let savedClipboardCopy = savedClipboard
                 Task.detached {
                     // Wait for page to load
@@ -85,13 +88,8 @@ final class LLMService: ServiceProvider {
                     // Restore clipboard after paste
                     try? await Task.sleep(nanoseconds: 500_000_000)
                     if let saved = savedClipboardCopy {
-                        pasteboard.clearContents()
-                        let newItems = saved.map { pairs -> NSPasteboardItem in
-                            let item = NSPasteboardItem()
-                            for (type, data) in pairs { item.setData(data, forType: type) }
-                            return item
-                        }
-                        if !newItems.isEmpty { pasteboard.writeObjects(newItems) }
+                        AppleScriptHelper.restoreClipboardContents(pasteboard, items: saved)
+                        ServiceDispatcher.clearClipboardRestorePending()
                     }
                 }
             } else {

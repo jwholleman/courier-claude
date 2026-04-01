@@ -76,4 +76,34 @@ final class DispatchChainTests: XCTestCase {
             XCTAssertGreaterThan(service.clipboardRestoreDelay, 0, "Delay for \(service.rawValue) must be positive")
         }
     }
+
+    // MARK: - Clipboard recovery
+
+    func testClipboardSaveRestoreRoundTrip() {
+        let pasteboard = NSPasteboard.general
+        let original = "Original clipboard \(UUID().uuidString)"
+        let replacement = "Replacement clipboard \(UUID().uuidString)"
+
+        pasteboard.clearContents()
+        pasteboard.setString(original, forType: .string)
+
+        let saved = AppleScriptHelper.saveClipboardContents(pasteboard)
+        XCTAssertNotNil(saved)
+
+        pasteboard.clearContents()
+        pasteboard.setString(replacement, forType: .string)
+        AppleScriptHelper.restoreClipboardContents(pasteboard, items: saved ?? [])
+
+        XCTAssertEqual(pasteboard.string(forType: .string), original)
+    }
+
+    func testCrashRecoveryFlagClearsAfterCheck() {
+        ServiceDispatcher.markClipboardRestorePending()
+        XCTAssertTrue(UserDefaults.standard.bool(forKey: "pendingClipboardRestore"))
+
+        let dispatcher = ServiceDispatcher(registry: ServiceRegistry())
+        dispatcher.checkCrashRecovery()
+
+        XCTAssertFalse(UserDefaults.standard.bool(forKey: "pendingClipboardRestore"))
+    }
 }

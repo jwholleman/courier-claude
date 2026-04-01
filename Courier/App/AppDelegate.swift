@@ -16,6 +16,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let hotKeyProvider: HotKeyProvider = KeyboardShortcutsProvider()
     private var activityToken: NSObjectProtocol?
     private var accessibilityTimer: Timer?
+    private var lastAccessibilityTrusted = AccessibilityPermission.isTrusted
+    private var lastSecureInputState = AccessibilityPermission.isSecureInputActive
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Single-instance guard
@@ -74,6 +76,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             name: NSWorkspace.didWakeNotification,
             object: nil
         )
+
+        checkPermissions(notifyOnChangeOnly: false)
     }
 
     func applicationWillTerminate(_ notification: Notification) {
@@ -108,20 +112,44 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func startMonitoringTimer() {
         accessibilityTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
-            self?.checkPermissions()
+            Task { @MainActor in
+                self?.checkPermissions()
+            }
         }
     }
 
     @objc private func didWake() {
-        checkPermissions()
+        Task { @MainActor in
+            reRegisterHotKeyIfNeeded()
+            checkPermissions(notifyOnChangeOnly: false)
+        }
     }
 
-    private func checkPermissions() {
-        if !AccessibilityPermission.isTrusted {
+    private func checkPermissions(notifyOnChangeOnly: Bool = true) {
+        let isTrusted = AccessibilityPermission.isTrusted
+        let isSecureInputActive = AccessibilityPermission.isSecureInputActive
+
+        if !isTrusted && (!notifyOnChangeOnly || lastAccessibilityTrusted != isTrusted) {
             Task { @MainActor in await NotificationHelper.postAccessibilityRevoked() }
         }
-        if AccessibilityPermission.isSecureInputActive {
+
+        if isSecureInputActive && (!notifyOnChangeOnly || lastSecureInputState != isSecureInputActive) {
             Task { @MainActor in await NotificationHelper.postSecureInputActive() }
+        }
+
+        lastAccessibilityTrusted = isTrusted
+        lastSecureInputState = isSecureInputActive
+    }
+
+    private func reRegisterHotKeyIfNeeded() {
+        if let shortcut = KeyboardShortcuts.getShortcut(for: .toggleCourier) {
+            KeyboardShortcuts.setShortcut(shortcut, for: .toggleCourier)
+        } else {
+            hotKeyProvider.register { [weak self] in
+                Task { @MainActor in
+                    self?.windowController?.toggle()
+                }
+            }
         }
     }
 }

@@ -9,11 +9,11 @@ final class ServiceDispatcher {
 
     private let registry: ServiceRegistry
 
+    nonisolated private static let crashRecoveryKey = "pendingClipboardRestore"
+
     init(registry: ServiceRegistry) {
         self.registry = registry
     }
-
-    private static let crashRecoveryKey = "pendingClipboardRestore"
 
     /// Call at launch — if a previous dispatch crashed mid-restore, inform the user.
     func checkCrashRecovery() {
@@ -26,13 +26,19 @@ final class ServiceDispatcher {
     /// Dispatches `query` to the provider for `serviceType`.
     func dispatch(query: String, serviceType: ServiceType) async throws {
         guard let provider = registry.provider(for: serviceType) else { return }
-        UserDefaults.standard.set(true, forKey: Self.crashRecoveryKey)
         try await provider.dispatch(query: query)
-        UserDefaults.standard.removeObject(forKey: Self.crashRecoveryKey)
     }
 
     /// Returns the service type for an exact-match slash command, if any.
     func serviceType(forSlashCommand command: String) -> ServiceType? {
         registry.serviceType(forSlashCommand: command)
+    }
+
+    nonisolated static func markClipboardRestorePending() {
+        UserDefaults.standard.set(true, forKey: crashRecoveryKey)
+    }
+
+    nonisolated static func clearClipboardRestorePending() {
+        UserDefaults.standard.removeObject(forKey: crashRecoveryKey)
     }
 }

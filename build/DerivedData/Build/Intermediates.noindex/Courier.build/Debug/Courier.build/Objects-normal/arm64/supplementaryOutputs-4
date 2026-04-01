@@ -1,0 +1,30 @@
+{
+  "/Users/John Holleman/repos/Courier/courier-claude/Courier/Utilities/LoginItemManager.swift" : {
+    "const-values" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LoginItemManager.swiftconstvalues",
+    "dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LoginItemManager.d",
+    "diagnostics" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LoginItemManager.dia",
+    "object" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LoginItemManager.o",
+    "swift-dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LoginItemManager.swiftdeps"
+  },
+  "/Users/John Holleman/repos/Courier/courier-claude/Courier/Views/Launcher/LauncherView.swift" : {
+    "const-values" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherView.swiftconstvalues",
+    "dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherView.d",
+    "diagnostics" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherView.dia",
+    "object" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherView.o",
+    "swift-dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherView.swiftdeps"
+  },
+  "/Users/John Holleman/repos/Courier/courier-claude/Courier/Views/Launcher/LauncherViewModel.swift" : {
+    "const-values" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherViewModel.swiftconstvalues",
+    "dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherViewModel.d",
+    "diagnostics" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherViewModel.dia",
+    "object" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherViewModel.o",
+    "swift-dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherViewModel.swiftdeps"
+  },
+  "/Users/John Holleman/repos/Courier/courier-claude/Courier/Views/Launcher/LauncherWindowController.swift" : {
+    "const-values" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherWindowController.swiftconstvalues",
+    "dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherWindowController.d",
+    "diagnostics" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherWindowController.dia",
+    "object" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherWindowController.o",
+    "swift-dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherWindowController.swiftdeps"
+  }
+}

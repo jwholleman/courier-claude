@@ -1,0 +1,30 @@
+{
+  "/Users/John Holleman/repos/Courier/courier-claude/Courier/Services/LLMService.swift" : {
+    "const-values" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LLMService.swiftconstvalues",
+    "dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LLMService.d",
+    "diagnostics" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LLMService.dia",
+    "object" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LLMService.o",
+    "swift-dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LLMService.swiftdeps"
+  },
+  "/Users/John Holleman/repos/Courier/courier-claude/Courier/Views/Launcher/LauncherPanel.swift" : {
+    "const-values" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherPanel.swiftconstvalues",
+    "dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherPanel.d",
+    "diagnostics" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherPanel.dia",
+    "object" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherPanel.o",
+    "swift-dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LauncherPanel.swiftdeps"
+  },
+  "/Users/John Holleman/repos/Courier/courier-claude/Courier/Views/Setup/HotkeySetupStep.swift" : {
+    "const-values" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/HotkeySetupStep.swiftconstvalues",
+    "dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/HotkeySetupStep.d",
+    "diagnostics" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/HotkeySetupStep.dia",
+    "object" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/HotkeySetupStep.o",
+    "swift-dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/HotkeySetupStep.swiftdeps"
+  },
+  "/Users/John Holleman/repos/Courier/courier-claude/Courier/Views/Setup/LLMSelectionStep.swift" : {
+    "const-values" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LLMSelectionStep.swiftconstvalues",
+    "dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LLMSelectionStep.d",
+    "diagnostics" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LLMSelectionStep.dia",
+    "object" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LLMSelectionStep.o",
+    "swift-dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/LLMSelectionStep.swiftdeps"
+  }
+}

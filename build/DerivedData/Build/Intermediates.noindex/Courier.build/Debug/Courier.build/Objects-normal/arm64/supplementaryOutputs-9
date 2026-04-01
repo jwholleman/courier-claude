@@ -1,0 +1,23 @@
+{
+  "/Users/John Holleman/repos/Courier/courier-claude/Courier/Models/SlashCommand.swift" : {
+    "const-values" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SlashCommand.swiftconstvalues",
+    "dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SlashCommand.d",
+    "diagnostics" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SlashCommand.dia",
+    "object" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SlashCommand.o",
+    "swift-dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SlashCommand.swiftdeps"
+  },
+  "/Users/John Holleman/repos/Courier/courier-claude/Courier/Views/Setup/SetupWizardWindowController.swift" : {
+    "const-values" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SetupWizardWindowController.swiftconstvalues",
+    "dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SetupWizardWindowController.d",
+    "diagnostics" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SetupWizardWindowController.dia",
+    "object" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SetupWizardWindowController.o",
+    "swift-dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SetupWizardWindowController.swiftdeps"
+  },
+  "/Users/John Holleman/repos/Courier/courier-claude/Courier/Views/Setup/SlashCommandStep.swift" : {
+    "const-values" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SlashCommandStep.swiftconstvalues",
+    "dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SlashCommandStep.d",
+    "diagnostics" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SlashCommandStep.dia",
+    "object" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SlashCommandStep.o",
+    "swift-dependencies" : "/Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Intermediates.noindex/Courier.build/Debug/Courier.build/Objects-normal/arm64/SlashCommandStep.swiftdeps"
+  }
+}

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>colors</key>
+	<array/>
+	<key>images</key>
+	<array>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameMenuBarIcon</string>
+			<key>relativePath</key>
+			<string>./MenuBarIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>menuBarIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameChatgpt</string>
+			<key>relativePath</key>
+			<string>./ServiceIcons/chatgpt.imageset</string>
+			<key>swiftSymbol</key>
+			<string>chatgpt</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameClaude</string>
+			<key>relativePath</key>
+			<string>./ServiceIcons/claude.imageset</string>
+			<key>swiftSymbol</key>
+			<string>claude</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameDuckduckgo</string>
+			<key>relativePath</key>
+			<string>./ServiceIcons/duckduckgo.imageset</string>
+			<key>swiftSymbol</key>
+			<string>duckduckgo</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameGemini</string>
+			<key>relativePath</key>
+			<string>./ServiceIcons/gemini.imageset</string>
+			<key>swiftSymbol</key>
+			<string>gemini</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameGoogle</string>
+			<key>relativePath</key>
+			<string>./ServiceIcons/google.imageset</string>
+			<key>swiftSymbol</key>
+			<string>google</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameKagi</string>
+			<key>relativePath</key>
+			<string>./ServiceIcons/kagi.imageset</string>
+			<key>swiftSymbol</key>
+			<string>kagi</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePerplexity</string>
+			<key>relativePath</key>
+			<string>./ServiceIcons/perplexity.imageset</string>
+			<key>swiftSymbol</key>
+			<string>perplexity</string>
+		</dict>
+	</array>
+	<key>symbols</key>
+	<array/>
+</dict>
+</plist>

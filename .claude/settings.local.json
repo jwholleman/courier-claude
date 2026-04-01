@@ -12,7 +12,11 @@
       "Bash(sed -i '' 's/^final class ServiceRegistryTests: XCTestCase {/@MainActor\\\\nfinal class ServiceRegistryTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/ServiceRegistryTests.swift\")",
       "Bash(sed -i '' 's/^final class DispatchChainTests: XCTestCase {/@MainActor\\\\nfinal class DispatchChainTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/DispatchChainTests.swift\")",
       "Bash(sed -i '' 's/^final class AppSettingsTests: XCTestCase {/@MainActor\\\\nfinal class AppSettingsTests: XCTestCase {/' \"/Users/John Holleman/repos/Courier/courier-claude/CourierTests/AppSettingsTests.swift\")",
-      "Bash(defaults delete:*)"
+      "Bash(defaults delete:*)",
+      "Bash(xcodebuild -scheme Courier -configuration Debug -derivedDataPath build/DerivedData build)",
+      "Bash(open /Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Products/Debug/Courier.app)",
+      "Bash(find ~/Library/Developer/Xcode/DerivedData -name Courier.app -path */Debug/*)",
+      "Bash(xcodebuild -scheme Courier -configuration Debug -destination 'platform=macOS' build)"
     ]
   }
 }

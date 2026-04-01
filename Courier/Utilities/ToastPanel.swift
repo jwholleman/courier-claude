@@ -68,11 +68,9 @@ final class ToastPanel: NSPanel {
         let width = max(200, min(400, textWidth + 48))
         setContentSize(NSSize(width: width, height: 40))
 
-        // Position top-center of screen, 80pt below menu bar
+        // Position top-center of screen, just below menu bar
         let targetScreen = screen ?? NSScreen.main ?? NSScreen.screens[0]
         let x = targetScreen.frame.midX - width / 2
-        let y = targetScreen.frame.maxY - targetScreen.frame.height + targetScreen.visibleFrame.maxY
-               + targetScreen.frame.height - targetScreen.visibleFrame.maxY - 80
         setFrameTopLeftPoint(NSPoint(x: x, y: targetScreen.visibleFrame.maxY - 12))
 
         let reduceMotion = NSWorkspace.shared.accessibilityDisplayShouldReduceMotion

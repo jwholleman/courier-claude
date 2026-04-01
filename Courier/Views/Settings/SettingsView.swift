@@ -6,6 +6,8 @@ struct SettingsView: View {
     @State private var launchAtLogin: Bool = false
     @State private var loginItemError: String? = nil
     @State private var showResetConfirm = false
+    /// Local text buffer for slash command fields — avoids cursor-reset on every keystroke.
+    @State private var slashCommandTexts: [String: String] = [:]
 
     private var chatGPTInstalled: Bool {
         NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.openai.chat") != nil
@@ -15,7 +17,7 @@ struct SettingsView: View {
         let shortcut = KeyboardShortcuts.getShortcut(for: .toggleCourier)
         let isOptionSpace = shortcut?.modifiers == .option && shortcut?.key == .space
         guard isOptionSpace && chatGPTInstalled else { return nil }
-        return "ChatGPT desktop also uses ⌥Space — pressing it will open both launchers. Change your hotkey above to avoid the conflict."
+        return "Global shortcuts can conflict with other apps. Change it here or in the conflicting app."
     }
 
     private let llmServices: [ServiceType] = [.claude, .chatgpt, .gemini, .perplexity]
@@ -27,68 +29,19 @@ struct SettingsView: View {
 
     var body: some View {
         TabView {
-            // MARK: - General tab
+            // MARK: - General tab (hotkey, startup, services)
             generalTab
                 .tabItem { Label("General", systemImage: "gear") }
-
-            // MARK: - Services tab
-            servicesTab
-                .tabItem { Label("Services", systemImage: "app.badge") }
-
-            // MARK: - Shortcuts tab
-            shortcutsTab
-                .tabItem { Label("Shortcuts", systemImage: "keyboard") }
 
             // MARK: - Advanced tab
             advancedTab
                 .tabItem { Label("Advanced", systemImage: "slider.horizontal.3") }
         }
-        .frame(width: 520, height: 400)
-        .onAppear { launchAtLogin = settings.launchAtLogin }
-    }
-
-    // MARK: - General tab
-
-    private var generalTab: some View {
-        Form {
-            Section("Hotkey") {
-                KeyboardShortcuts.Recorder("Launch Courier:", name: .toggleCourier)
-                Button("Reset to Default (⌥Space)") {
-                    KeyboardShortcuts.setShortcut(.init(.space, modifiers: .option), for: .toggleCourier)
-                }
-                .buttonStyle(.bordered)
-                if let warning = hotkeyConflictWarning {
-                    Label(warning, systemImage: "exclamationmark.triangle.fill")
-                        .font(.caption)
-                        .foregroundStyle(.orange)
-                }
-            }
-
-            Section("Startup") {
-                Toggle("Launch at Login", isOn: $launchAtLogin)
-                    .onChange(of: launchAtLogin) { _, newValue in
-                        settings.launchAtLogin = newValue
-                        do {
-                            if newValue { try LoginItemManager.shared.enable() }
-                            else        { try LoginItemManager.shared.disable() }
-                            loginItemError = nil
-                        } catch {
-                            loginItemError = error.localizedDescription
-                            launchAtLogin = !newValue
-                            settings.launchAtLogin = !newValue
-                        }
-                    }
-                if let err = loginItemError {
-                    Text(err).font(.caption).foregroundStyle(.red)
-                }
-            }
-
-            Section {
-                Button("Reset All Settings to Defaults…") { showResetConfirm = true }
-                    .foregroundStyle(.red)
-            }
+        .frame(width: 560, height: 500)
+        .onAppear {
+            launchAtLogin = settings.launchAtLogin
+            initSlashCommandTexts()
         }
-        .formStyle(.grouped)
         .confirmationDialog(
             "Reset all settings to defaults?",
             isPresented: $showResetConfirm,
@@ -101,67 +54,225 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Services tab
+    // MARK: - General tab (hotkey + startup + services combined)
 
-    private var servicesTab: some View {
-        Form {
-            Section("AI Assistants") {
-                ForEach(llmServices) { service in
-                    ServiceToggleRow(
-                        service: service,
-                        isEnabled: !settings.disabledServices.contains(service),
-                        canDisable: enabledCount > 1 || settings.disabledServices.contains(service)
-                    ) { enabled in
-                        if enabled { settings.disabledServices.remove(service) }
-                        else       { settings.disabledServices.insert(service) }
+    private var generalTab: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+
+                // Behavior (hotkey + launch at login)
+                sectionHeader("Behavior")
+                VStack(spacing: 1) {
+                    HStack {
+                        Text("Open on startup")
+                            .font(.body)
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Toggle("", isOn: $launchAtLogin)
+                                .toggleStyle(.switch)
+                                .labelsHidden()
+                                .onChange(of: launchAtLogin) { _, newValue in
+                                    settings.launchAtLogin = newValue
+                                    do {
+                                        if newValue { try LoginItemManager.shared.enable() }
+                                        else        { try LoginItemManager.shared.disable() }
+                                        loginItemError = nil
+                                    } catch {
+                                        loginItemError = error.localizedDescription
+                                        launchAtLogin = !newValue
+                                        settings.launchAtLogin = !newValue
+                                    }
+                                }
+                            if let err = loginItemError {
+                                Text(err).font(.caption).foregroundStyle(.red)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 9)
+                    .background(Color(nsColor: .controlBackgroundColor))
+
+                    HStack {
+                        Text("Theme")
+                            .font(.body)
+                        Spacer()
+                        Picker("", selection: $settings.theme) {
+                            ForEach(AppTheme.allCases, id: \.rawValue) { t in
+                                Text(t.displayName).tag(t)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(width: 180)
+                        .labelsHidden()
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 9)
+                    .background(Color(nsColor: .controlBackgroundColor))
+
+                    HStack {
+                        Text("Keyboard shortcut:")
+                            .font(.body)
+                        Spacer()
+                        KeyboardShortcuts.Recorder("", name: .toggleCourier)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 9)
+                    .background(Color(nsColor: .controlBackgroundColor))
+
+                    if let warning = hotkeyConflictWarning {
+                        Label(warning, systemImage: "exclamationmark.triangle.fill")
+                            .font(.caption)
+                            .foregroundStyle(.orange)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color(nsColor: .controlBackgroundColor))
                     }
                 }
-            }
+                .clipShape(RoundedRectangle(cornerRadius: 8))
 
-            Section("Search Engines") {
-                ForEach(searchServices) { service in
-                    ServiceToggleRow(
-                        service: service,
-                        isEnabled: !settings.disabledServices.contains(service),
-                        canDisable: enabledCount > 1 || settings.disabledServices.contains(service)
-                    ) { enabled in
-                        if enabled { settings.disabledServices.remove(service) }
-                        else       { settings.disabledServices.insert(service) }
+                // AI Assistants
+                sectionHeader("AI Assistants")
+                VStack(spacing: 1) {
+                    ForEach(llmServices) { service in
+                        llmServiceRow(for: service)
                     }
                 }
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                // Search Engines
+                sectionHeader("Search Engines")
+                VStack(spacing: 1) {
+                    ForEach(searchServices) { service in
+                        searchServiceRow(for: service)
+                    }
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+
             }
+            .padding(16)
         }
-        .formStyle(.grouped)
     }
 
-    // MARK: - Shortcuts tab
+    // MARK: - Service rows
 
-    private var shortcutsTab: some View {
-        Form {
-            Section("Slash Commands") {
-                ForEach(ServiceType.displayOrder.filter { !settings.disabledServices.contains($0) }) { service in
-                    HStack {
-                        Image(service.iconName, bundle: nil)
-                            .resizable().renderingMode(.template)
-                            .frame(width: 16, height: 16)
-                            .foregroundStyle(.secondary)
-                        Text(service.displayName)
-                        Spacer()
-                        let cmds = settings.customSlashCommands[service.rawValue]
-                            ?? SlashCommand.all.filter { $0.serviceType == service }.map { $0.command }
-                        Text(cmds.joined(separator: ", "))
-                            .font(.system(size: 12, design: .monospaced))
-                            .foregroundStyle(.secondary)
-                    }
+    /// The currently active search engine (first enabled, fallback to .google).
+    private var selectedSearchService: ServiceType {
+        searchServices.first { !settings.disabledServices.contains($0) } ?? .google
+    }
+
+    @ViewBuilder
+    private func sectionHeader(_ title: String) -> some View {
+        Text(title)
+            .font(.headline)
+            .foregroundStyle(.secondary)
+            .padding(.top, 12)
+            .padding(.bottom, 6)
+            .padding(.horizontal, 4)
+    }
+
+    // LLM row: [toggle] [icon] [name] [spacer] [slash field]
+    private func llmServiceRow(for service: ServiceType) -> some View {
+        let isEnabled = !settings.disabledServices.contains(service)
+        let canDisable = enabledCount > 1 || !isEnabled
+
+        return HStack(spacing: 10) {
+            Toggle("", isOn: Binding(
+                get: { isEnabled },
+                set: { enabled in
+                    if enabled { settings.disabledServices.remove(service) }
+                    else       { settings.disabledServices.insert(service) }
                 }
-            }
-            Section {
-                Text("To edit slash commands, open Setup again from the menu bar.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
+            ))
+            .disabled(!canDisable && isEnabled)
+            .labelsHidden()
+
+            Image(service.iconName, bundle: nil)
+                .resizable()
+                .renderingMode(.template)
+                .frame(width: 16, height: 16)
+                .foregroundStyle(isEnabled ? Color(nsColor: .controlAccentColor) : .secondary)
+
+            Text(service.displayName)
+                .font(.body)
+                .lineLimit(1)
+
+            Spacer(minLength: 8)
+
+            TextField("", text: slashCommandBinding(for: service))
+                .textFieldStyle(.roundedBorder)
+                .font(.system(size: 12, design: .monospaced))
+                .frame(width: 240)
+                .disabled(!isEnabled)
+                .opacity(isEnabled ? 1.0 : 0.4)
         }
-        .formStyle(.grouped)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 9)
+        .background(Color(nsColor: .controlBackgroundColor))
+    }
+
+    // Search row: [radio] [icon] [name] [spacer] [slash field]
+    private func searchServiceRow(for service: ServiceType) -> some View {
+        let isSelected = selectedSearchService == service
+
+        return HStack(spacing: 10) {
+            Button {
+                // Select this engine, deselect all others
+                for s in searchServices { settings.disabledServices.insert(s) }
+                settings.disabledServices.remove(service)
+            } label: {
+                Image(systemName: isSelected ? "circle.inset.filled" : "circle")
+                    .foregroundStyle(isSelected ? Color(nsColor: .controlAccentColor) : .secondary)
+                    .frame(width: 20, height: 20)
+            }
+            .buttonStyle(.plain)
+
+            Image(service.iconName, bundle: nil)
+                .resizable()
+                .renderingMode(.template)
+                .frame(width: 16, height: 16)
+                .foregroundStyle(isSelected ? Color(nsColor: .controlAccentColor) : .secondary)
+
+            Text(service.displayName)
+                .font(.body)
+                .lineLimit(1)
+
+            Spacer(minLength: 8)
+
+            TextField("", text: slashCommandBinding(for: service))
+                .textFieldStyle(.roundedBorder)
+                .font(.system(size: 12, design: .monospaced))
+                .frame(width: 240)
+                .disabled(!isSelected)
+                .opacity(isSelected ? 1.0 : 0.4)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 9)
+        .background(Color(nsColor: .controlBackgroundColor))
+    }
+
+    // MARK: - Slash command binding helpers
+
+    private func initSlashCommandTexts() {
+        for service in ServiceType.allCases {
+            let cmds = settings.customSlashCommands[service.rawValue]
+                ?? SlashCommand.all.filter { $0.serviceType == service }.map { $0.command }
+            slashCommandTexts[service.rawValue] = cmds.joined(separator: ", ")
+        }
+    }
+
+    private func slashCommandBinding(for service: ServiceType) -> Binding<String> {
+        Binding(
+            get: { slashCommandTexts[service.rawValue] ?? "" },
+            set: { newValue in
+                slashCommandTexts[service.rawValue] = newValue
+                let parsed = newValue
+                    .split(separator: ",")
+                    .map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+                    .filter { $0.hasPrefix("/") }
+                settings.customSlashCommands[service.rawValue] = parsed.isEmpty ? nil : parsed
+            }
+        )
     }
 
     // MARK: - Advanced tab
@@ -189,6 +300,11 @@ struct SettingsView: View {
                     }
                 }
             }
+
+            Section {
+                Button("Reset All Settings to Defaults…") { showResetConfirm = true }
+                    .foregroundStyle(.red)
+            }
         }
         .formStyle(.grouped)
     }
@@ -202,6 +318,7 @@ struct SettingsView: View {
         settings.keystrokeOverrides = [:]
         settings.lastUsedService = .claude
         settings.launchAtLogin = false
+        settings.theme = .system
         launchAtLogin = false
         try? LoginItemManager.shared.disable()
     }

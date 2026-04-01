@@ -1,5 +1,20 @@
+import AppKit
 import Foundation
 import Observation
+
+enum AppTheme: String, CaseIterable {
+    case light, dark, system
+
+    var nsAppearance: NSAppearance? {
+        switch self {
+        case .light:  return NSAppearance(named: .aqua)
+        case .dark:   return NSAppearance(named: .darkAqua)
+        case .system: return nil
+        }
+    }
+
+    var displayName: String { rawValue.capitalized }
+}
 
 @Observable
 @MainActor
@@ -43,6 +58,13 @@ final class AppSettings {
         didSet { save() }
     }
 
+    var theme: AppTheme {
+        didSet {
+            save()
+            NSApp.appearance = theme.nsAppearance
+        }
+    }
+
     // MARK: - Derived
 
     /// The effective selected service — falls back to first enabled if last-used is disabled.
@@ -75,6 +97,12 @@ final class AppSettings {
         hasCompletedSetup = Self.defaults.bool(forKey: "hasCompletedSetup")
         customSlashCommands = (Self.defaults.dictionary(forKey: "customSlashCommands") as? [String: [String]]) ?? [:]
         keystrokeOverrides = (Self.defaults.dictionary(forKey: "keystrokeOverrides") as? [String: String]) ?? [:]
+        let rawTheme = Self.defaults.string(forKey: "theme") ?? "system"
+        theme = AppTheme(rawValue: rawTheme) ?? .system
+    }
+
+    func applyTheme() {
+        NSApp.appearance = theme.nsAppearance
     }
 
     // MARK: - Persistence
@@ -87,6 +115,7 @@ final class AppSettings {
         Self.defaults.set(hasCompletedSetup, forKey: "hasCompletedSetup")
         Self.defaults.set(customSlashCommands, forKey: "customSlashCommands")
         Self.defaults.set(keystrokeOverrides, forKey: "keystrokeOverrides")
+        Self.defaults.set(theme.rawValue, forKey: "theme")
         Self.defaults.set(Self.currentVersion, forKey: "settingsVersion")
     }
 

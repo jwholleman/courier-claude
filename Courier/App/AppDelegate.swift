@@ -36,6 +36,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Create and retain the window controller (panel + view model pre-created at launch)
         windowController = LauncherWindowController()
 
+        // Apply saved theme before any windows appear
+        windowController?.viewModel.settings?.applyTheme()
+
         // Check if previous session crashed mid-dispatch and inform user
         windowController?.checkCrashRecovery()
 

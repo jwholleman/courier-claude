@@ -45,14 +45,7 @@ final class LauncherViewModel {
 
         // Check if a space was typed — try to resolve the slash command
         if newText.contains(" ") {
-            let candidate = String(newText.prefix(while: { $0 != " " }))
-                .lowercased(with: Locale(identifier: "en"))
-            if let match = SlashCommand.all.first(where: { $0.command == candidate }) {
-                selectService(match.serviceType)
-                queryText = ""
-                isSlashMode = false
-                slashPrefix = ""
-            } else {
+            if !applySlashCommand(String(newText.prefix(while: { $0 != " " }))) {
                 // No match — exit slash mode but keep text as-is
                 isSlashMode = false
                 slashPrefix = ""
@@ -62,6 +55,19 @@ final class LauncherViewModel {
             isSlashMode = true
             slashPrefix = newText.lowercased(with: Locale(identifier: "en"))
         }
+    }
+
+    @discardableResult
+    func applySlashCommand(_ command: String) -> Bool {
+        let candidate = command.lowercased(with: Locale(identifier: "en"))
+        guard let match = SlashCommand.all.first(where: { $0.command == candidate }) else {
+            return false
+        }
+        selectService(match.serviceType)
+        queryText = ""
+        isSlashMode = false
+        slashPrefix = ""
+        return true
     }
 
     func selectService(_ service: ServiceType) {

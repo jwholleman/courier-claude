@@ -15,7 +15,7 @@ struct QueryInputView: NSViewRepresentable {
     func makeNSView(context: Context) -> NSScrollView {
         let textView = CourierTextView()
         textView.delegate = context.coordinator
-        textView.font = .systemFont(ofSize: 15)
+        textView.font = .systemFont(ofSize: LauncherTokens.Typography.querySize)
         textView.textColor = .labelColor
         textView.drawsBackground = false
         textView.isRichText = false
@@ -124,6 +124,11 @@ struct QueryInputView: NSViewRepresentable {
                 // Cmd+Return and Shift+Return are intercepted in CourierTextView.keyDown
                 // before they reach doCommandBy:, so they never arrive here.
                 guard !hasSubmitted else { return true }
+                if parent.viewModel?.isSlashMode == true {
+                    let command = textView.string.trimmingCharacters(in: .whitespacesAndNewlines)
+                    _ = parent.viewModel?.applySlashCommand(command)
+                    return true
+                }
                 let trimmed = textView.string.trimmingCharacters(in: .whitespacesAndNewlines)
                 guard !trimmed.isEmpty else { return true }
                 hasSubmitted = true

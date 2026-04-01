@@ -19,13 +19,14 @@ struct ServiceBar: View {
     }
 
     private var isDeliverEnabled: Bool {
+        !viewModel.isSlashMode &&
         !viewModel.queryText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     var body: some View {
         HStack(spacing: 0) {
             // LLM service buttons
-            HStack(spacing: 8) {
+            HStack(spacing: 16) {
                 ForEach(llmServices) { service in
                     ServiceButton(
                         service: service,
@@ -49,7 +50,7 @@ struct ServiceBar: View {
             }
 
             // Search service buttons
-            HStack(spacing: 8) {
+            HStack(spacing: 16) {
                 ForEach(searchServices) { service in
                     ServiceButton(
                         service: service,
@@ -68,7 +69,6 @@ struct ServiceBar: View {
 
             DeliverButton(isEnabled: isDeliverEnabled, onDeliver: onSubmit)
         }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 12)
+        .padding(.top, 20)
     }
 }

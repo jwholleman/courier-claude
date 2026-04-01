@@ -3,6 +3,5 @@
     { "filename": "chatgpt.png", "idiom": "universal", "scale": "1x" },
     { "filename": "chatgpt@2x.png", "idiom": "universal", "scale": "2x" }
   ],
-  "info": { "author": "xcode", "version": 1 },
-  "properties": { "template-rendering-intent": "template" }
+  "info": { "author": "xcode", "version": 1 }
 }

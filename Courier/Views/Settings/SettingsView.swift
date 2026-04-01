@@ -64,6 +64,23 @@ struct SettingsView: View {
                 sectionHeader("Behavior")
                 VStack(spacing: 1) {
                     HStack {
+                        Text("Theme")
+                            .font(.body)
+                        Spacer()
+                        Picker("", selection: $settings.theme) {
+                            ForEach(AppTheme.allCases, id: \.rawValue) { t in
+                                Text(t.displayName).tag(t)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(width: 180)
+                        .labelsHidden()
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 9)
+                    .background(Color(nsColor: .controlBackgroundColor))
+
+                    HStack {
                         Text("Open on startup")
                             .font(.body)
                         Spacer()
@@ -87,23 +104,6 @@ struct SettingsView: View {
                                 Text(err).font(.caption).foregroundStyle(.red)
                             }
                         }
-                    }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 9)
-                    .background(Color(nsColor: .controlBackgroundColor))
-
-                    HStack {
-                        Text("Theme")
-                            .font(.body)
-                        Spacer()
-                        Picker("", selection: $settings.theme) {
-                            ForEach(AppTheme.allCases, id: \.rawValue) { t in
-                                Text(t.displayName).tag(t)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: 180)
-                        .labelsHidden()
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 9)
@@ -187,7 +187,7 @@ struct SettingsView: View {
             .disabled(!canDisable && isEnabled)
             .labelsHidden()
 
-            Image(service.iconName, bundle: nil)
+            Image(service.settingsIconName, bundle: nil)
                 .resizable()
                 .renderingMode(.template)
                 .frame(width: 16, height: 16)
@@ -227,7 +227,7 @@ struct SettingsView: View {
             }
             .buttonStyle(.plain)
 
-            Image(service.iconName, bundle: nil)
+            Image(service.settingsIconName, bundle: nil)
                 .resizable()
                 .renderingMode(.template)
                 .frame(width: 16, height: 16)

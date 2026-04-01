@@ -14,6 +14,8 @@ final class LauncherPanel: NSPanel {
         isFloatingPanel = true
         isMovableByWindowBackground = false
         hasShadow = true
+        backgroundColor = .clear
+        isOpaque = false
         isReleasedWhenClosed = false
         collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
     }

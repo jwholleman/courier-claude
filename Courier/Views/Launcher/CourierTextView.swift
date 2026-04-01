@@ -16,8 +16,8 @@ final class CourierTextView: NSTextView {
 
         if string.isEmpty {
             let attributes: [NSAttributedString.Key: Any] = [
-                .font: NSFont.systemFont(ofSize: 15),
-                .foregroundColor: NSColor.placeholderTextColor,
+                .font: NSFont.systemFont(ofSize: LauncherTokens.Typography.querySize),
+                .foregroundColor: LauncherTokens.Color.placeholder,
             ]
             let inset = textContainerInset
             let rect = NSRect(

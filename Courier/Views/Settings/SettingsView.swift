@@ -7,6 +7,17 @@ struct SettingsView: View {
     @State private var loginItemError: String? = nil
     @State private var showResetConfirm = false
 
+    private var chatGPTInstalled: Bool {
+        NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.openai.chat") != nil
+    }
+
+    private var hotkeyConflictWarning: String? {
+        let shortcut = KeyboardShortcuts.getShortcut(for: .toggleCourier)
+        let isOptionSpace = shortcut?.modifiers == .option && shortcut?.key == .space
+        guard isOptionSpace && chatGPTInstalled else { return nil }
+        return "ChatGPT desktop also uses ⌥Space — pressing it will open both launchers. Change your hotkey above to avoid the conflict."
+    }
+
     private let llmServices: [ServiceType] = [.claude, .chatgpt, .gemini, .perplexity]
     private let searchServices: [ServiceType] = [.kagi, .google, .duckduckgo]
 
@@ -46,6 +57,11 @@ struct SettingsView: View {
                     KeyboardShortcuts.setShortcut(.init(.space, modifiers: .option), for: .toggleCourier)
                 }
                 .buttonStyle(.bordered)
+                if let warning = hotkeyConflictWarning {
+                    Label(warning, systemImage: "exclamationmark.triangle.fill")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                }
             }
 
             Section("Startup") {

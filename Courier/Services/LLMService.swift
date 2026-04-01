@@ -77,7 +77,9 @@ final class LLMService: ServiceProvider {
                     NSWorkspace.shared.openApplication(at: browserAppURL, configuration: config) { _, _ in sem.signal() }
                     sem.wait()
 
-                    try? await Task.sleep(nanoseconds: 300_000_000)
+                    // Wait for the browser to become truly frontmost and its input to focus.
+                    // 300ms was too short on macOS 26; 800ms gives the window time to settle.
+                    try? await Task.sleep(nanoseconds: 800_000_000)
                     await AppleScriptHelper.pasteAndSubmitInFrontmostApp(after: 0)
 
                     // Restore clipboard after paste

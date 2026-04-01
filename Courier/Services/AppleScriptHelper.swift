@@ -46,6 +46,7 @@ enum AppleScriptHelper {
             }
         } catch AppleScriptError.accessibilityDenied {
             print("[Courier] Accessibility denied — keystrokes blocked, falling back to browser")
+            await showAccessibilityAlert()
             try await browserFallback()
         } catch AppleScriptError.automationDenied(let appName) {
             print("[Courier] Automation denied for \(appName)")
@@ -143,6 +144,9 @@ enum AppleScriptHelper {
         let timeout: TimeInterval = isColdLaunch ? 10.0 : 3.0
         try waitForFrontmost(bundleID: bundleID, timeout: timeout, isColdLaunch: isColdLaunch)
 
+        // Brief pause for the app's UI to settle after receiving focus before sending keystrokes
+        Thread.sleep(forTimeInterval: 0.25)
+
         // Step 5 — Send keystrokes
         let appName = serviceType.displayName
 
@@ -216,7 +220,16 @@ enum AppleScriptHelper {
         """)
         script?.executeAndReturnError(&error)
         if let error {
-            print("[Courier] Browser paste error: \(error[NSAppleScript.errorMessage] ?? "?")")
+            let msg = error[NSAppleScript.errorMessage] as? String ?? "Unknown error"
+            print("[Courier] Browser paste error: \(msg)")
+            let isAccessibility = msg.contains("not allowed to send keystrokes")
+            Task { @MainActor in
+                if isAccessibility {
+                    await NotificationHelper.showToast("Accessibility permission needed. Query is in clipboard — press Cmd+V.")
+                } else {
+                    await NotificationHelper.showToast("Paste failed. Query is in clipboard — press Cmd+V.")
+                }
+            }
         }
     }
 

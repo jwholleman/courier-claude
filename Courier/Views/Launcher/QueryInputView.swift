@@ -30,6 +30,14 @@ struct QueryInputView: NSViewRepresentable {
         context.coordinator.textView = textView
         viewModel?.queryTextView = textView
 
+        textView.onCmdModeChanged = { [weak viewModel] isDown in
+            viewModel?.isCmdMode = isDown
+        }
+        textView.onCmdNumberPressed = { [weak viewModel] position in
+            guard let vm = viewModel, let settings = vm.settings else { return }
+            vm.selectServiceByPosition(position, disabledServices: settings.disabledServices)
+        }
+
         let scrollView = NSScrollView()
         scrollView.documentView = textView
         scrollView.hasVerticalScroller = true

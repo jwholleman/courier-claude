@@ -10,6 +10,7 @@ final class LauncherViewModel {
     var isSlashMode: Bool = false
     var slashPrefix: String = ""
     var hasSubmitted: Bool = false
+    var isCmdMode: Bool = false
 
     // Injected at init from AppSettings so selection persists across launches
     var settings: AppSettings?
@@ -25,6 +26,7 @@ final class LauncherViewModel {
         isSlashMode = false
         slashPrefix = ""
         hasSubmitted = false
+        isCmdMode = false
         // Restore last-used service from settings (always-selected invariant)
         if let settings {
             selectedService = settings.effectiveSelectedService
@@ -65,6 +67,12 @@ final class LauncherViewModel {
     func selectService(_ service: ServiceType) {
         selectedService = service
         settings?.lastUsedService = service
+    }
+
+    func selectServiceByPosition(_ position: Int, disabledServices: Set<ServiceType>) {
+        let enabled = ServiceType.displayOrder.filter { !disabledServices.contains($0) }
+        guard position >= 1, position <= enabled.count else { return }
+        selectService(enabled[position - 1])
     }
 
     func cycleService(direction: Int, disabledServices: Set<ServiceType> = []) {

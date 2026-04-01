@@ -5,6 +5,8 @@ struct ServiceButton: View {
     let isSelected: Bool
     let isSlashMode: Bool
     let slashPrefix: String
+    let isCmdMode: Bool
+    let cmdPosition: Int
     let onSelect: () -> Void
 
     @State private var isHovered = false
@@ -28,7 +30,13 @@ struct ServiceButton: View {
     var body: some View {
         Button(action: onSelect) {
             Group {
-                if isSlashMode {
+                if isCmdMode {
+                    Text("⌘\(cmdPosition)")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(Color(nsColor: .labelColor))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                } else if isSlashMode {
                     Text(shortCommand)
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(matchesPrefix ? Color(nsColor: .labelColor) : Color(nsColor: .secondaryLabelColor))
@@ -45,7 +53,7 @@ struct ServiceButton: View {
             .frame(width: 36, height: 36)
             .background(backgroundFill)
             .clipShape(RoundedRectangle(cornerRadius: 6))
-            .opacity(isSlashMode && !matchesPrefix ? 0.4 : 1.0)
+            .opacity(isSlashMode && !isCmdMode && !matchesPrefix ? 0.4 : 1.0)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(isSlashMode

@@ -5,6 +5,11 @@ struct ServiceBar: View {
     let disabledServices: Set<ServiceType>
     let onSubmit: () -> Void
 
+    /// All enabled services in left-to-right display order — used for Cmd+number positions.
+    private var orderedServices: [ServiceType] {
+        ServiceType.displayOrder.filter { !disabledServices.contains($0) }
+    }
+
     private var llmServices: [ServiceType] {
         ServiceType.displayOrder.filter { $0.category == .llm && !disabledServices.contains($0) }
     }
@@ -26,7 +31,9 @@ struct ServiceBar: View {
                         service: service,
                         isSelected: viewModel.selectedService == service,
                         isSlashMode: viewModel.isSlashMode,
-                        slashPrefix: viewModel.slashPrefix
+                        slashPrefix: viewModel.slashPrefix,
+                        isCmdMode: viewModel.isCmdMode,
+                        cmdPosition: (orderedServices.firstIndex(of: service) ?? 0) + 1
                     ) {
                         viewModel.selectService(service)
                     }
@@ -48,7 +55,9 @@ struct ServiceBar: View {
                         service: service,
                         isSelected: viewModel.selectedService == service,
                         isSlashMode: viewModel.isSlashMode,
-                        slashPrefix: viewModel.slashPrefix
+                        slashPrefix: viewModel.slashPrefix,
+                        isCmdMode: viewModel.isCmdMode,
+                        cmdPosition: (orderedServices.firstIndex(of: service) ?? 0) + 1
                     ) {
                         viewModel.selectService(service)
                     }

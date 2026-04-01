@@ -124,6 +124,10 @@ enum AppleScriptHelper {
         let savedClipboard = saveClipboard(pasteboard)
         let restoreNeeded = savedClipboard != nil
 
+        if restoreNeeded {
+            ServiceDispatcher.markClipboardRestorePending()
+        }
+
         // Step 2 — Copy query to clipboard
         pasteboard.clearContents()
         pasteboard.setString(query, forType: .string)
@@ -133,6 +137,7 @@ enum AppleScriptHelper {
             if restoreNeeded {
                 Thread.sleep(forTimeInterval: serviceType.clipboardRestoreDelay)
                 restoreClipboard(pasteboard, items: savedClipboard ?? [])
+                ServiceDispatcher.clearClipboardRestorePending()
             }
         }
 
@@ -279,6 +284,14 @@ enum AppleScriptHelper {
     /// Public access for browser-fallback path in LLMService.
     static func saveClipboardContents(_ pasteboard: NSPasteboard) -> [[(NSPasteboard.PasteboardType, Data)]]? {
         saveClipboard(pasteboard)
+    }
+
+    /// Public access for tests and browser-fallback restoration.
+    static func restoreClipboardContents(
+        _ pasteboard: NSPasteboard,
+        items: [[(NSPasteboard.PasteboardType, Data)]]
+    ) {
+        restoreClipboard(pasteboard, items: items)
     }
 
     private static func saveClipboard(_ pasteboard: NSPasteboard) -> [[(NSPasteboard.PasteboardType, Data)]]? {

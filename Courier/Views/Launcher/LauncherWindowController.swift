@@ -90,6 +90,13 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
             name: NSApplication.didChangeScreenParametersNotification,
             object: nil
         )
+
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self,
+            selector: #selector(accessibilityDisplayOptionsChanged),
+            name: NSWorkspace.accessibilityDisplayOptionsDidChangeNotification,
+            object: nil
+        )
     }
 
     deinit {
@@ -210,6 +217,14 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
 
     @objc private func screenParametersChanged() {
         if panel.isVisible { positionPanel() }
+    }
+
+    @objc private func accessibilityDisplayOptionsChanged() {
+        if panel.isVisible {
+            containerView.needsDisplay = true
+            hostingView.needsDisplay = true
+            panel.invalidateShadow()
+        }
     }
 
     private func drainPendingToggle() {

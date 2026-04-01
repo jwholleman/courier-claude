@@ -5,7 +5,9 @@ import AppKit
 final class ToastPanel: NSPanel {
 
     private let label = NSTextField(labelWithString: "")
+    private let visualEffectView = NSVisualEffectView()
     private var dismissTimer: Timer?
+    private var currentMessage: String?
 
     override var canBecomeKey: Bool { false }
     override var canBecomeMain: Bool { false }
@@ -26,15 +28,15 @@ final class ToastPanel: NSPanel {
         ignoresMouseEvents = false
 
         // Visual effect background
-        let fx = NSVisualEffectView(frame: contentView!.bounds)
-        fx.material = .hudWindow
-        fx.blendingMode = .behindWindow
-        fx.state = .active
-        fx.wantsLayer = true
-        fx.layer?.cornerRadius = 8
-        fx.layer?.masksToBounds = true
-        fx.autoresizingMask = [.width, .height]
-        contentView?.addSubview(fx)
+        visualEffectView.frame = contentView!.bounds
+        visualEffectView.material = .hudWindow
+        visualEffectView.blendingMode = .behindWindow
+        visualEffectView.state = .active
+        visualEffectView.wantsLayer = true
+        visualEffectView.layer?.cornerRadius = 8
+        visualEffectView.layer?.masksToBounds = true
+        visualEffectView.autoresizingMask = [.width, .height]
+        contentView?.addSubview(visualEffectView)
 
         // Label
         label.font = .systemFont(ofSize: 13)
@@ -42,20 +44,28 @@ final class ToastPanel: NSPanel {
         label.alignment = .center
         label.lineBreakMode = .byTruncatingTail
         label.translatesAutoresizingMaskIntoConstraints = false
-        fx.addSubview(label)
+        visualEffectView.addSubview(label)
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: fx.leadingAnchor, constant: 16),
-            label.trailingAnchor.constraint(equalTo: fx.trailingAnchor, constant: -16),
-            label.centerYAnchor.constraint(equalTo: fx.centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: visualEffectView.leadingAnchor, constant: 16),
+            label.trailingAnchor.constraint(equalTo: visualEffectView.trailingAnchor, constant: -16),
+            label.centerYAnchor.constraint(equalTo: visualEffectView.centerYAnchor),
         ])
 
         // Click to dismiss
         let click = NSClickGestureRecognizer(target: self, action: #selector(dismiss))
         contentView?.addGestureRecognizer(click)
+
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self,
+            selector: #selector(accessibilityDisplayOptionsChanged),
+            name: NSWorkspace.accessibilityDisplayOptionsDidChangeNotification,
+            object: nil
+        )
     }
 
     func show(_ message: String, on screen: NSScreen? = NSScreen.main) {
         dismissTimer?.invalidate()
+        currentMessage = message
         label.stringValue = message
 
         // Size to content (min 200, max 400)
@@ -94,6 +104,7 @@ final class ToastPanel: NSPanel {
     @objc func dismiss() {
         dismissTimer?.invalidate()
         dismissTimer = nil
+        currentMessage = nil
         let reduceMotion = NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
         if reduceMotion {
             orderOut(nil)
@@ -104,6 +115,16 @@ final class ToastPanel: NSPanel {
             }, completionHandler: { [weak self] in
                 self?.orderOut(nil)
             })
+        }
+    }
+
+    @objc private func accessibilityDisplayOptionsChanged() {
+        visualEffectView.state = .active
+        visualEffectView.needsDisplay = true
+        contentView?.needsDisplay = true
+        if isVisible, let currentMessage {
+            label.stringValue = currentMessage
+            invalidateShadow()
         }
     }
 }

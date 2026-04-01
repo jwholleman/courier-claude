@@ -8,32 +8,48 @@ struct DeliverButton: View {
 
     var body: some View {
         Button(action: onDeliver) {
-            HStack(spacing: 6) {
+            HStack(spacing: LauncherTokens.Layout.deliverSpacing) {
                 Image(systemName: "paperplane.fill")
-                    .font(.system(size: 13, weight: .medium))
+                    .font(.system(size: LauncherTokens.Typography.deliverSize, weight: .semibold))
                 Text("Deliver")
-                    .font(.system(size: 13, weight: .medium))
+                    .font(.system(size: LauncherTokens.Typography.deliverSize, weight: .semibold, design: .rounded))
             }
             .foregroundStyle(isEnabled ? .white : Color(nsColor: .tertiaryLabelColor))
-            .padding(.horizontal, 14)
-            .padding(.vertical, 7)
+            .padding(.horizontal, LauncherTokens.Layout.deliverHorizontalPadding)
+            .frame(height: LauncherTokens.Layout.deliverButtonHeight)
             .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(isEnabled
-                        ? Color(nsColor: .controlAccentColor).opacity(isHovered ? 0.85 : 1.0)
-                        : Color(nsColor: .quaternaryLabelColor)
-                    )
+                RoundedRectangle(cornerRadius: LauncherTokens.Layout.controlCornerRadius, style: .continuous)
+                    .fill(backgroundFill)
             )
+            .overlay {
+                RoundedRectangle(cornerRadius: LauncherTokens.Layout.controlCornerRadius, style: .continuous)
+                    .strokeBorder(borderColor, lineWidth: 1)
+            }
         }
         .buttonStyle(.plain)
         .disabled(!isEnabled)
         .help("Deliver query")
         .accessibilityLabel("Deliver query")
         .accessibilityHint(isEnabled ? "Sends your query to the selected service" : "Enter a query first")
+        .padding(.top, LauncherTokens.Layout.deliverTopMargin)
         .onHover { hovered in
-            withAnimation(.easeInOut(duration: 0.1)) {
+            withAnimation(.easeInOut(duration: LauncherTokens.Motion.quickEase)) {
                 isHovered = hovered
             }
         }
+    }
+
+    private var backgroundFill: Color {
+        if isEnabled {
+            return Color(nsColor: .controlAccentColor).opacity(isHovered ? 0.88 : 0.98)
+        }
+        return LauncherTokens.Color.deliverDisabledBackground
+    }
+
+    private var borderColor: Color {
+        if isEnabled {
+            return isHovered ? LauncherTokens.Color.deliverEnabledBorderHover : LauncherTokens.Color.deliverEnabledBorder
+        }
+        return LauncherTokens.Color.deliverDisabledBorder
     }
 }

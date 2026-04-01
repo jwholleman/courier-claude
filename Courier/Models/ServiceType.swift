@@ -31,6 +31,13 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
 
     var iconName: String { rawValue }  // Matches asset catalog name
 
+    var settingsIconName: String {
+        switch self {
+        case .duckduckgo: return "duckduckgoNegative"
+        default: return iconName
+        }
+    }
+
     /// Display order: LLMs first, then search engines
     static let displayOrder: [ServiceType] = [
         .claude, .chatgpt, .gemini, .perplexity,

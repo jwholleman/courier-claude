@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0775A1A1E11D26B159BBBD17 /* ServiceDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71519206C85015FE0A5F756 /* ServiceDispatcher.swift */; };
 		08FFD206CDDE79EA0FC0A6D6 /* SlashCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA36970EBAC5529CEC978813 /* SlashCommand.swift */; };
+		0D453F66D8AE4E698808411E /* perplexity.svg in Resources */ = {isa = PBXBuildFile; fileRef = AE8FDCD2077AE89C9867C471 /* perplexity.svg */; };
 		0DB904F6ECD5D5F908CC29FF /* URLEncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333C9A158A37FBD974CFA0B /* URLEncodingTests.swift */; };
 		0E88981E00E3CFA0375E7AA1 /* SlashCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA36970EBAC5529CEC978813 /* SlashCommand.swift */; };
 		198C61B9115B43E14A07DA2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C34D9DA5A69B02A2E9D3EAA /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 		50206ACC947A3EC56A8E0CB9 /* SetupWizardWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2011F90D54E9E5A9E20E8759 /* SetupWizardWindowController.swift */; };
 		50227300DC93BE43FCFE95EF /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */; };
 		51A3B9886563D5B70D234226 /* LauncherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E32568662C61373356FD0E6 /* LauncherViewModel.swift */; };
+		54463DD184A1BA7FAF981CBB /* chatgpt.svg in Resources */ = {isa = PBXBuildFile; fileRef = B3AB23A616311B0C040BD8D7 /* chatgpt.svg */; };
 		55E68424FD2EE2D8F47AF90F /* ServiceDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71519206C85015FE0A5F756 /* ServiceDispatcher.swift */; };
 		5800C8EE277D3C06C4CECCF4 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48345AD7CBBC3F15D92CE9AB /* LLMService.swift */; };
 		662C98E38CA9B9F878278F60 /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913E7D1E7FDFAB3F0650B1E8 /* LoginItemManager.swift */; };
@@ -31,6 +33,7 @@
 		69B82B8E20190732BE7E7254 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 673FF32B1E8DE8E261D97327 /* KeyboardShortcuts */; };
 		6B1824268A2352F2B25C93B8 /* ServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA96E39F011A2BD69DC0B1 /* ServiceType.swift */; };
 		703551CEBCD7F0D5D2675611 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75603284C3E3297DEE0A917F /* main.swift */; };
+		7A335C7D39D999333CFC359D /* LauncherTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B480FAAFBDC1D3E99539DD /* LauncherTokens.swift */; };
 		7ACA3C0AE3EBCE1DB349E6D6 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */; };
 		7D2F92A2A14CAEF64555EFB1 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4306791EEC24A5DB3A5CC3A /* AppSettings.swift */; };
 		7F6CE4FD178464DE9744F8A1 /* ServiceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B8115768923F6E0A57CEE /* ServiceRegistry.swift */; };
@@ -43,23 +46,28 @@
 		A0B4E43B10351720C26B92B9 /* HotkeySetupStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8C761BD9E0458E86D51EC6 /* HotkeySetupStep.swift */; };
 		AB0E50E5C451B342B4184C58 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48345AD7CBBC3F15D92CE9AB /* LLMService.swift */; };
 		ACD693F178B1DDE62D35DCDA /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913E7D1E7FDFAB3F0650B1E8 /* LoginItemManager.swift */; };
+		AE01AB2568C7808BD41F4D38 /* google.svg in Resources */ = {isa = PBXBuildFile; fileRef = A26B7CB7C7A6C9715CCFEC1E /* google.svg */; };
 		AE5A66CE1E06980B039A2040 /* CourierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4CF1B696C1CB7B47451B1A /* CourierApp.swift */; };
 		AE847B898CEDE103FAB6274B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1919C1D565FF29394C6278 /* AppDelegate.swift */; };
 		B0A08F14BA36162D30CE70A6 /* AppSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E854495BD67BDD665F5A8 /* AppSettingsTests.swift */; };
 		B0FBF1AC261F72F936E8F9F2 /* ServiceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B8115768923F6E0A57CEE /* ServiceRegistry.swift */; };
+		B2076D277006021A00AA84E9 /* claude.svg in Resources */ = {isa = PBXBuildFile; fileRef = 3001F3BB90203B069E29A9E8 /* claude.svg */; };
 		B59EAF2463BE3CDA9EEC1853 /* HotKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */; };
 		B6142CF629F6C1379B9BF43C /* SlashCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A95CC58CC3D54AE3E66D8FD /* SlashCommandTests.swift */; };
 		B9084402F16872A4AB4A72E1 /* AppleScriptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013DCAEE921EF01A35C316EF /* AppleScriptHelper.swift */; };
 		B913B345FC157125235451C8 /* ServiceRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BD37508C8391419F6F2196 /* ServiceRegistryTests.swift */; };
 		C07C15B449FFC0088BA9D165 /* ServiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615498E1897DEFA1446B2C9D /* ServiceButton.swift */; };
 		C353F95DCB2660CFE9D48BDF /* LLMSelectionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFE535BADDDBB8FF5FF527D /* LLMSelectionStep.swift */; };
+		C6267B9C96C43E666A6A307B /* gemini.svg in Resources */ = {isa = PBXBuildFile; fileRef = 78BBC80753A959D1B26DC96D /* gemini.svg */; };
 		C7356D4B21BC5025E2C17590 /* LauncherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B324B7F92A57F99B1A802452 /* LauncherView.swift */; };
 		C7C068A6FD866BD21C25C286 /* QueryInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F239051016D81D03687F5AEF /* QueryInputView.swift */; };
 		CA3F00C51BF340C0D453CE9F /* AccessibilityPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */; };
 		CA85E52F510E78574776C365 /* LauncherPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52F5A980156215207341A21 /* LauncherPanel.swift */; };
+		CD0B52A7CA66D6E7101D5580 /* kagi.svg in Resources */ = {isa = PBXBuildFile; fileRef = 19823F6A5DDE7BC086667966 /* kagi.svg */; };
 		D0E90CB825437967F5757C59 /* AccessibilityPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */; };
 		D227644F7DABD7A18C5291B2 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4306791EEC24A5DB3A5CC3A /* AppSettings.swift */; };
 		D7B0F28A10FA332656C8B6E7 /* ServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA96E39F011A2BD69DC0B1 /* ServiceType.swift */; };
+		DDAF11EF040D5FAC146979B0 /* duckduckgo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 225C0F7BF957E75DA61F4A44 /* duckduckgo.svg */; };
 		EF46B3FE35D456C009F2A0D3 /* ServiceBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623A720E6BD4D32A0BEC52DC /* ServiceBar.swift */; };
 		F913283E60F2F20C97E083D0 /* AppleScriptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013DCAEE921EF01A35C316EF /* AppleScriptHelper.swift */; };
 		FFF67BECD8C01B40FE4AD0D8 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC24D44D603D16958C27C4 /* NotificationHelper.swift */; };
@@ -71,11 +79,15 @@
 		03411370A9CC58ED68CD976F /* SlashCommandStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlashCommandStep.swift; sourceTree = "<group>"; };
 		0860A4EBBFA3AF278407D3F4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0C1919C1D565FF29394C6278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		19823F6A5DDE7BC086667966 /* kagi.svg */ = {isa = PBXFileReference; path = kagi.svg; sourceTree = "<group>"; };
 		2011F90D54E9E5A9E20E8759 /* SetupWizardWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWizardWindowController.swift; sourceTree = "<group>"; };
+		225C0F7BF957E75DA61F4A44 /* duckduckgo.svg */ = {isa = PBXFileReference; path = duckduckgo.svg; sourceTree = "<group>"; };
 		24141858E6F0CBABA361EF37 /* SetupWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWizardView.swift; sourceTree = "<group>"; };
 		2A4CF1B696C1CB7B47451B1A /* CourierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierApp.swift; sourceTree = "<group>"; };
+		3001F3BB90203B069E29A9E8 /* claude.svg */ = {isa = PBXFileReference; path = claude.svg; sourceTree = "<group>"; };
 		3A95CC58CC3D54AE3E66D8FD /* SlashCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlashCommandTests.swift; sourceTree = "<group>"; };
 		48345AD7CBBC3F15D92CE9AB /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
+		55B480FAAFBDC1D3E99539DD /* LauncherTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherTokens.swift; sourceTree = "<group>"; };
 		57C8EC6E55DCC0D75C42AA72 /* Courier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Courier.entitlements; sourceTree = "<group>"; };
 		5D80B1A8CD184B0A1E308BD3 /* SearchProviderStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProviderStep.swift; sourceTree = "<group>"; };
 		5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
@@ -83,6 +95,7 @@
 		623A720E6BD4D32A0BEC52DC /* ServiceBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBar.swift; sourceTree = "<group>"; };
 		6D4B3CBCF4A53A44DFA16BB5 /* Courier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Courier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75603284C3E3297DEE0A917F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		78BBC80753A959D1B26DC96D /* gemini.svg */ = {isa = PBXFileReference; path = gemini.svg; sourceTree = "<group>"; };
 		7A7AEC35AF82CADA900BD555 /* ToastPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPanel.swift; sourceTree = "<group>"; };
 		7C34D9DA5A69B02A2E9D3EAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		895714AF57464A156FAFCE79 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
@@ -90,8 +103,11 @@
 		8E32568662C61373356FD0E6 /* LauncherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherViewModel.swift; sourceTree = "<group>"; };
 		913E7D1E7FDFAB3F0650B1E8 /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
 		97EC24D44D603D16958C27C4 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
+		A26B7CB7C7A6C9715CCFEC1E /* google.svg */ = {isa = PBXFileReference; path = google.svg; sourceTree = "<group>"; };
 		A633BAC19461299308D6A373 /* ServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProtocol.swift; sourceTree = "<group>"; };
+		AE8FDCD2077AE89C9867C471 /* perplexity.svg */ = {isa = PBXFileReference; path = perplexity.svg; sourceTree = "<group>"; };
 		B324B7F92A57F99B1A802452 /* LauncherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherView.swift; sourceTree = "<group>"; };
+		B3AB23A616311B0C040BD8D7 /* chatgpt.svg */ = {isa = PBXFileReference; path = chatgpt.svg; sourceTree = "<group>"; };
 		B52F5A980156215207341A21 /* LauncherPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherPanel.swift; sourceTree = "<group>"; };
 		B8C2F68A847162779FBFAE7F /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		BA36970EBAC5529CEC978813 /* SlashCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlashCommand.swift; sourceTree = "<group>"; };
@@ -101,6 +117,7 @@
 		C333C9A158A37FBD974CFA0B /* URLEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncodingTests.swift; sourceTree = "<group>"; };
 		C7AA0F043469499A6179DEA8 /* DispatchChainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchChainTests.swift; sourceTree = "<group>"; };
 		DDC435963B019B86A15BEB91 /* CourierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CourierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E018628493FF9D82B0310D89 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		E71519206C85015FE0A5F756 /* ServiceDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDispatcher.swift; sourceTree = "<group>"; };
 		E8BD37508C8391419F6F2196 /* ServiceRegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRegistryTests.swift; sourceTree = "<group>"; };
 		EAC6041C861A9354FEC75C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -160,6 +177,7 @@
 				F2966F52EE5E164C6A998B77 /* CourierTextView.swift */,
 				EEA6D2B70B210FC41A49C3A4 /* DeliverButton.swift */,
 				B52F5A980156215207341A21 /* LauncherPanel.swift */,
+				55B480FAAFBDC1D3E99539DD /* LauncherTokens.swift */,
 				B324B7F92A57F99B1A802452 /* LauncherView.swift */,
 				8E32568662C61373356FD0E6 /* LauncherViewModel.swift */,
 				8DA7CB3C725F043E8EE5F831 /* LauncherWindowController.swift */,
@@ -186,6 +204,21 @@
 				DDC435963B019B86A15BEB91 /* CourierTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		3DF3D9B71B40FF48633B2A2F /* IncomingIcons */ = {
+			isa = PBXGroup;
+			children = (
+				E018628493FF9D82B0310D89 /* .gitkeep */,
+				B3AB23A616311B0C040BD8D7 /* chatgpt.svg */,
+				3001F3BB90203B069E29A9E8 /* claude.svg */,
+				225C0F7BF957E75DA61F4A44 /* duckduckgo.svg */,
+				78BBC80753A959D1B26DC96D /* gemini.svg */,
+				A26B7CB7C7A6C9715CCFEC1E /* google.svg */,
+				19823F6A5DDE7BC086667966 /* kagi.svg */,
+				AE8FDCD2077AE89C9867C471 /* perplexity.svg */,
+			);
+			path = IncomingIcons;
 			sourceTree = "<group>";
 		};
 		4136B269CB363967B0594508 /* Courier */ = {
@@ -251,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				7C34D9DA5A69B02A2E9D3EAA /* Assets.xcassets */,
+				3DF3D9B71B40FF48633B2A2F /* IncomingIcons */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -384,6 +418,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				198C61B9115B43E14A07DA2A /* Assets.xcassets in Resources */,
+				54463DD184A1BA7FAF981CBB /* chatgpt.svg in Resources */,
+				B2076D277006021A00AA84E9 /* claude.svg in Resources */,
+				DDAF11EF040D5FAC146979B0 /* duckduckgo.svg in Resources */,
+				C6267B9C96C43E666A6A307B /* gemini.svg in Resources */,
+				AE01AB2568C7808BD41F4D38 /* google.svg in Resources */,
+				CD0B52A7CA66D6E7101D5580 /* kagi.svg in Resources */,
+				0D453F66D8AE4E698808411E /* perplexity.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +472,7 @@
 				C353F95DCB2660CFE9D48BDF /* LLMSelectionStep.swift in Sources */,
 				5800C8EE277D3C06C4CECCF4 /* LLMService.swift in Sources */,
 				CA85E52F510E78574776C365 /* LauncherPanel.swift in Sources */,
+				7A335C7D39D999333CFC359D /* LauncherTokens.swift in Sources */,
 				C7356D4B21BC5025E2C17590 /* LauncherView.swift in Sources */,
 				51A3B9886563D5B70D234226 /* LauncherViewModel.swift in Sources */,
 				4DA3A80A9C60FC26385B47F2 /* LauncherWindowController.swift in Sources */,

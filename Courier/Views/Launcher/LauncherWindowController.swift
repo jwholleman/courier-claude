@@ -14,7 +14,7 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
     private(set) var panel: LauncherPanel
     private(set) var viewModel: LauncherViewModel
     private let hostingView: NSHostingView<LauncherView>
-    private let visualEffectView: NSVisualEffectView
+    private let containerView: NSView
     private let dispatcher: ServiceDispatcher
 
     private var state: PanelState = .hidden
@@ -39,13 +39,13 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
         hostingView = NSHostingView(rootView: rootView)
         hostingView.translatesAutoresizingMaskIntoConstraints = false
 
-        visualEffectView = NSVisualEffectView()
-        visualEffectView.material = .hudWindow
-        visualEffectView.blendingMode = .behindWindow
-        visualEffectView.state = .active
-        visualEffectView.wantsLayer = true
-        visualEffectView.layer?.cornerRadius = 12
-        visualEffectView.layer?.masksToBounds = true
+        containerView = NSView()
+        containerView.wantsLayer = true
+        containerView.layer?.cornerRadius = 18
+        containerView.layer?.masksToBounds = true
+        containerView.layer?.borderWidth = 1
+        containerView.layer?.borderColor = NSColor.white.withAlphaComponent(0.08).cgColor
+        containerView.layer?.backgroundColor = NSColor.clear.cgColor
 
         super.init()
 
@@ -56,14 +56,14 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
             onDismiss: { [weak self] in self?.hide() }
         )
 
-        panel.contentView = visualEffectView
-        visualEffectView.addSubview(hostingView)
+        panel.contentView = containerView
+        containerView.addSubview(hostingView)
 
         NSLayoutConstraint.activate([
-            hostingView.topAnchor.constraint(equalTo: visualEffectView.topAnchor),
-            hostingView.bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor),
-            hostingView.leadingAnchor.constraint(equalTo: visualEffectView.leadingAnchor),
-            hostingView.trailingAnchor.constraint(equalTo: visualEffectView.trailingAnchor),
+            hostingView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            hostingView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            hostingView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            hostingView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
         ])
 
         panel.contentMinSize = NSSize(width: 680, height: 80)

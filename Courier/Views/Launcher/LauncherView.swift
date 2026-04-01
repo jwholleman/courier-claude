@@ -14,50 +14,73 @@ struct LauncherView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Query text input
-            QueryInputView(
-                text: Binding(
-                    get: { viewModel.queryText },
-                    set: { viewModel.queryText = $0 }
-                ),
-                height: Binding(
-                    get: { viewModel.contentHeight },
-                    set: { viewModel.contentHeight = $0 }
-                ),
-                onSubmit: { onSubmit?() },
-                onDismiss: { onDismiss?() },
-                viewModel: viewModel
-            )
-            .frame(height: viewModel.contentHeight)
-            .padding(.horizontal, 16)
-            .padding(.top, 12)
-            .padding(.bottom, isOverLimit ? 4 : 0)
+            VStack(spacing: 0) {
+                QueryInputView(
+                    text: Binding(
+                        get: { viewModel.queryText },
+                        set: { viewModel.queryText = $0 }
+                    ),
+                    height: Binding(
+                        get: { viewModel.contentHeight },
+                        set: { viewModel.contentHeight = $0 }
+                    ),
+                    onSubmit: { onSubmit?() },
+                    onDismiss: { onDismiss?() },
+                    viewModel: viewModel
+                )
+                .frame(height: viewModel.contentHeight)
+                .padding(.horizontal, LauncherTokens.Layout.inputHorizontalPadding)
+                .padding(.top, LauncherTokens.Layout.inputTopPadding)
+                .padding(.bottom, isOverLimit ? LauncherTokens.Layout.inputBottomPaddingWarning : LauncherTokens.Layout.inputBottomPadding)
 
-            // Inline char-limit warning
-            if isOverLimit {
-                Text("Query will be truncated to \(charLimit) characters")
-                    .font(.system(size: 11))
-                    .foregroundStyle(Color(nsColor: .systemOrange))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 6)
-                    .transition(.opacity)
+                if isOverLimit {
+                    Text("Query will be truncated to \(charLimit) characters")
+                        .font(.system(size: LauncherTokens.Typography.warningSize, weight: .medium))
+                        .foregroundStyle(Color(nsColor: .systemOrange))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, LauncherTokens.Layout.warningHorizontalPadding)
+                        .padding(.bottom, LauncherTokens.Layout.warningBottomPadding)
+                        .transition(.opacity)
+                }
             }
+            .background(inputSurface)
+            .overlay {
+                RoundedRectangle(cornerRadius: LauncherTokens.Layout.panelCornerRadius, style: .continuous)
+                    .stroke(LauncherTokens.Color.inputBorder, lineWidth: 1)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: LauncherTokens.Layout.panelCornerRadius, style: .continuous))
 
-            // Separator
-            Rectangle()
-                .fill(Color(nsColor: .separatorColor))
-                .frame(height: 1)
-                .padding(.horizontal, 8)
-
-            // Service bar + Deliver button
             ServiceBar(
                 viewModel: viewModel,
                 disabledServices: viewModel.settings?.disabledServices ?? [],
                 onSubmit: { onSubmit?() }
             )
         }
-        .frame(width: 680)
-        .animation(.easeInOut(duration: 0.15), value: isOverLimit)
+        .frame(width: LauncherTokens.Layout.panelWidth)
+        .padding(LauncherTokens.Layout.panelOuterPadding)
+        .background(panelSurface)
+        .animation(.easeInOut(duration: LauncherTokens.Motion.stateEase), value: isOverLimit)
+    }
+
+    private var inputSurface: some ShapeStyle {
+        LinearGradient(
+            colors: [
+                Color(nsColor: LauncherTokens.Color.inputTop),
+                Color(nsColor: LauncherTokens.Color.inputBottom)
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+
+    private var panelSurface: some ShapeStyle {
+        LinearGradient(
+            colors: [
+                Color(nsColor: LauncherTokens.Color.panelTop),
+                Color(nsColor: LauncherTokens.Color.panelBottom)
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
     }
 }

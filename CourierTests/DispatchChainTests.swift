@@ -106,4 +106,13 @@ final class DispatchChainTests: XCTestCase {
 
         XCTAssertFalse(UserDefaults.standard.bool(forKey: "pendingClipboardRestore"))
     }
+
+    func testSavingEmptyClipboardReturnsNil() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+
+        let saved = AppleScriptHelper.saveClipboardContents(pasteboard)
+
+        XCTAssertNil(saved)
+    }
 }

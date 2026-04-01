@@ -171,8 +171,9 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
                 context.duration = 0.15
                 panel.animator().alphaValue = 1.0
             }, completionHandler: { [weak self] in
-                self?.state = .visible
-                self?.drainPendingToggle()
+                Task { @MainActor in
+                    self?.completeShowAnimation()
+                }
             })
         }
     }
@@ -181,24 +182,17 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
         state = .animatingOut
         viewModel.clearQuery()
 
-        let finishHide: () -> Void = { [weak self] in
-            guard let self else { return }
-            self.panel.orderOut(nil)
-            NSAccessibility.post(element: self.panel, notification: .uiElementDestroyed)
-            if self.previousApp?.isTerminated != true {
-                self.previousApp?.activate()
-            }
-            self.state = .hidden
-            self.drainPendingToggle()
-        }
-
         if NSWorkspace.shared.accessibilityDisplayShouldReduceMotion {
-            finishHide()
+            completeHideAnimation()
         } else {
             NSAnimationContext.runAnimationGroup({ context in
                 context.duration = 0.15
                 panel.animator().alphaValue = 0.0
-            }, completionHandler: finishHide)
+            }, completionHandler: { [weak self] in
+                Task { @MainActor in
+                    self?.completeHideAnimation()
+                }
+            })
         }
     }
 
@@ -232,6 +226,21 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
             pendingToggle = false
             toggle()
         }
+    }
+
+    private func completeShowAnimation() {
+        state = .visible
+        drainPendingToggle()
+    }
+
+    private func completeHideAnimation() {
+        panel.orderOut(nil)
+        NSAccessibility.post(element: panel, notification: .uiElementDestroyed)
+        if previousApp?.isTerminated != true {
+            previousApp?.activate()
+        }
+        state = .hidden
+        drainPendingToggle()
     }
 
     private func updatePanelHeight() {

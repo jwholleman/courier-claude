@@ -69,16 +69,12 @@ final class LLMService: ServiceProvider {
                     ServiceDispatcher.markClipboardRestorePending()
                 }
                 let savedClipboardCopy = savedClipboard
-                Task.detached {
+                Task.detached { [self] in
                     // Wait for page to load
                     try? await Task.sleep(nanoseconds: 900_000_000)
 
                     // Re-activate the browser by app URL — no polling, no race condition
-                    let config = NSWorkspace.OpenConfiguration()
-                    config.activates = true
-                    let sem = DispatchSemaphore(value: 0)
-                    NSWorkspace.shared.openApplication(at: browserAppURL, configuration: config) { _, _ in sem.signal() }
-                    sem.wait()
+                    await self.activateBrowser(at: browserAppURL)
 
                     // Wait for the browser to become truly frontmost and its input to focus.
                     // 300ms was too short on macOS 26; 800ms gives the window time to settle.
@@ -122,5 +118,15 @@ final class LLMService: ServiceProvider {
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(query, forType: .string)
         await NotificationHelper.showToast("\(reason) Query copied to clipboard.")
+    }
+
+    private func activateBrowser(at url: URL) async {
+        let config = NSWorkspace.OpenConfiguration()
+        config.activates = true
+        await withCheckedContinuation { continuation in
+            NSWorkspace.shared.openApplication(at: url, configuration: config) { _, _ in
+                continuation.resume()
+            }
+        }
     }
 }

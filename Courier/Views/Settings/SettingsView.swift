@@ -8,6 +8,7 @@ struct SettingsView: View {
     @State private var loginItemError: String? = nil
     @State private var showResetConfirm = false
     @State private var draggedService: ServiceType? = nil
+    @State private var currentDropTarget: ServiceType? = nil
     @State private var hoveredService: ServiceType? = nil
     @State private var draftServiceOrder: [ServiceType] = []
     /// Local text buffer for slash command fields — avoids cursor-reset on every keystroke.
@@ -218,7 +219,8 @@ struct SettingsView: View {
                 settings: settings,
                 services: $draftServiceOrder,
                 persistedServices: settings.orderedServices,
-                draggedService: $draggedService
+                draggedService: $draggedService,
+                currentDropTarget: $currentDropTarget
             )
         )
     }
@@ -240,6 +242,7 @@ struct SettingsView: View {
         .contentShape(Rectangle())
         .onDrag {
             draggedService = service
+            currentDropTarget = nil
             return NSItemProvider(object: service.rawValue as NSString)
         }
     }
@@ -325,6 +328,7 @@ private struct ServiceRowDropDelegate: DropDelegate {
     @Binding var services: [ServiceType]
     let persistedServices: [ServiceType]
     @Binding var draggedService: ServiceType?
+    @Binding var currentDropTarget: ServiceType?
 
     func dropUpdated(info: DropInfo) -> DropProposal? {
         DropProposal(operation: .move)
@@ -333,15 +337,17 @@ private struct ServiceRowDropDelegate: DropDelegate {
     func dropEntered(info: DropInfo) {
         guard let draggedService,
               draggedService != destination,
+              currentDropTarget != destination,
               let sourceIndex = services.firstIndex(of: draggedService),
               let destinationIndex = services.firstIndex(of: destination) else {
             return
         }
 
+        currentDropTarget = destination
         let adjustedDestination = destinationIndex > sourceIndex ? destinationIndex + 1 : destinationIndex
         guard sourceIndex != adjustedDestination else { return }
 
-        withAnimation(.interactiveSpring(response: 0.22, dampingFraction: 0.88, blendDuration: 0.12)) {
+        withAnimation(.interactiveSpring(response: 0.28, dampingFraction: 0.92, blendDuration: 0.16)) {
             let movedService = services.remove(at: sourceIndex)
             let targetIndex = min(max(adjustedDestination, 0), services.count)
             services.insert(movedService, at: targetIndex)
@@ -352,6 +358,7 @@ private struct ServiceRowDropDelegate: DropDelegate {
         if services != persistedServices {
             settings.serviceOrder = services
         }
+        currentDropTarget = nil
         draggedService = nil
         return true
     }
@@ -360,5 +367,6 @@ private struct ServiceRowDropDelegate: DropDelegate {
         if draggedService == nil {
             services = persistedServices
         }
+        currentDropTarget = nil
     }
 }

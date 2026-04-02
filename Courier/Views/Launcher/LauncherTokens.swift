@@ -5,7 +5,7 @@ enum LauncherTokens {
     enum Layout {
         static let panelWidth: CGFloat = 680
         static let panelOuterPadding: CGFloat = 32
-        static let panelCornerRadius: CGFloat = 18
+        static let panelCornerRadius: CGFloat = 24
         static let controlCornerRadius: CGFloat = 8
         static let inputHorizontalPadding: CGFloat = 12
         static let inputTopPadding: CGFloat = 8

@@ -8,6 +8,8 @@ struct SettingsView: View {
     @State private var loginItemError: String? = nil
     @State private var showResetConfirm = false
     @State private var draggedService: ServiceType? = nil
+    @State private var hoveredService: ServiceType? = nil
+    @State private var draftServiceOrder: [ServiceType] = []
     /// Local text buffer for slash command fields — avoids cursor-reset on every keystroke.
     @State private var slashCommandTexts: [String: String] = [:]
 
@@ -39,7 +41,12 @@ struct SettingsView: View {
         .frame(width: 560, height: 500)
         .onAppear {
             launchAtLogin = settings.launchAtLogin
+            draftServiceOrder = settings.orderedServices
             initSlashCommandTexts()
+        }
+        .onChange(of: settings.serviceOrder) { _, newValue in
+            guard draggedService == nil else { return }
+            draftServiceOrder = newValue
         }
         .confirmationDialog(
             "Reset all settings to defaults?",
@@ -133,7 +140,7 @@ struct SettingsView: View {
                 // Services
                 sectionHeader("Services")
                 VStack(spacing: 1) {
-                    ForEach(settings.orderedServices) { service in
+                    ForEach(draftServiceOrder) { service in
                         serviceRow(for: service)
                     }
                 }
@@ -194,15 +201,23 @@ struct SettingsView: View {
                 .disabled(!isEnabled)
                 .opacity(isEnabled ? 1.0 : 0.4)
         }
-        .padding(.horizontal, 12)
+        .padding(.leading, 4)
+        .padding(.trailing, 12)
         .padding(.vertical, 9)
         .background(Color(nsColor: .controlBackgroundColor))
         .contentShape(Rectangle())
+        .onHover { isHovered in
+            withAnimation(.easeInOut(duration: 0.12)) {
+                hoveredService = isHovered ? service : (hoveredService == service ? nil : hoveredService)
+            }
+        }
         .onDrop(
             of: [UTType.text],
             delegate: ServiceRowDropDelegate(
                 destination: service,
                 settings: settings,
+                services: $draftServiceOrder,
+                persistedServices: settings.orderedServices,
                 draggedService: $draggedService
             )
         )
@@ -221,6 +236,7 @@ struct SettingsView: View {
         }
         .foregroundStyle(.secondary)
         .frame(width: 18, height: 20)
+        .opacity((hoveredService == service || draggedService == service) ? 1 : 0)
         .contentShape(Rectangle())
         .onDrag {
             draggedService = service
@@ -294,6 +310,7 @@ struct SettingsView: View {
         settings.customSlashCommands = [:]
         settings.keystrokeOverrides = [:]
         settings.serviceOrder = ServiceType.displayOrder
+        draftServiceOrder = ServiceType.displayOrder
         settings.lastUsedService = settings.orderedServices.first ?? .claude
         settings.launchAtLogin = false
         settings.theme = .system
@@ -305,6 +322,8 @@ struct SettingsView: View {
 private struct ServiceRowDropDelegate: DropDelegate {
     let destination: ServiceType
     let settings: AppSettings
+    @Binding var services: [ServiceType]
+    let persistedServices: [ServiceType]
     @Binding var draggedService: ServiceType?
 
     func dropUpdated(info: DropInfo) -> DropProposal? {
@@ -314,21 +333,32 @@ private struct ServiceRowDropDelegate: DropDelegate {
     func dropEntered(info: DropInfo) {
         guard let draggedService,
               draggedService != destination,
-              let sourceIndex = settings.orderedServices.firstIndex(of: draggedService),
-              let destinationIndex = settings.orderedServices.firstIndex(of: destination) else {
+              let sourceIndex = services.firstIndex(of: draggedService),
+              let destinationIndex = services.firstIndex(of: destination) else {
             return
         }
 
         let adjustedDestination = destinationIndex > sourceIndex ? destinationIndex + 1 : destinationIndex
         guard sourceIndex != adjustedDestination else { return }
 
-        withAnimation(.easeInOut(duration: 0.15)) {
-            settings.moveService(from: sourceIndex, to: adjustedDestination)
+        withAnimation(.interactiveSpring(response: 0.22, dampingFraction: 0.88, blendDuration: 0.12)) {
+            let movedService = services.remove(at: sourceIndex)
+            let targetIndex = min(max(adjustedDestination, 0), services.count)
+            services.insert(movedService, at: targetIndex)
         }
     }
 
     func performDrop(info: DropInfo) -> Bool {
+        if services != persistedServices {
+            settings.serviceOrder = services
+        }
         draggedService = nil
         return true
+    }
+
+    func dropExited(info: DropInfo) {
+        if draggedService == nil {
+            services = persistedServices
+        }
     }
 }

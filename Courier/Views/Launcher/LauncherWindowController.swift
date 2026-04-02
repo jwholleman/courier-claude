@@ -41,7 +41,7 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
 
         containerView = NSView()
         containerView.wantsLayer = true
-        containerView.layer?.cornerRadius = 18
+        containerView.layer?.cornerRadius = 24
         containerView.layer?.masksToBounds = true
         containerView.layer?.borderWidth = 1
         containerView.layer?.borderColor = NSColor.white.withAlphaComponent(0.08).cgColor

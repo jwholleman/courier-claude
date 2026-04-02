@@ -10,7 +10,7 @@ struct SlashCommandStep: View {
     @State private var duplicateError: String? = nil
 
     private var enabledServices: [ServiceType] {
-        ServiceType.displayOrder.filter { !settings.disabledServices.contains($0) }
+        settings.enabledServices
     }
 
     var body: some View {

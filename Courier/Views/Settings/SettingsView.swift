@@ -1,11 +1,13 @@
 import SwiftUI
 import KeyboardShortcuts
+import UniformTypeIdentifiers
 
 struct SettingsView: View {
     @Bindable var settings: AppSettings
     @State private var launchAtLogin: Bool = false
     @State private var loginItemError: String? = nil
     @State private var showResetConfirm = false
+    @State private var draggedService: ServiceType? = nil
     /// Local text buffer for slash command fields — avoids cursor-reset on every keystroke.
     @State private var slashCommandTexts: [String: String] = [:]
 
@@ -20,11 +22,8 @@ struct SettingsView: View {
         return "Global shortcuts can conflict with other apps. Change it here or in the conflicting app."
     }
 
-    private let llmServices: [ServiceType] = [.claude, .chatgpt, .gemini, .perplexity]
-    private let searchServices: [ServiceType] = [.kagi, .google, .duckduckgo]
-
     private var enabledCount: Int {
-        ServiceType.allCases.filter { !settings.disabledServices.contains($0) }.count
+        settings.enabledServices.count
     }
 
     var body: some View {
@@ -131,20 +130,11 @@ struct SettingsView: View {
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 8))
 
-                // AI Assistants
-                sectionHeader("AI Assistants")
+                // Services
+                sectionHeader("Services")
                 VStack(spacing: 1) {
-                    ForEach(llmServices) { service in
-                        llmServiceRow(for: service)
-                    }
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-
-                // Search Engines
-                sectionHeader("Search Engines")
-                VStack(spacing: 1) {
-                    ForEach(searchServices) { service in
-                        searchServiceRow(for: service)
+                    ForEach(settings.orderedServices) { service in
+                        serviceRow(for: service)
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -156,11 +146,6 @@ struct SettingsView: View {
 
     // MARK: - Service rows
 
-    /// The currently active search engine (first enabled, fallback to .google).
-    private var selectedSearchService: ServiceType {
-        searchServices.first { !settings.disabledServices.contains($0) } ?? .google
-    }
-
     @ViewBuilder
     private func sectionHeader(_ title: String) -> some View {
         Text(title)
@@ -171,12 +156,15 @@ struct SettingsView: View {
             .padding(.horizontal, 4)
     }
 
-    // LLM row: [toggle] [icon] [name] [spacer] [slash field]
-    private func llmServiceRow(for service: ServiceType) -> some View {
+    // Service row: [toggle] [icon] [name] [spacer] [slash field]
+    private func serviceRow(for service: ServiceType) -> some View {
         let isEnabled = !settings.disabledServices.contains(service)
         let canDisable = enabledCount > 1 || !isEnabled
 
         return HStack(spacing: 10) {
+            dragHandle(for: service)
+                .help("Drag to reorder services")
+
             Toggle("", isOn: Binding(
                 get: { isEnabled },
                 set: { enabled in
@@ -209,46 +197,35 @@ struct SettingsView: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 9)
         .background(Color(nsColor: .controlBackgroundColor))
+        .contentShape(Rectangle())
+        .onDrop(
+            of: [UTType.text],
+            delegate: ServiceRowDropDelegate(
+                destination: service,
+                settings: settings,
+                draggedService: $draggedService
+            )
+        )
     }
 
-    // Search row: [radio] [icon] [name] [spacer] [slash field]
-    private func searchServiceRow(for service: ServiceType) -> some View {
-        let isSelected = selectedSearchService == service
-
-        return HStack(spacing: 10) {
-            Button {
-                // Select this engine, deselect all others
-                for s in searchServices { settings.disabledServices.insert(s) }
-                settings.disabledServices.remove(service)
-            } label: {
-                Image(systemName: isSelected ? "circle.inset.filled" : "circle")
-                    .foregroundStyle(isSelected ? Color(nsColor: .controlAccentColor) : .secondary)
-                    .frame(width: 20, height: 20)
+    private func dragHandle(for service: ServiceType) -> some View {
+        VStack(spacing: 3) {
+            ForEach(0..<3, id: \.self) { _ in
+                HStack(spacing: 3) {
+                    Circle()
+                        .frame(width: 3, height: 3)
+                    Circle()
+                        .frame(width: 3, height: 3)
+                }
             }
-            .buttonStyle(.plain)
-
-            Image(service.settingsIconName, bundle: nil)
-                .resizable()
-                .renderingMode(.template)
-                .frame(width: 16, height: 16)
-                .foregroundStyle(isSelected ? Color(nsColor: .controlAccentColor) : .secondary)
-
-            Text(service.displayName)
-                .font(.body)
-                .lineLimit(1)
-
-            Spacer(minLength: 8)
-
-            TextField("", text: slashCommandBinding(for: service))
-                .textFieldStyle(.roundedBorder)
-                .font(.system(size: 12, design: .monospaced))
-                .frame(width: 240)
-                .disabled(!isSelected)
-                .opacity(isSelected ? 1.0 : 0.4)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 9)
-        .background(Color(nsColor: .controlBackgroundColor))
+        .foregroundStyle(.secondary)
+        .frame(width: 18, height: 20)
+        .contentShape(Rectangle())
+        .onDrag {
+            draggedService = service
+            return NSItemProvider(object: service.rawValue as NSString)
+        }
     }
 
     // MARK: - Slash command binding helpers
@@ -284,7 +261,7 @@ struct SettingsView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
-                ForEach(llmServices) { service in
+                ForEach(settings.orderedServices.filter(\.supportsNativeKeystrokeConfiguration)) { service in
                     if settings.disabledServices.contains(service) { EmptyView() } else {
                         Picker(service.displayName, selection: Binding(
                             get: {
@@ -316,10 +293,42 @@ struct SettingsView: View {
         settings.disabledServices = []
         settings.customSlashCommands = [:]
         settings.keystrokeOverrides = [:]
-        settings.lastUsedService = .claude
+        settings.serviceOrder = ServiceType.displayOrder
+        settings.lastUsedService = settings.orderedServices.first ?? .claude
         settings.launchAtLogin = false
         settings.theme = .system
         launchAtLogin = false
         try? LoginItemManager.shared.disable()
+    }
+}
+
+private struct ServiceRowDropDelegate: DropDelegate {
+    let destination: ServiceType
+    let settings: AppSettings
+    @Binding var draggedService: ServiceType?
+
+    func dropUpdated(info: DropInfo) -> DropProposal? {
+        DropProposal(operation: .move)
+    }
+
+    func dropEntered(info: DropInfo) {
+        guard let draggedService,
+              draggedService != destination,
+              let sourceIndex = settings.orderedServices.firstIndex(of: draggedService),
+              let destinationIndex = settings.orderedServices.firstIndex(of: destination) else {
+            return
+        }
+
+        let adjustedDestination = destinationIndex > sourceIndex ? destinationIndex + 1 : destinationIndex
+        guard sourceIndex != adjustedDestination else { return }
+
+        withAnimation(.easeInOut(duration: 0.15)) {
+            settings.moveService(from: sourceIndex, to: adjustedDestination)
+        }
+    }
+
+    func performDrop(info: DropInfo) -> Bool {
+        draggedService = nil
+        return true
     }
 }

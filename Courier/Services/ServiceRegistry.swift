@@ -24,6 +24,10 @@ final class ServiceRegistry {
             slashCommands: ["/cl", "/claude"],
             appendsQueryToURL: false
         )
+        map[.claudeCode] = ClaudeCodeService(
+            type: .claudeCode,
+            slashCommands: ["/cc", "/claudecode"]
+        )
         map[.chatgpt] = LLMService(
             type: .chatgpt,
             browserURL: "https://chatgpt.com/",
@@ -54,6 +58,11 @@ final class ServiceRegistry {
             type: .google,
             browserURL: "https://www.google.com/search?q=",
             slashCommands: ["/g", "/google"]
+        )
+        map[.youtube] = SearchService(
+            type: .youtube,
+            browserURL: "https://www.youtube.com/results?search_query=",
+            slashCommands: ["/yt", "/youtube"]
         )
         map[.duckduckgo] = SearchService(
             type: .duckduckgo,

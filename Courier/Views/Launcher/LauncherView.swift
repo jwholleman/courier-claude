@@ -3,6 +3,7 @@ import SwiftUI
 /// Root view hosted inside the launcher panel.
 struct LauncherView: View {
     let viewModel: LauncherViewModel
+    @Bindable var settings: AppSettings
     var onSubmit: (() -> Void)?
     var onDismiss: (() -> Void)?
 
@@ -52,7 +53,7 @@ struct LauncherView: View {
 
             ServiceBar(
                 viewModel: viewModel,
-                disabledServices: viewModel.settings?.disabledServices ?? [],
+                settings: settings,
                 onSubmit: { onSubmit?() }
             )
         }

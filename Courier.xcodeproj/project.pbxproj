@@ -38,6 +38,7 @@
 		7D2F92A2A14CAEF64555EFB1 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4306791EEC24A5DB3A5CC3A /* AppSettings.swift */; };
 		7F6CE4FD178464DE9744F8A1 /* ServiceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B8115768923F6E0A57CEE /* ServiceRegistry.swift */; };
 		812A96E13E3A3D7EC075A538 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC24D44D603D16958C27C4 /* NotificationHelper.swift */; };
+		81EA8FCD590EBA6F836EF4C6 /* claudecode.svg in Resources */ = {isa = PBXBuildFile; fileRef = F95559B5AC908B3131F1E37F /* claudecode.svg */; };
 		84A7FDA9DBE3AE6A95644233 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 40A6A677D7FA4E3D9460167B /* KeyboardShortcuts */; };
 		8C3744F6D4A6EACE499E1656 /* ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A633BAC19461299308D6A373 /* ServiceProtocol.swift */; };
 		8C94A4700AB0D97C200C7776 /* SearchProviderStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D80B1A8CD184B0A1E308BD3 /* SearchProviderStep.swift */; };
@@ -54,8 +55,10 @@
 		B2076D277006021A00AA84E9 /* claude.svg in Resources */ = {isa = PBXBuildFile; fileRef = 3001F3BB90203B069E29A9E8 /* claude.svg */; };
 		B59EAF2463BE3CDA9EEC1853 /* HotKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */; };
 		B6142CF629F6C1379B9BF43C /* SlashCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A95CC58CC3D54AE3E66D8FD /* SlashCommandTests.swift */; };
+		B8FDA8CE2B705C53381BDBAF /* duckduckgo-negative.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4795C7C07492DB8C2C13A6F5 /* duckduckgo-negative.svg */; };
 		B9084402F16872A4AB4A72E1 /* AppleScriptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013DCAEE921EF01A35C316EF /* AppleScriptHelper.swift */; };
 		B913B345FC157125235451C8 /* ServiceRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BD37508C8391419F6F2196 /* ServiceRegistryTests.swift */; };
+		BEB8E0A1FB4261C3BC75769D /* ClaudeCodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7878251D2D85E0637A2DD45E /* ClaudeCodeService.swift */; };
 		C07C15B449FFC0088BA9D165 /* ServiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615498E1897DEFA1446B2C9D /* ServiceButton.swift */; };
 		C353F95DCB2660CFE9D48BDF /* LLMSelectionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFE535BADDDBB8FF5FF527D /* LLMSelectionStep.swift */; };
 		C6267B9C96C43E666A6A307B /* gemini.svg in Resources */ = {isa = PBXBuildFile; fileRef = 78BBC80753A959D1B26DC96D /* gemini.svg */; };
@@ -67,9 +70,12 @@
 		D0E90CB825437967F5757C59 /* AccessibilityPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */; };
 		D227644F7DABD7A18C5291B2 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4306791EEC24A5DB3A5CC3A /* AppSettings.swift */; };
 		D7B0F28A10FA332656C8B6E7 /* ServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA96E39F011A2BD69DC0B1 /* ServiceType.swift */; };
+		D941E72DCEE7F8B6339522CB /* courier.svg in Resources */ = {isa = PBXBuildFile; fileRef = D68674DC4FE8A3674D8B342B /* courier.svg */; };
 		DDAF11EF040D5FAC146979B0 /* duckduckgo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 225C0F7BF957E75DA61F4A44 /* duckduckgo.svg */; };
+		E3581528DD8D69D1B206390F /* ClaudeCodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7878251D2D85E0637A2DD45E /* ClaudeCodeService.swift */; };
 		EF46B3FE35D456C009F2A0D3 /* ServiceBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623A720E6BD4D32A0BEC52DC /* ServiceBar.swift */; };
 		F913283E60F2F20C97E083D0 /* AppleScriptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013DCAEE921EF01A35C316EF /* AppleScriptHelper.swift */; };
+		FDF992893C14E51F30557994 /* youtube.svg in Resources */ = {isa = PBXBuildFile; fileRef = 41859AA1EEE7616F5337651F /* youtube.svg */; };
 		FFF67BECD8C01B40FE4AD0D8 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC24D44D603D16958C27C4 /* NotificationHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +92,8 @@
 		2A4CF1B696C1CB7B47451B1A /* CourierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierApp.swift; sourceTree = "<group>"; };
 		3001F3BB90203B069E29A9E8 /* claude.svg */ = {isa = PBXFileReference; path = claude.svg; sourceTree = "<group>"; };
 		3A95CC58CC3D54AE3E66D8FD /* SlashCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlashCommandTests.swift; sourceTree = "<group>"; };
+		41859AA1EEE7616F5337651F /* youtube.svg */ = {isa = PBXFileReference; path = youtube.svg; sourceTree = "<group>"; };
+		4795C7C07492DB8C2C13A6F5 /* duckduckgo-negative.svg */ = {isa = PBXFileReference; path = "duckduckgo-negative.svg"; sourceTree = "<group>"; };
 		48345AD7CBBC3F15D92CE9AB /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
 		55B480FAAFBDC1D3E99539DD /* LauncherTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherTokens.swift; sourceTree = "<group>"; };
 		57C8EC6E55DCC0D75C42AA72 /* Courier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Courier.entitlements; sourceTree = "<group>"; };
@@ -95,6 +103,7 @@
 		623A720E6BD4D32A0BEC52DC /* ServiceBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBar.swift; sourceTree = "<group>"; };
 		6D4B3CBCF4A53A44DFA16BB5 /* Courier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Courier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75603284C3E3297DEE0A917F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		7878251D2D85E0637A2DD45E /* ClaudeCodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeCodeService.swift; sourceTree = "<group>"; };
 		78BBC80753A959D1B26DC96D /* gemini.svg */ = {isa = PBXFileReference; path = gemini.svg; sourceTree = "<group>"; };
 		7A7AEC35AF82CADA900BD555 /* ToastPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPanel.swift; sourceTree = "<group>"; };
 		7C34D9DA5A69B02A2E9D3EAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -116,6 +125,7 @@
 		C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyProvider.swift; sourceTree = "<group>"; };
 		C333C9A158A37FBD974CFA0B /* URLEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncodingTests.swift; sourceTree = "<group>"; };
 		C7AA0F043469499A6179DEA8 /* DispatchChainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchChainTests.swift; sourceTree = "<group>"; };
+		D68674DC4FE8A3674D8B342B /* courier.svg */ = {isa = PBXFileReference; path = courier.svg; sourceTree = "<group>"; };
 		DDC435963B019B86A15BEB91 /* CourierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CourierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E018628493FF9D82B0310D89 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		E71519206C85015FE0A5F756 /* ServiceDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDispatcher.swift; sourceTree = "<group>"; };
@@ -125,6 +135,7 @@
 		F239051016D81D03687F5AEF /* QueryInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInputView.swift; sourceTree = "<group>"; };
 		F2966F52EE5E164C6A998B77 /* CourierTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierTextView.swift; sourceTree = "<group>"; };
 		F4306791EEC24A5DB3A5CC3A /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		F95559B5AC908B3131F1E37F /* claudecode.svg */ = {isa = PBXFileReference; path = claudecode.svg; sourceTree = "<group>"; };
 		FAEA96E39F011A2BD69DC0B1 /* ServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceType.swift; sourceTree = "<group>"; };
 		FB8C761BD9E0458E86D51EC6 /* HotkeySetupStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeySetupStep.swift; sourceTree = "<group>"; };
 		FBFE535BADDDBB8FF5FF527D /* LLMSelectionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMSelectionStep.swift; sourceTree = "<group>"; };
@@ -211,12 +222,16 @@
 			children = (
 				E018628493FF9D82B0310D89 /* .gitkeep */,
 				B3AB23A616311B0C040BD8D7 /* chatgpt.svg */,
+				F95559B5AC908B3131F1E37F /* claudecode.svg */,
 				3001F3BB90203B069E29A9E8 /* claude.svg */,
+				D68674DC4FE8A3674D8B342B /* courier.svg */,
+				4795C7C07492DB8C2C13A6F5 /* duckduckgo-negative.svg */,
 				225C0F7BF957E75DA61F4A44 /* duckduckgo.svg */,
 				78BBC80753A959D1B26DC96D /* gemini.svg */,
 				A26B7CB7C7A6C9715CCFEC1E /* google.svg */,
 				19823F6A5DDE7BC086667966 /* kagi.svg */,
 				AE8FDCD2077AE89C9867C471 /* perplexity.svg */,
+				41859AA1EEE7616F5337651F /* youtube.svg */,
 			);
 			path = IncomingIcons;
 			sourceTree = "<group>";
@@ -252,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				013DCAEE921EF01A35C316EF /* AppleScriptHelper.swift */,
+				7878251D2D85E0637A2DD45E /* ClaudeCodeService.swift */,
 				48345AD7CBBC3F15D92CE9AB /* LLMService.swift */,
 				5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */,
 				E71519206C85015FE0A5F756 /* ServiceDispatcher.swift */,
@@ -419,12 +435,16 @@
 			files = (
 				198C61B9115B43E14A07DA2A /* Assets.xcassets in Resources */,
 				54463DD184A1BA7FAF981CBB /* chatgpt.svg in Resources */,
+				81EA8FCD590EBA6F836EF4C6 /* claudecode.svg in Resources */,
 				B2076D277006021A00AA84E9 /* claude.svg in Resources */,
+				D941E72DCEE7F8B6339522CB /* courier.svg in Resources */,
+				B8FDA8CE2B705C53381BDBAF /* duckduckgo-negative.svg in Resources */,
 				DDAF11EF040D5FAC146979B0 /* duckduckgo.svg in Resources */,
 				C6267B9C96C43E666A6A307B /* gemini.svg in Resources */,
 				AE01AB2568C7808BD41F4D38 /* google.svg in Resources */,
 				CD0B52A7CA66D6E7101D5580 /* kagi.svg in Resources */,
 				0D453F66D8AE4E698808411E /* perplexity.svg in Resources */,
+				FDF992893C14E51F30557994 /* youtube.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +459,7 @@
 				D227644F7DABD7A18C5291B2 /* AppSettings.swift in Sources */,
 				B0A08F14BA36162D30CE70A6 /* AppSettingsTests.swift in Sources */,
 				F913283E60F2F20C97E083D0 /* AppleScriptHelper.swift in Sources */,
+				BEB8E0A1FB4261C3BC75769D /* ClaudeCodeService.swift in Sources */,
 				3AF4324D428C40BD1C8CDDAF /* DispatchChainTests.swift in Sources */,
 				AB0E50E5C451B342B4184C58 /* LLMService.swift in Sources */,
 				662C98E38CA9B9F878278F60 /* LoginItemManager.swift in Sources */,
@@ -464,6 +485,7 @@
 				AE847B898CEDE103FAB6274B /* AppDelegate.swift in Sources */,
 				7D2F92A2A14CAEF64555EFB1 /* AppSettings.swift in Sources */,
 				B9084402F16872A4AB4A72E1 /* AppleScriptHelper.swift in Sources */,
+				E3581528DD8D69D1B206390F /* ClaudeCodeService.swift in Sources */,
 				AE5A66CE1E06980B039A2040 /* CourierApp.swift in Sources */,
 				3AB3D5BFDAA237317128657F /* CourierTextView.swift in Sources */,
 				1AC819B3CC0E600D49753B95 /* DeliverButton.swift in Sources */,

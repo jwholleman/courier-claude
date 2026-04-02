@@ -35,7 +35,7 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
         dispatcher = ServiceDispatcher(registry: registry)
 
         // Create stub root view pre-super.init; closures capturing self are set post-super.init
-        let rootView = LauncherView(viewModel: viewModel, onSubmit: nil, onDismiss: nil)
+        let rootView = LauncherView(viewModel: viewModel, settings: settings, onSubmit: nil, onDismiss: nil)
         hostingView = NSHostingView(rootView: rootView)
         hostingView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -52,6 +52,7 @@ final class LauncherWindowController: NSObject, NSWindowDelegate {
         // Update rootView with closures now that self is available
         hostingView.rootView = LauncherView(
             viewModel: viewModel,
+            settings: settings,
             onSubmit: { [weak self] in self?.handleSubmit() },
             onDismiss: { [weak self] in self?.hide() }
         )

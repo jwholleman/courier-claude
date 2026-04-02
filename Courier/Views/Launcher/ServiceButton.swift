@@ -38,8 +38,17 @@ struct ServiceButton: View {
     }
 
     private var iconAssetName: String {
-        if service == .duckduckgo && !showsBrandColor {
-            return "duckduckgoNegative"
+        if !showsBrandColor {
+            switch service {
+            case .duckduckgo:
+                return "duckduckgoNegative"
+            case .claudeCode:
+                return "claudeCodeNegative"
+            case .youtube:
+                return "youtubeNegative"
+            default:
+                break
+            }
         }
         return service.iconName
     }

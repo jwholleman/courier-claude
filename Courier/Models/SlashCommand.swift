@@ -10,6 +10,8 @@ struct SlashCommand {
     static let all: [SlashCommand] = [
         SlashCommand(command: "/cl",        serviceType: .claude),
         SlashCommand(command: "/claude",    serviceType: .claude),
+        SlashCommand(command: "/cc",        serviceType: .claudeCode),
+        SlashCommand(command: "/claudecode",serviceType: .claudeCode),
         SlashCommand(command: "/ch",        serviceType: .chatgpt),
         SlashCommand(command: "/chatgpt",   serviceType: .chatgpt),
         SlashCommand(command: "/ge",        serviceType: .gemini),
@@ -20,6 +22,8 @@ struct SlashCommand {
         SlashCommand(command: "/kagi",      serviceType: .kagi),
         SlashCommand(command: "/g",         serviceType: .google),
         SlashCommand(command: "/google",    serviceType: .google),
+        SlashCommand(command: "/yt",        serviceType: .youtube),
+        SlashCommand(command: "/youtube",   serviceType: .youtube),
         SlashCommand(command: "/d",         serviceType: .duckduckgo),
         SlashCommand(command: "/ddg",       serviceType: .duckduckgo),
         SlashCommand(command: "/duckduckgo",serviceType: .duckduckgo),

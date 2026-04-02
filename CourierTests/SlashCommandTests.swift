@@ -10,15 +10,18 @@ final class SlashCommandTests: XCTestCase {
         registry = ServiceRegistry()
     }
 
-    func testAllFourteenCommands() {
+    func testBuiltInCommands() {
         let expected: [(String, ServiceType)] = [
             ("/cl", .claude),       ("/claude", .claude),
+            ("/cc", .claudeCode),   ("/claudecode", .claudeCode),
             ("/ch", .chatgpt),      ("/chatgpt", .chatgpt),
             ("/ge", .gemini),       ("/gemini", .gemini),
             ("/p", .perplexity),    ("/perplexity", .perplexity),
             ("/k", .kagi),          ("/kagi", .kagi),
             ("/g", .google),        ("/google", .google),
+            ("/yt", .youtube),      ("/youtube", .youtube),
             ("/d", .duckduckgo),    ("/ddg", .duckduckgo),
+            ("/duckduckgo", .duckduckgo),
         ]
         for (command, expectedType) in expected {
             XCTAssertEqual(registry.serviceType(forSlashCommand: command), expectedType,
@@ -28,8 +31,10 @@ final class SlashCommandTests: XCTestCase {
 
     func testCaseInsensitive() {
         XCTAssertEqual(registry.serviceType(forSlashCommand: "/CL"), .claude)
+        XCTAssertEqual(registry.serviceType(forSlashCommand: "/CC"), .claudeCode)
         XCTAssertEqual(registry.serviceType(forSlashCommand: "/CHATGPT"), .chatgpt)
         XCTAssertEqual(registry.serviceType(forSlashCommand: "/Google"), .google)
+        XCTAssertEqual(registry.serviceType(forSlashCommand: "/YOUTUBE"), .youtube)
         XCTAssertEqual(registry.serviceType(forSlashCommand: "/DDG"), .duckduckgo)
     }
 
@@ -55,9 +60,9 @@ final class SlashCommandTests: XCTestCase {
     }
 
     func testSlashPrefixNarrows() {
-        // "/cl" prefix matches only Claude
+        // "/cl" prefix matches Claude and Claude Code
         let prefix = "/cl"
         let matches = SlashCommand.all.filter { $0.command.hasPrefix(prefix) }.map { $0.serviceType }
-        XCTAssertEqual(Set(matches), Set([ServiceType.claude]))
+        XCTAssertEqual(Set(matches), Set([ServiceType.claude, ServiceType.claudeCode]))
     }
 }

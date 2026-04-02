@@ -32,7 +32,17 @@ final class AppSettings {
     }
 
     var disabledServices: Set<ServiceType> {
-        didSet { save() }
+        didSet {
+            normalizeDisabledServices()
+            save()
+        }
+    }
+
+    var serviceOrder: [ServiceType] {
+        didSet {
+            normalizeServiceOrder()
+            save()
+        }
     }
 
     var hotKeyShortcut: String? {
@@ -69,11 +79,15 @@ final class AppSettings {
 
     /// The effective selected service — falls back to first enabled if last-used is disabled.
     var effectiveSelectedService: ServiceType {
-        if !disabledServices.contains(lastUsedService) {
-            return lastUsedService
-        }
-        // Fall back to first enabled in display order
-        return ServiceType.displayOrder.first(where: { !disabledServices.contains($0) }) ?? .claude
+        enabledServices.first(where: { $0 == lastUsedService }) ?? enabledServices.first ?? .claude
+    }
+
+    var orderedServices: [ServiceType] {
+        serviceOrder
+    }
+
+    var enabledServices: [ServiceType] {
+        orderedServices.filter { !disabledServices.contains($0) }
     }
 
     // MARK: - Init
@@ -92,6 +106,9 @@ final class AppSettings {
         let rawDisabled = Self.defaults.stringArray(forKey: "disabledServices") ?? []
         disabledServices = Set(rawDisabled.compactMap { ServiceType(rawValue: $0) })
 
+        let rawOrder = Self.defaults.stringArray(forKey: "serviceOrder") ?? []
+        serviceOrder = rawOrder.compactMap { ServiceType(rawValue: $0) }
+
         hotKeyShortcut = Self.defaults.string(forKey: "hotKeyShortcut")
         launchAtLogin = Self.defaults.bool(forKey: "launchAtLogin")
         hasCompletedSetup = Self.defaults.bool(forKey: "hasCompletedSetup")
@@ -99,10 +116,29 @@ final class AppSettings {
         keystrokeOverrides = (Self.defaults.dictionary(forKey: "keystrokeOverrides") as? [String: String]) ?? [:]
         let rawTheme = Self.defaults.string(forKey: "theme") ?? "system"
         theme = AppTheme(rawValue: rawTheme) ?? .system
+
+        serviceOrder = normalizedServiceOrder(from: serviceOrder)
+        disabledServices = disabledServices.intersection(Set(ServiceType.allCases))
+        if enabledServices.isEmpty, let fallback = orderedServices.first {
+            disabledServices.remove(fallback)
+        }
+        if disabledServices.contains(lastUsedService) {
+            lastUsedService = enabledServices.first ?? .claude
+        }
     }
 
     func applyTheme() {
         NSApp.appearance = theme.nsAppearance
+    }
+
+    func moveService(from source: Int, to destination: Int) {
+        guard orderedServices.indices.contains(source) else { return }
+
+        var reordered = orderedServices
+        let service = reordered.remove(at: source)
+        let targetIndex = min(max(destination, 0), reordered.count)
+        reordered.insert(service, at: targetIndex)
+        serviceOrder = reordered
     }
 
     // MARK: - Persistence
@@ -110,6 +146,7 @@ final class AppSettings {
     func save() {
         Self.defaults.set(lastUsedService.rawValue, forKey: "lastUsedService")
         Self.defaults.set(disabledServices.map(\.rawValue), forKey: "disabledServices")
+        Self.defaults.set(orderedServices.map(\.rawValue), forKey: "serviceOrder")
         Self.defaults.set(hotKeyShortcut, forKey: "hotKeyShortcut")
         Self.defaults.set(launchAtLogin, forKey: "launchAtLogin")
         Self.defaults.set(hasCompletedSetup, forKey: "hasCompletedSetup")
@@ -124,5 +161,45 @@ final class AppSettings {
     private static func migrate(from oldVersion: Int, to newVersion: Int) {
         // v0 -> v1: no existing keys, nothing to migrate
         defaults.set(newVersion, forKey: "settingsVersion")
+    }
+
+    private func normalizeServiceOrder() {
+        let normalizedOrder = normalizedServiceOrder(from: serviceOrder)
+        if normalizedOrder != serviceOrder {
+            serviceOrder = normalizedOrder
+            return
+        }
+
+        if disabledServices.contains(lastUsedService) {
+            lastUsedService = enabledServices.first ?? .claude
+        }
+    }
+
+    private func normalizeDisabledServices() {
+        let validDisabled = disabledServices.intersection(Set(ServiceType.allCases))
+        if validDisabled != disabledServices {
+            disabledServices = validDisabled
+            return
+        }
+
+        if enabledServices.isEmpty {
+            if let fallback = orderedServices.first {
+                disabledServices.remove(fallback)
+            }
+            return
+        }
+
+        if disabledServices.contains(lastUsedService) {
+            lastUsedService = enabledServices.first ?? .claude
+        }
+    }
+
+    private func normalizedServiceOrder(from services: [ServiceType]) -> [ServiceType] {
+        var seen = Set<ServiceType>()
+        let validServices = services.filter { service in
+            ServiceType.allCases.contains(service) && seen.insert(service).inserted
+        }
+
+        return validServices + ServiceType.displayOrder.filter { seen.insert($0).inserted }
     }
 }

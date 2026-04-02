@@ -1,30 +1,20 @@
 import Foundation
 
-enum ServiceCategory: String, Codable {
-    case llm
-    case search
-}
-
 enum ServiceType: String, Codable, CaseIterable, Identifiable {
-    case claude, chatgpt, gemini, perplexity, kagi, google, duckduckgo
+    case claude, claudeCode = "claude-code", chatgpt, gemini, perplexity, kagi, google, youtube, duckduckgo
 
     var id: String { rawValue }
-
-    var category: ServiceCategory {
-        switch self {
-        case .claude, .chatgpt, .gemini, .perplexity: return .llm
-        case .kagi, .google, .duckduckgo: return .search
-        }
-    }
 
     var displayName: String {
         switch self {
         case .claude: return "Claude"
+        case .claudeCode: return "Claude Code"
         case .chatgpt: return "ChatGPT"
         case .gemini: return "Gemini"
         case .perplexity: return "Perplexity"
         case .kagi: return "Kagi"
         case .google: return "Google"
+        case .youtube: return "YouTube"
         case .duckduckgo: return "DuckDuckGo"
         }
     }
@@ -34,14 +24,25 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
     var settingsIconName: String {
         switch self {
         case .duckduckgo: return "duckduckgoNegative"
+        case .claudeCode: return "claudeCodeNegative"
+        case .youtube: return "youtubeNegative"
         default: return iconName
         }
     }
 
-    /// Display order: LLMs first, then search engines
+    var supportsNativeKeystrokeConfiguration: Bool {
+        switch self {
+        case .claude, .chatgpt, .gemini, .perplexity:
+            return true
+        case .claudeCode, .kagi, .google, .youtube, .duckduckgo:
+            return false
+        }
+    }
+
+    /// Default display order for enabled services in Settings and the launcher.
     static let displayOrder: [ServiceType] = [
-        .claude, .chatgpt, .gemini, .perplexity,
-        .kagi, .google, .duckduckgo
+        .claude, .claudeCode, .chatgpt, .gemini, .perplexity,
+        .kagi, .google, .youtube, .duckduckgo
     ]
 
     // MARK: - Dispatch configuration

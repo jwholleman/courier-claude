@@ -29,6 +29,13 @@ final class DispatchChainTests: XCTestCase {
         XCTAssertTrue(str.hasPrefix("https://kagi.com/search?q="))
     }
 
+    func testYouTubeURLStructure() {
+        let url = SearchService.buildURL(base: "https://www.youtube.com/results?search_query=", query: "hello world")
+        XCTAssertNotNil(url)
+        let str = url?.absoluteString ?? ""
+        XCTAssertTrue(str.hasPrefix("https://www.youtube.com/results?search_query="))
+    }
+
     func testSpecialCharsInSearchURL() {
         let url = SearchService.buildURL(base: "https://www.google.com/search?q=", query: "C++ programming & design")
         XCTAssertNotNil(url)
@@ -51,7 +58,9 @@ final class DispatchChainTests: XCTestCase {
     func testSlashCommandLookup() {
         let registry = ServiceRegistry()
         XCTAssertEqual(registry.serviceType(forSlashCommand: "/cl"), .claude)
+        XCTAssertEqual(registry.serviceType(forSlashCommand: "/cc"), .claudeCode)
         XCTAssertEqual(registry.serviceType(forSlashCommand: "/g"), .google)
+        XCTAssertEqual(registry.serviceType(forSlashCommand: "/yt"), .youtube)
         XCTAssertEqual(registry.serviceType(forSlashCommand: "/ddg"), .duckduckgo)
         XCTAssertEqual(registry.serviceType(forSlashCommand: "/p"), .perplexity)
         XCTAssertNil(registry.serviceType(forSlashCommand: "/unknown"))

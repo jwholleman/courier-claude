@@ -12,6 +12,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     var windowController: LauncherWindowController?
     private var wizardController: SetupWizardWindowController?
     private var settingsController: SettingsWindowController?
+    private var statusItem: NSStatusItem?
 
     private let hotKeyProvider: HotKeyProvider = KeyboardShortcutsProvider()
     private var activityToken: NSObjectProtocol?
@@ -78,10 +79,85 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         )
 
         checkPermissions(notifyOnChangeOnly: false)
+
+        setupStatusItem()
     }
 
     func applicationWillTerminate(_ notification: Notification) {
         accessibilityTimer?.invalidate()
+    }
+
+    // MARK: - Status Item
+
+    private func setupStatusItem() {
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+
+        if let button = statusItem?.button {
+            let image = NSImage(named: "MenuBarIcon")!
+            image.size = NSSize(width: 18, height: 18)
+            image.isTemplate = true
+            button.image = image
+            button.setAccessibilityLabel("Courier")
+        }
+
+        let menu = NSMenu()
+
+        let showItem = NSMenuItem(title: "Show Courier", action: #selector(handleTogglePanel), keyEquivalent: "")
+        showItem.target = self
+        menu.addItem(showItem)
+
+        menu.addItem(.separator())
+
+        let settingsItem = NSMenuItem(title: "Settings...", action: #selector(handleOpenSettings), keyEquivalent: ",")
+        settingsItem.keyEquivalentModifierMask = .command
+        settingsItem.target = self
+        menu.addItem(settingsItem)
+
+        let aboutItem = NSMenuItem(title: "About Courier", action: #selector(handleAbout), keyEquivalent: "")
+        aboutItem.target = self
+        menu.addItem(aboutItem)
+
+        let helpItem = NSMenuItem(title: "Help", action: #selector(handleHelp), keyEquivalent: "")
+        helpItem.target = self
+        menu.addItem(helpItem)
+
+        menu.addItem(.separator())
+
+        let updatesItem = NSMenuItem(title: "Check for Updates...", action: nil, keyEquivalent: "")
+        updatesItem.isEnabled = false
+        menu.addItem(updatesItem)
+
+        menu.addItem(.separator())
+
+        let quitItem = NSMenuItem(title: "Quit Courier", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        quitItem.keyEquivalentModifierMask = .command
+        menu.addItem(quitItem)
+
+        statusItem?.menu = menu
+    }
+
+    @objc private func handleTogglePanel() { togglePanel() }
+    @objc private func handleOpenSettings() { openSettings() }
+
+    @objc private func handleAbout() {
+        NSApp.activate(ignoringOtherApps: true)
+        var options: [NSApplication.AboutPanelOptionKey: Any] = [
+            .applicationVersion: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0",
+            .credits: NSAttributedString(
+                string: "A universal query launcher for macOS.",
+                attributes: [.font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)]
+            )
+        ]
+        if let icon = NSImage(named: "AppIcon") {
+            options[.applicationIcon] = icon
+        }
+        NSApp.orderFrontStandardAboutPanel(options: options)
+    }
+
+    @objc private func handleHelp() {
+        if let url = URL(string: "https://github.com/johnholleman/courier") {
+            NSWorkspace.shared.open(url)
+        }
     }
 
     // MARK: - Panel

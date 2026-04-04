@@ -23,4 +23,11 @@ final class LauncherPanel: NSPanel {
     // Required for text input to work in a .nonactivatingPanel
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { false }
+
+    // MARK: - Accessibility
+
+    override func accessibilityRole() -> NSAccessibility.Role? { .window }
+    override func accessibilityLabel() -> String? { "Courier Launcher" }
+    override func accessibilityRoleDescription() -> String? { "launcher panel" }
+    override func isAccessibilityElement() -> Bool { true }
 }

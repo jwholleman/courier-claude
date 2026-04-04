@@ -100,8 +100,12 @@ struct ServiceButton: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(isSlashMode
-            ? "\(service.displayName) \(matchesPrefix ? "matching" : "not matching")"
-            : "Send to \(service.displayName)")
+            ? "\(service.displayName), \(matchesPrefix ? "matches current slash command" : "does not match current slash command")"
+            : "\(service.displayName)")
+        .accessibilityHint(isSlashMode
+            ? "Select to route slash command to \(service.displayName)"
+            : "Send query to \(service.displayName). Command+\(cmdPosition) for keyboard shortcut.")
+        .accessibilityValue(isSelected ? "Selected" : "")
         .overlay(alignment: .bottom) {
             if showsTooltip {
                 Text(service.displayName)
@@ -111,6 +115,7 @@ struct ServiceButton: View {
                     .offset(y: LauncherTokens.Layout.tooltipOffsetY)
                     .transition(.opacity)
                     .allowsHitTesting(false)
+                    .accessibilityHidden(true)
             }
         }
         .onHover { hovered in

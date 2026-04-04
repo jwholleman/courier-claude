@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(qlmanage -t -s 1024 -o /tmp/ \"/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/IncomingIcons/Courier-app-icon.svg\")",
+      "Read(//private/tmp/**)",
+      "Read(//Users/John Holleman/Library/Developer/Xcode/DerivedData/**)",
+      "Bash(ls -lt ~/Library/Developer/Xcode/DerivedData/Courier-*/Build/Products/Debug/Courier.app)",
+      "Bash(xcodebuild -scheme Courier -configuration Debug -derivedDataPath ~/Library/Developer/Xcode/DerivedData/Courier-bbrhvhebpowvzugpkzewsghgmepa build)",
+      "Bash(/System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/LaunchServices.framework/Versions/Current/Support/lsregister -kill -r -domain local -domain system -domain user)",
+      "Bash(sudo killall:*)",
+      "Bash(sips -g pixelWidth -g pixelHeight -g hasAlpha \"/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets/AppIcon.appiconset/icon_512x512.png\")",
+      "Bash(open \"/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets/AppIcon.appiconset/icon_512x512.png\")",
+      "Bash(qlmanage -t -s 1024 -o /tmp/qltest \"/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/IncomingIcons/courier-app-icon-new.svg\")",
+      "Read(//tmp/**)",
+      "Bash(sips -g pixelWidth -g pixelHeight /tmp/qltest/courier-app-icon-new.svg.png)",
+      "Bash(open /tmp/qltest/courier-app-icon-new.svg.png)",
+      "Bash(chmod +x \"/Users/John Holleman/repos/Courier/courier-claude/scripts/convert-icons.sh\")",
+      "Bash(defaults read:*)",
+      "Bash(xargs cat:*)"
+    ],
+    "additionalDirectories": [
+      "/Users/John Holleman/Library/Developer/Xcode/DerivedData/Courier-bbrhvhebpowvzugpkzewsghgmepa",
+      "/tmp"
+    ]
+  }
+}

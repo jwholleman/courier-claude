@@ -6,18 +6,14 @@ struct HotkeySetupStep: View {
 
     var body: some View {
         VStack(spacing: 24) {
-            VStack(spacing: 8) {
-                Text("Set Your Hotkey")
-                    .font(.title2.bold())
-                Text("This shortcut opens Courier from anywhere on your Mac.")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-            }
+            Text("Set Your Hotkey")
+                .font(.title.bold())
 
             VStack(spacing: 16) {
                 // Recorder — click it, then press your desired key combination
                 KeyboardShortcuts.Recorder("Launch Courier:", name: .toggleCourier)
+                    .accessibilityLabel("Courier hotkey recorder")
+                    .accessibilityHint("Click, then press the key combination you want to use to open Courier")
                     .onChange(of: KeyboardShortcuts.getShortcut(for: .toggleCourier) != nil) { _, new in
                         hasShortcut = new
                     }
@@ -34,20 +30,12 @@ struct HotkeySetupStep: View {
                     hasShortcut = true
                 }
                 .buttonStyle(.bordered)
+                .accessibilityLabel("Reset hotkey to default")
+                .accessibilityHint("Sets the hotkey back to Option+Space")
             }
             .padding(.horizontal, 40)
 
-            VStack(spacing: 4) {
-                Text("How to record:")
-                    .font(.caption.bold())
-                    .foregroundStyle(.secondary)
-                Text("1. Click the shortcut field   2. Press your desired key combination   3. Done")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
-                    .multilineTextAlignment(.center)
-            }
-            .padding(.horizontal, 32)
-        }
+}
         .padding(40)
         .onAppear {
             hasShortcut = KeyboardShortcuts.getShortcut(for: .toggleCourier) != nil

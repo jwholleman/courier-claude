@@ -19,13 +19,17 @@ struct MenuBarView: View {
         .accessibilityLabel("Open Courier settings")
 
         Button("About Courier") {
-            NSApp.orderFrontStandardAboutPanel(options: [
+            var options: [NSApplication.AboutPanelOptionKey: Any] = [
                 .applicationVersion: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0",
                 .credits: NSAttributedString(
                     string: "A universal query launcher for macOS.",
                     attributes: [.font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)]
                 )
-            ])
+            ]
+            if let icon = NSImage(named: "AppIcon") {
+                options[.applicationIcon] = icon
+            }
+            NSApp.orderFrontStandardAboutPanel(options: options)
         }
         .accessibilityLabel("Show about Courier panel")
 

@@ -2,7 +2,9 @@ import AppKit
 
 final class CourierTextView: NSTextView {
 
-    var placeholder: String = "Type your message. Hold ⌘ or type \"/\" to switch destination."
+    var placeholder: String = "Type your message. Hold ⌘ or type \"/\" to switch destination." {
+        didSet { setAccessibilityPlaceholderValue(placeholder) }
+    }
 
     /// Called when the Cmd modifier key is pressed or released.
     var onCmdModeChanged: ((Bool) -> Void)?

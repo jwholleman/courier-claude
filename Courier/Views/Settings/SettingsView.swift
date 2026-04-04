@@ -73,6 +73,7 @@ struct SettingsView: View {
                     HStack {
                         Text("Theme")
                             .font(.body)
+                            .accessibilityHidden(true)
                         Spacer()
                         Picker("", selection: $settings.theme) {
                             ForEach(AppTheme.allCases, id: \.rawValue) { t in
@@ -82,6 +83,7 @@ struct SettingsView: View {
                         .pickerStyle(.segmented)
                         .frame(width: 180)
                         .labelsHidden()
+                        .accessibilityLabel("Theme")
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 9)
@@ -90,11 +92,13 @@ struct SettingsView: View {
                     HStack {
                         Text("Open on startup")
                             .font(.body)
+                            .accessibilityHidden(true)
                         Spacer()
                         VStack(alignment: .trailing, spacing: 2) {
                             Toggle("", isOn: $launchAtLogin)
                                 .toggleStyle(.switch)
                                 .labelsHidden()
+                                .accessibilityLabel("Open on startup")
                                 .onChange(of: launchAtLogin) { _, newValue in
                                     settings.launchAtLogin = newValue
                                     do {
@@ -108,7 +112,10 @@ struct SettingsView: View {
                                     }
                                 }
                             if let err = loginItemError {
-                                Text(err).font(.caption).foregroundStyle(.red)
+                                Text(err)
+                                    .font(.caption)
+                                    .foregroundStyle(.red)
+                                    .accessibilityLabel("Error: \(err)")
                             }
                         }
                     }
@@ -119,8 +126,11 @@ struct SettingsView: View {
                     HStack {
                         Text("Keyboard shortcut:")
                             .font(.body)
+                            .accessibilityHidden(true)
                         Spacer()
                         KeyboardShortcuts.Recorder("", name: .toggleCourier)
+                            .accessibilityLabel("Courier keyboard shortcut")
+                            .accessibilityHint("Click then press the key combination you want to use to open Courier")
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 9)
@@ -162,6 +172,7 @@ struct SettingsView: View {
             .padding(.top, 12)
             .padding(.bottom, 6)
             .padding(.horizontal, 4)
+            .accessibilityAddTraits(.isHeader)
     }
 
     // Service row: [toggle] [icon] [name] [spacer] [slash field]
@@ -182,16 +193,20 @@ struct SettingsView: View {
             ))
             .disabled(!canDisable && isEnabled)
             .labelsHidden()
+            .accessibilityLabel(isEnabled ? "\(service.displayName), enabled" : "\(service.displayName), disabled")
+            .accessibilityHint(canDisable ? "Toggle to enable or disable \(service.displayName)" : "Cannot disable — at least one service must remain enabled")
 
             Image(service.settingsIconName, bundle: nil)
                 .resizable()
                 .renderingMode(.template)
                 .frame(width: 16, height: 16)
                 .foregroundStyle(isEnabled ? Color(nsColor: .controlAccentColor) : .secondary)
+                .accessibilityHidden(true)
 
             Text(service.displayName)
                 .font(.body)
                 .lineLimit(1)
+                .accessibilityHidden(true)
 
             Spacer(minLength: 8)
 
@@ -201,6 +216,8 @@ struct SettingsView: View {
                 .frame(width: 240)
                 .disabled(!isEnabled)
                 .opacity(isEnabled ? 1.0 : 0.4)
+                .accessibilityLabel("Slash commands for \(service.displayName)")
+                .accessibilityHint("Comma-separated slash commands, e.g. /claude, /ai. Leave empty to use defaults.")
         }
         .padding(.leading, 4)
         .padding(.trailing, 12)
@@ -240,6 +257,9 @@ struct SettingsView: View {
         .frame(width: 18, height: 20)
         .opacity((hoveredService == service || draggedService == service) ? 1 : 0)
         .contentShape(Rectangle())
+        .accessibilityElement()
+        .accessibilityLabel("Reorder \(service.displayName)")
+        .accessibilityHint("Drag to change the position of \(service.displayName) in the launcher")
         .onDrag {
             draggedService = service
             currentDropTarget = nil

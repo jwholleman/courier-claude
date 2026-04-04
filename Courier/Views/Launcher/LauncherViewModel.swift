@@ -77,6 +77,11 @@ final class LauncherViewModel {
         }
         selectedService = service
         settings?.lastUsedService = service
+        NSAccessibility.post(
+            element: NSApp,
+            notification: .announcementRequested,
+            userInfo: [.announcement: service.displayName, .priority: NSAccessibilityPriorityLevel.high.rawValue]
+        )
     }
 
     func selectServiceByPosition(_ position: Int, disabledServices: Set<ServiceType>) {

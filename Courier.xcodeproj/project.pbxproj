@@ -44,6 +44,7 @@
 		8C94A4700AB0D97C200C7776 /* SearchProviderStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D80B1A8CD184B0A1E308BD3 /* SearchProviderStep.swift */; };
 		93022E48CAEC6C63F44E83A9 /* ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A633BAC19461299308D6A373 /* ServiceProtocol.swift */; };
 		9A75F15224EDA3059326EBFE /* SlashCommandStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03411370A9CC58ED68CD976F /* SlashCommandStep.swift */; };
+		CFA7F162EE92B5BAAD489F3D /* ServiceSelectionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218455956EC8A3273FB7CAB0 /* ServiceSelectionStep.swift */; };
 		A0B4E43B10351720C26B92B9 /* HotkeySetupStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8C761BD9E0458E86D51EC6 /* HotkeySetupStep.swift */; };
 		AB0E50E5C451B342B4184C58 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48345AD7CBBC3F15D92CE9AB /* LLMService.swift */; };
 		ACD693F178B1DDE62D35DCDA /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913E7D1E7FDFAB3F0650B1E8 /* LoginItemManager.swift */; };
@@ -98,6 +99,7 @@
 		55B480FAAFBDC1D3E99539DD /* LauncherTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherTokens.swift; sourceTree = "<group>"; };
 		57C8EC6E55DCC0D75C42AA72 /* Courier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Courier.entitlements; sourceTree = "<group>"; };
 		5D80B1A8CD184B0A1E308BD3 /* SearchProviderStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProviderStep.swift; sourceTree = "<group>"; };
+		218455956EC8A3273FB7CAB0 /* ServiceSelectionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSelectionStep.swift; sourceTree = "<group>"; };
 		5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		615498E1897DEFA1446B2C9D /* ServiceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceButton.swift; sourceTree = "<group>"; };
 		623A720E6BD4D32A0BEC52DC /* ServiceBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBar.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				FB8C761BD9E0458E86D51EC6 /* HotkeySetupStep.swift */,
 				FBFE535BADDDBB8FF5FF527D /* LLMSelectionStep.swift */,
 				5D80B1A8CD184B0A1E308BD3 /* SearchProviderStep.swift */,
+				218455956EC8A3273FB7CAB0 /* ServiceSelectionStep.swift */,
 				24141858E6F0CBABA361EF37 /* SetupWizardView.swift */,
 				2011F90D54E9E5A9E20E8759 /* SetupWizardWindowController.swift */,
 				03411370A9CC58ED68CD976F /* SlashCommandStep.swift */,
@@ -503,6 +506,7 @@
 				812A96E13E3A3D7EC075A538 /* NotificationHelper.swift in Sources */,
 				C7C068A6FD866BD21C25C286 /* QueryInputView.swift in Sources */,
 				8C94A4700AB0D97C200C7776 /* SearchProviderStep.swift in Sources */,
+				CFA7F162EE92B5BAAD489F3D /* ServiceSelectionStep.swift in Sources */,
 				7ACA3C0AE3EBCE1DB349E6D6 /* SearchService.swift in Sources */,
 				EF46B3FE35D456C009F2A0D3 /* ServiceBar.swift in Sources */,
 				C07C15B449FFC0088BA9D165 /* ServiceButton.swift in Sources */,

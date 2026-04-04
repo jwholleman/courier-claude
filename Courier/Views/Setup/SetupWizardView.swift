@@ -5,7 +5,7 @@ struct SetupWizardView: View {
     var onComplete: () -> Void
 
     @State private var currentStep = 0
-    private let totalSteps = 5
+    private let totalSteps = 4
 
     var body: some View {
         VStack(spacing: 0) {
@@ -13,54 +13,48 @@ struct SetupWizardView: View {
             ZStack {
                 switch currentStep {
                 case 0: WelcomeStep()
-                case 1: HotkeySetupStep()
-                case 2: LLMSelectionStep(settings: settings)
-                case 3: SearchProviderStep(settings: settings)
-                case 4: SlashCommandStep(settings: settings)
+                case 1: ServiceSelectionStep(settings: settings)
+                case 2: HotkeySetupStep()
+                case 3: SlashCommandStep(settings: settings)
                 default: EmptyView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("Setup step \(currentStep + 1) of \(totalSteps)")
 
-            Divider()
-
-            // Navigation bar
-            HStack {
-                // Step indicators
-                HStack(spacing: 6) {
-                    ForEach(0..<totalSteps, id: \.self) { step in
-                        Circle()
-                            .fill(step == currentStep
-                                  ? Color(nsColor: .controlAccentColor)
-                                  : Color(nsColor: .tertiaryLabelColor))
-                            .frame(width: 6, height: 6)
-                    }
+            // Navigation
+            HStack(spacing: 12) {
+                if currentStep > 0 {
+                    Button("Back") { currentStep -= 1 }
+                        .keyboardShortcut("[", modifiers: .command)
+                        .buttonStyle(.bordered)
+                        .controlSize(.large)
+                        .accessibilityLabel("Back")
+                        .accessibilityHint("Go to step \(currentStep) of \(totalSteps)")
                 }
 
-                Spacer()
-
-                HStack(spacing: 12) {
-                    if currentStep > 0 {
-                        Button("Back") { currentStep -= 1 }
-                            .keyboardShortcut("[", modifiers: .command)
-                    }
-
-                    if currentStep < totalSteps - 1 {
-                        Button("Next") { currentStep += 1 }
-                            .keyboardShortcut(.return, modifiers: [])
-                            .buttonStyle(.borderedProminent)
-                    } else {
-                        Button("Finish") {
-                            settings.hasCompletedSetup = true
-                            onComplete()
-                        }
+                if currentStep < totalSteps - 1 {
+                    Button("Next") { currentStep += 1 }
                         .keyboardShortcut(.return, modifiers: [])
                         .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                        .accessibilityLabel("Next")
+                        .accessibilityHint("Go to step \(currentStep + 2) of \(totalSteps)")
+                } else {
+                    Button("Get Started") {
+                        settings.hasCompletedSetup = true
+                        onComplete()
                     }
+                    .keyboardShortcut(.return, modifiers: [])
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .accessibilityLabel("Get Started")
+                    .accessibilityHint("Complete setup and open Courier")
                 }
             }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 16)
+            .padding(.bottom, 32)
+            .padding(.top, 8)
         }
     }
 }
@@ -70,22 +64,15 @@ struct SetupWizardView: View {
 private struct WelcomeStep: View {
     var body: some View {
         VStack(spacing: 20) {
-            Image(systemName: "paperplane.fill")
-                .font(.system(size: 48))
-                .foregroundStyle(Color(nsColor: .controlAccentColor))
+            Image(nsImage: NSImage(named: "AppIcon") ?? NSApp.applicationIconImage)
+                .resizable()
+                .frame(width: 80, height: 80)
+                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                .accessibilityHidden(true)
 
-            VStack(spacing: 8) {
-                Text("Welcome to Courier")
-                    .font(.title.bold())
-                Text("Your universal query launcher.\nPress your hotkey, type a query, pick a destination.")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-            }
-
-            Text("This short setup takes about a minute.")
-                .font(.callout)
-                .foregroundStyle(.tertiary)
+            Text("Courier is your quick launcher for searches and prompts")
+                .font(.largeTitle.bold())
+                .multilineTextAlignment(.center)
         }
         .padding(40)
     }

@@ -30,15 +30,7 @@ struct SettingsView: View {
     }
 
     var body: some View {
-        TabView {
-            // MARK: - General tab (hotkey, startup, services)
-            generalTab
-                .tabItem { Label("General", systemImage: "gear") }
-
-            // MARK: - Advanced tab
-            advancedTab
-                .tabItem { Label("Advanced", systemImage: "slider.horizontal.3") }
-        }
+        generalTab
         .frame(width: 560, height: 500)
         .onAppear {
             launchAtLogin = settings.launchAtLogin
@@ -57,11 +49,11 @@ struct SettingsView: View {
             Button("Reset", role: .destructive) { resetToDefaults() }
             Button("Cancel", role: .cancel) {}
         } message: {
-            Text("This cannot be undone. Your service selections, hotkey, slash commands, and keystroke config will all be reset.")
+            Text("This cannot be undone. Your service selections, hotkey, and slash commands will all be reset.")
         }
     }
 
-    // MARK: - General tab (hotkey + startup + services combined)
+    // MARK: - Settings Content
 
     private var generalTab: some View {
         ScrollView {
@@ -154,6 +146,27 @@ struct SettingsView: View {
                     ForEach(draftServiceOrder) { service in
                         serviceRow(for: service)
                     }
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                // Reset
+                sectionHeader("Reset")
+                VStack(spacing: 1) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Reset all settings")
+                                .font(.body)
+                            Text("Restore Courier's default configuration.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Button("Reset All Settings…") { showResetConfirm = true }
+                            .foregroundStyle(.red)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 9)
+                    .background(Color(nsColor: .controlBackgroundColor))
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 8))
 
@@ -289,40 +302,6 @@ struct SettingsView: View {
                 settings.customSlashCommands[service.rawValue] = parsed.isEmpty ? nil : parsed
             }
         )
-    }
-
-    // MARK: - Advanced tab
-
-    private var advancedTab: some View {
-        Form {
-            Section("Native App Keystroke") {
-                Text("Configure how Courier opens a new conversation in each app before pasting. Change this if an app update changed its keyboard shortcut.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-
-                ForEach(settings.orderedServices.filter(\.supportsNativeKeystrokeConfiguration)) { service in
-                    if settings.disabledServices.contains(service) { EmptyView() } else {
-                        Picker(service.displayName, selection: Binding(
-                            get: {
-                                settings.keystrokeOverrides[service.rawValue]
-                                    ?? service.defaultNewConversationKeystroke.rawValue
-                            },
-                            set: { settings.keystrokeOverrides[service.rawValue] = $0 }
-                        )) {
-                            ForEach(LLMKeystroke.allCases, id: \.rawValue) { k in
-                                Text(k.displayName).tag(k.rawValue)
-                            }
-                        }
-                    }
-                }
-            }
-
-            Section {
-                Button("Reset All Settings to Defaults…") { showResetConfirm = true }
-                    .foregroundStyle(.red)
-            }
-        }
-        .formStyle(.grouped)
     }
 
     // MARK: - Reset

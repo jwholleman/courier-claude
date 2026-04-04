@@ -22,7 +22,7 @@ final class AppSettings {
 
     // MARK: - Settings Version
 
-    private static let currentVersion = 1
+    private static let currentVersion = 2
     private static let defaults = UserDefaults.standard
 
     // MARK: - Properties (cached from UserDefaults)
@@ -159,7 +159,17 @@ final class AppSettings {
     // MARK: - Migration
 
     private static func migrate(from oldVersion: Int, to newVersion: Int) {
-        // v0 -> v1: no existing keys, nothing to migrate
+        if oldVersion < 2 {
+            // ChatGPT previously relied on URL routing and some installs persisted "none"
+            // as the effective behavior. Migrate those installs to the current expected
+            // default of Cmd+N so launcher submissions open a fresh conversation again.
+            var overrides = defaults.dictionary(forKey: "keystrokeOverrides") as? [String: String] ?? [:]
+            if overrides[ServiceType.chatgpt.rawValue] == LLMKeystroke.none.rawValue {
+                overrides[ServiceType.chatgpt.rawValue] = LLMKeystroke.cmdN.rawValue
+                defaults.set(overrides, forKey: "keystrokeOverrides")
+            }
+        }
+
         defaults.set(newVersion, forKey: "settingsVersion")
     }
 

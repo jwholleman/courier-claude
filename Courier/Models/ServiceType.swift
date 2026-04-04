@@ -32,9 +32,9 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
 
     var supportsNativeKeystrokeConfiguration: Bool {
         switch self {
-        case .claude, .chatgpt, .gemini, .perplexity:
+        case .claude, .chatgpt:
             return true
-        case .claudeCode, .kagi, .google, .youtube, .duckduckgo:
+        case .claudeCode, .gemini, .perplexity, .kagi, .google, .youtube, .duckduckgo:
             return false
         }
     }
@@ -51,10 +51,9 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
     /// Default keystroke — can be overridden per-user in Settings.
     var defaultNewConversationKeystroke: LLMKeystroke {
         switch self {
-        case .claude:     return .shiftCmdO
-        case .chatgpt:    return .none
-        case .perplexity: return .none
-        default:          return .none
+        case .claude:  return .shiftCmdO
+        case .chatgpt: return .cmdN
+        default:       return .none
         }
     }
 
@@ -76,8 +75,19 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
     /// How long to wait (seconds) after pasting before sending Return to submit.
     var submitDelay: TimeInterval {
         switch self {
+        case .claude:  return 0.1
         case .chatgpt: return 0.5  // Electron app needs more time to register paste
         default:       return 0.1
+        }
+    }
+
+    /// Extra submit delay for cold launches where the destination app may accept the paste
+    /// before its composer is fully ready to handle the final Return keystroke.
+    var coldLaunchSubmitDelay: TimeInterval {
+        switch self {
+        case .claude:  return 0.75
+        case .chatgpt: return 0.75
+        default:       return submitDelay
         }
     }
 
@@ -87,6 +97,46 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .claude, .chatgpt, .perplexity: return 1.5
         default: return 1.0
+        }
+    }
+
+    /// How long to wait (seconds) for the app to become frontmost on a cold launch.
+    /// Claude.app and ChatGPT.app are Electron apps and can take 10–15 s on first run.
+    var coldLaunchTimeout: TimeInterval {
+        switch self {
+        case .claude:   return 15.0
+        case .chatgpt:  return 12.0
+        default:        return 10.0
+        }
+    }
+
+    /// Extra UI settle time (seconds) after the app becomes frontmost on a cold launch,
+    /// before sending any keystrokes. Electron apps are frontmost before their renderer
+    /// is fully ready to accept input.
+    var coldLaunchSettleDelay: TimeInterval {
+        switch self {
+        case .claude, .chatgpt: return 2.0
+        default:                return 0.5
+        }
+    }
+
+    /// How long to wait after the "new conversation" shortcut before pasting.
+    /// ChatGPT needs more time for the fresh thread input to mount than Claude does.
+    var newConversationReadyDelay: TimeInterval {
+        switch self {
+        case .chatgpt: return 0.85
+        case .claude:  return 0.3
+        default:       return 0.3
+        }
+    }
+
+    /// Same as `newConversationReadyDelay`, but for cold app launches where the new-thread
+    /// UI animation and renderer startup are both still settling.
+    var coldLaunchNewConversationReadyDelay: TimeInterval {
+        switch self {
+        case .chatgpt: return 1.4
+        case .claude:  return 1.0
+        default:       return 1.0
         }
     }
 }

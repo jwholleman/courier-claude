@@ -7,6 +7,9 @@ final class LLMService: ServiceProvider {
     let bundleIdentifier: String?
     let defaultSlashCommands: [String]
     let appendsQueryToURL: Bool
+    /// URL scheme to open a new conversation directly (e.g. "chatgpt://new").
+    /// When set, the dispatcher opens this URL instead of activating the app + sending a keystroke.
+    let nativeNewChatURLScheme: String?
 
     weak var settings: AppSettings?
 
@@ -15,13 +18,15 @@ final class LLMService: ServiceProvider {
         browserURL: String,
         bundleIdentifier: String?,
         slashCommands: [String],
-        appendsQueryToURL: Bool = false
+        appendsQueryToURL: Bool = false,
+        nativeNewChatURLScheme: String? = nil
     ) {
         self.type = type
         self.browserURL = browserURL
         self.bundleIdentifier = bundleIdentifier
         self.defaultSlashCommands = slashCommands
         self.appendsQueryToURL = appendsQueryToURL
+        self.nativeNewChatURLScheme = nativeNewChatURLScheme
     }
 
     func dispatch(query: String) async throws {
@@ -60,6 +65,13 @@ final class LLMService: ServiceProvider {
             // any frontmost-app polling approach.
             let browserAppURL = NSWorkspace.shared.urlForApplication(toOpen: url)
 
+            // Detect cold browser launch before opening so we can extend the page-load wait.
+            let isBrowserColdLaunch: Bool = {
+                guard let appURL = browserAppURL,
+                      let bundleID = Bundle(url: appURL)?.bundleIdentifier else { return false }
+                return NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).isEmpty
+            }()
+
             let opened = NSWorkspace.shared.open(url)
             pasteboard.clearContents()
             pasteboard.setString(query, forType: .string)
@@ -70,8 +82,10 @@ final class LLMService: ServiceProvider {
                 }
                 let savedClipboardCopy = savedClipboard
                 Task.detached { [self] in
-                    // Wait for page to load
-                    try? await Task.sleep(nanoseconds: 900_000_000)
+                    // Cold browser launch needs time to start up and load the page.
+                    // Warm launch (tab opened in running browser) is much faster.
+                    let pageLoadWait: UInt64 = isBrowserColdLaunch ? 3_000_000_000 : 900_000_000
+                    try? await Task.sleep(nanoseconds: pageLoadWait)
 
                     // Re-activate the browser by app URL — no polling, no race condition
                     await self.activateBrowser(at: browserAppURL)
@@ -99,12 +113,14 @@ final class LLMService: ServiceProvider {
     private func dispatchNative(query: String, bundleID: String, appURL: URL) async throws {
         // Resolve keystroke on MainActor before entering background dispatch
         let keystroke = await MainActor.run { type.effectiveKeystroke(settings: settings) }
+        let newChatURL = nativeNewChatURLScheme.flatMap { URL(string: $0) }
         try await AppleScriptHelper.dispatch(
             query: query,
             bundleID: bundleID,
             appURL: appURL,
             serviceType: type,
             keystroke: keystroke,
+            newChatURL: newChatURL,
             browserFallback: { [weak self] in
                 guard let self else { return }
                 try await self.dispatchBrowser(query: query)

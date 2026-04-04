@@ -96,10 +96,9 @@ struct ServiceToggleRow: View {
 
     private var nativeBundleID: String? {
         switch service {
-        case .claude:      return "com.anthropic.claudefordesktop"
-        case .chatgpt:     return "com.openai.chat"
-        case .perplexity:  return "ai.perplexity.mac"
-        default:           return nil
+        case .claude:   return "com.anthropic.claudefordesktop"
+        case .chatgpt:  return "com.openai.chat"
+        default:        return nil
         }
     }
 }

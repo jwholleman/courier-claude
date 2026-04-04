@@ -7,7 +7,7 @@ final class AppSettingsTests: XCTestCase {
     override func setUp() {
         // Clear UserDefaults for each test to avoid cross-test contamination
         let defaults = UserDefaults.standard
-        ["lastUsedService", "disabledServices", "serviceOrder", "hotKeyShortcut", "launchAtLogin", "settingsVersion"]
+        ["lastUsedService", "disabledServices", "serviceOrder", "hotKeyShortcut", "launchAtLogin", "settingsVersion", "keystrokeOverrides"]
             .forEach { defaults.removeObject(forKey: $0) }
     }
 
@@ -97,5 +97,15 @@ final class AppSettingsTests: XCTestCase {
 
         XCTAssertEqual(settings.enabledServices, [.google])
         XCTAssertEqual(settings.effectiveSelectedService, .google)
+    }
+
+    func testMigratesLegacyChatGPTKeystrokeOverrideToCmdN() {
+        let defaults = UserDefaults.standard
+        defaults.set(1, forKey: "settingsVersion")
+        defaults.set(["chatgpt": "none"], forKey: "keystrokeOverrides")
+
+        let settings = AppSettings()
+
+        XCTAssertEqual(settings.keystrokeOverrides["chatgpt"], "cmdN")
     }
 }

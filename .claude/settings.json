@@ -16,7 +16,14 @@
       "Bash(open /tmp/qltest/courier-app-icon-new.svg.png)",
       "Bash(chmod +x \"/Users/John Holleman/repos/Courier/courier-claude/scripts/convert-icons.sh\")",
       "Bash(defaults read:*)",
-      "Bash(xargs cat:*)"
+      "Bash(xargs cat:*)",
+      "Read(//Applications/ChatGPT.app/Contents/Resources/**)",
+      "Read(//Applications/ChatGPT.app/Contents/MacOS/**)",
+      "Read(//Applications/ChatGPT.app/**)",
+      "Bash(osascript)",
+      "Bash(osascript -e 'tell application \"ChatGPT\" to activate')",
+      "Bash(grep -E \"^[a-z]$|keyEquivalent|Cmd|⌘|keyboard\")",
+      "Bash(plutil -p /Applications/ChatGPT.app/Contents/Info.plist)"
     ],
     "additionalDirectories": [
       "/Users/John Holleman/Library/Developer/Xcode/DerivedData/Courier-bbrhvhebpowvzugpkzewsghgmepa",

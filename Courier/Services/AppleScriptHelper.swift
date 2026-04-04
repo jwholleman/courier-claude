@@ -22,6 +22,7 @@ enum AppleScriptHelper {
         appURL: URL,
         serviceType: ServiceType,
         keystroke: LLMKeystroke? = nil,
+        newChatURL: URL? = nil,
         browserFallback: @escaping () async throws -> Void
     ) async throws {
         print("[Courier] Attempting native dispatch to \(bundleID)")
@@ -36,7 +37,8 @@ enum AppleScriptHelper {
                             bundleID: bundleID,
                             appURL: appURL,
                             serviceType: serviceType,
-                            keystroke: resolvedKeystroke
+                            keystroke: resolvedKeystroke,
+                            newChatURL: newChatURL
                         )
                         continuation.resume()
                     } catch {
@@ -116,7 +118,8 @@ enum AppleScriptHelper {
         bundleID: String,
         appURL: URL,
         serviceType: ServiceType,
-        keystroke: LLMKeystroke
+        keystroke: LLMKeystroke,
+        newChatURL: URL? = nil
     ) throws {
         let pasteboard = NSPasteboard.general
 
@@ -143,29 +146,53 @@ enum AppleScriptHelper {
 
         // Step 3 — Activate app (warm or cold launch)
         let isColdLaunch = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).isEmpty
-        try activateApp(bundleID: bundleID, appURL: appURL, isColdLaunch: isColdLaunch)
+        if let newChatURL {
+            // Open via URL scheme — the app handles routing to a new conversation directly.
+            // No keystroke needed; skip to paste after the app is frontmost.
+            NSWorkspace.shared.open(newChatURL)
+        } else {
+            try activateApp(bundleID: bundleID, appURL: appURL, isColdLaunch: isColdLaunch)
+        }
 
         // Step 4 — Wait for app to become frontmost
-        let timeout: TimeInterval = isColdLaunch ? 10.0 : 3.0
+        let timeout: TimeInterval = isColdLaunch ? serviceType.coldLaunchTimeout : 3.0
         try waitForFrontmost(bundleID: bundleID, timeout: timeout, isColdLaunch: isColdLaunch)
 
-        // Brief pause for the app's UI to settle after receiving focus before sending keystrokes
-        Thread.sleep(forTimeInterval: 0.25)
+        // Brief pause for the app's UI to settle after receiving focus before sending keystrokes.
+        // - Cold launch: Electron apps are frontmost before their renderer is ready.
+        // - Warm launch with URL scheme: app is already running but needs time to navigate
+        //   to the new conversation before the input field is ready.
+        let settleDelay: TimeInterval
+        if isColdLaunch {
+            settleDelay = serviceType.coldLaunchSettleDelay
+        } else if newChatURL != nil {
+            settleDelay = 1.0  // URL navigation needs time to complete even when app is warm
+        } else {
+            settleDelay = 0.25
+        }
+        Thread.sleep(forTimeInterval: settleDelay)
 
         // Step 5 — Send keystrokes
         let appName = serviceType.displayName
 
-        if keystroke != .none {
+        // Skip keystroke when a newChatURL was used — the URL already opens a new conversation.
+        if newChatURL == nil && keystroke != .none {
             let newChatScript = keystrokeScript(key: keystroke.key, modifiers: keystroke.modifiers, appName: appName)
             try runScript(newChatScript, appName: appName)
-            Thread.sleep(forTimeInterval: 0.3) // Wait for new conversation UI
+            // Give the destination app time to finish switching to a fresh thread
+            // before we send the paste keystroke.
+            let newConvoWait: TimeInterval = isColdLaunch
+                ? serviceType.coldLaunchNewConversationReadyDelay
+                : serviceType.newConversationReadyDelay
+            Thread.sleep(forTimeInterval: newConvoWait)
         }
 
         let pasteScript = keystrokeScript(key: "v", modifiers: ["command"], appName: appName)
         try runScript(pasteScript, appName: appName)
 
         // Step 5b — Submit the pasted query (key code 36 = Return)
-        Thread.sleep(forTimeInterval: serviceType.submitDelay)
+        let submitDelay = isColdLaunch ? serviceType.coldLaunchSubmitDelay : serviceType.submitDelay
+        Thread.sleep(forTimeInterval: submitDelay)
         let returnScript = keyCodeScript(code: 36, modifiers: [])
         try runScript(returnScript, appName: appName)
     }

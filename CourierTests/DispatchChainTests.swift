@@ -76,7 +76,7 @@ final class DispatchChainTests: XCTestCase {
 
     func testNewConversationKeystroke() {
         XCTAssertEqual(ServiceType.claude.newConversationKeystroke, .shiftCmdO)  // Verified: Shift+Cmd+O
-        XCTAssertEqual(ServiceType.chatgpt.newConversationKeystroke, .none)      // Opens to new chat automatically
+        XCTAssertEqual(ServiceType.chatgpt.newConversationKeystroke, .cmdN)      // Start a fresh chat before pasting
         XCTAssertEqual(ServiceType.perplexity.newConversationKeystroke, .none)
     }
 

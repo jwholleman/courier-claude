@@ -14,7 +14,7 @@ struct LLMSelectionStep: View {
             VStack(spacing: 8) {
                 Text("Choose Your AI Assistants")
                     .font(.title2.bold())
-                Text("Select which AI services you'd like to use.\nAt least one must be enabled.")
+                Text("Select the AI services you'd like to use.\nYou can change these anytime in Settings.")
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -56,6 +56,7 @@ struct ServiceToggleRow: View {
                 .renderingMode(.template)
                 .frame(width: 18, height: 18)
                 .foregroundStyle(isEnabled ? Color(nsColor: .controlAccentColor) : .secondary)
+                .accessibilityHidden(true)
 
             Text(service.displayName)
                 .font(.body)
@@ -68,6 +69,7 @@ struct ServiceToggleRow: View {
                     .background(Color(nsColor: .controlAccentColor).opacity(0.15))
                     .foregroundStyle(Color(nsColor: .controlAccentColor))
                     .clipShape(Capsule())
+                    .accessibilityLabel("\(service.displayName) native app is installed")
             }
 
             Spacer()
@@ -78,6 +80,8 @@ struct ServiceToggleRow: View {
             ))
             .disabled(!canDisable && isEnabled)
             .labelsHidden()
+            .accessibilityLabel(isEnabled ? "\(service.displayName), enabled" : "\(service.displayName), disabled")
+            .accessibilityHint(canDisable ? "Toggle to enable or disable \(service.displayName)" : "Cannot disable — at least one AI assistant must remain enabled")
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)

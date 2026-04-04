@@ -42,6 +42,8 @@ struct ServiceBar: View {
                     }
                 }
             }
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("Services")
 
             Spacer()
 

@@ -61,6 +61,7 @@ private struct SearchEngineRow: View {
                     .renderingMode(.template)
                     .frame(width: 18, height: 18)
                     .foregroundStyle(isSelected ? Color(nsColor: .controlAccentColor) : .secondary)
+                    .accessibilityHidden(true)
 
                 Text(service.displayName)
                     .font(.body)
@@ -71,6 +72,7 @@ private struct SearchEngineRow: View {
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(Color(nsColor: .controlAccentColor))
+                        .accessibilityHidden(true)
                 }
             }
             .padding(.horizontal, 16)
@@ -85,5 +87,8 @@ private struct SearchEngineRow: View {
             )
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(service.displayName)
+        .accessibilityHint(isSelected ? "Selected. Tap to confirm." : "Tap to select as your search engine.")
+        .accessibilityValue(isSelected ? "Selected" : "Not selected")
     }
 }

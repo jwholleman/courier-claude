@@ -26,6 +26,8 @@ struct QueryInputView: NSViewRepresentable {
         textView.isHorizontallyResizable = false
         textView.textContainer?.widthTracksTextView = true
         textView.setAccessibilityLabel("Query input")
+        textView.setAccessibilityHelp("Type a query and press Return to send. Start with / for slash commands. Hold Command and press 1–9 to switch services. Command+Return or Shift+Return inserts a newline. Escape dismisses.")
+        textView.setAccessibilityPlaceholderValue(textView.placeholder)
 
         context.coordinator.textView = textView
         viewModel?.queryTextView = textView

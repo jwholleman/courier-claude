@@ -16,7 +16,21 @@
       "Bash(xcodebuild -scheme Courier -configuration Debug -derivedDataPath build/DerivedData build)",
       "Bash(open /Users/John Holleman/repos/Courier/courier-claude/build/DerivedData/Build/Products/Debug/Courier.app)",
       "Bash(find ~/Library/Developer/Xcode/DerivedData -name Courier.app -path */Debug/*)",
-      "Bash(xcodebuild -scheme Courier -configuration Debug -destination 'platform=macOS' build)"
+      "Bash(xcodebuild -scheme Courier -configuration Debug -destination 'platform=macOS' build)",
+      "Bash(python3 -c \"import cairosvg\")",
+      "Bash(brew list:*)",
+      "Bash(chmod +x /Users/John Holleman/repos/Courier/courier-claude/scripts/convert-icons.swift)",
+      "Bash(swift /Users/John Holleman/repos/Courier/courier-claude/scripts/convert-icons.swift \"/Users/John Holleman/repos/Courier/courier-claude\")",
+      "Bash(swift \"/Users/John Holleman/repos/Courier/courier-claude/scripts/convert-icons.swift\" \"/Users/John Holleman/repos/Courier/courier-claude\")",
+      "Bash(xcodebuild -project Courier.xcodeproj -scheme Courier -configuration Debug build)",
+      "Bash(rm -rf ~/Library/Caches/com.apple.iconservices.store)",
+      "Bash(sudo find:*)",
+      "Bash(killall Dock)",
+      "Bash(identify \"/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets/AppIcon.appiconset/icon_512x512@2x.png\")",
+      "Bash(sips -g pixelWidth -g pixelHeight \"/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/Assets.xcassets/AppIcon.appiconset/icon_512x512@2x.png\")",
+      "Bash(xcodebuild -project \"/Users/John Holleman/repos/Courier/courier-claude/Courier.xcodeproj\" -scheme Courier -configuration Debug build)",
+      "Bash(python3 -c \"from PIL import Image\")",
+      "Bash(sips -s format png --resampleHeightWidthMax 512 \"/Users/John Holleman/repos/Courier/courier-claude/Courier/Resources/IncomingIcons/Courier-app-icon.svg\" --out /tmp/test_icon.png)"
     ]
   }
 }

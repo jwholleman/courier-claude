@@ -9,8 +9,11 @@ struct DeliverButton: View {
     var body: some View {
         Button(action: onDeliver) {
             HStack(spacing: LauncherTokens.Layout.deliverSpacing) {
-                Image(systemName: "paperplane.fill")
-                    .font(.system(size: LauncherTokens.Typography.deliverSize, weight: .semibold))
+                Image("MenuBarIcon", bundle: nil)
+                    .resizable()
+                    .renderingMode(.template)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: LauncherTokens.Typography.deliverSize, height: LauncherTokens.Typography.deliverSize)
                 Text("Deliver")
                     .font(.system(size: LauncherTokens.Typography.deliverSize, weight: .semibold, design: .rounded))
             }

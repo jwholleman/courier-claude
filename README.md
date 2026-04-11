@@ -27,11 +27,10 @@ Courier currently supports these services:
 - YouTube
 - DuckDuckGo
 
-Dispatch behavior varies by service:
+Dispatch behavior varies by service and whether the **Use desktop apps** setting is enabled:
 
-- `Claude`, `ChatGPT`: prefer native app dispatch when available, with browser fallback
+- `Claude`, `ChatGPT`, `Perplexity`: native app dispatch when the desktop app is installed and Use desktop apps is on; browser fallback otherwise
 - `Gemini`: browser-backed
-- `Perplexity`: browser-backed URL submission
 - `Kagi`, `Google`, `YouTube`, `DuckDuckGo`: browser-backed search submission
 - `Claude Code`: opens a new Terminal window and starts a fresh Claude Code session
 
@@ -54,7 +53,10 @@ Dispatch behavior varies by service:
 - Reorder services by drag and drop
 - Edit slash commands per service
 - Configure native-app keystrokes for supported services
+- Toggle whether to use desktop apps (when off, all services fall back to browser)
 - Reset settings back to defaults
+
+When **Use desktop apps** is on, Courier detects which supported desktop apps (Claude, ChatGPT, Perplexity) are installed and dispatches to them directly. Settings shows which apps are currently detected.
 
 ## Service Ordering
 

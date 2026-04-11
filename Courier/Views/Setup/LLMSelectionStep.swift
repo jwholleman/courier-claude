@@ -90,15 +90,6 @@ struct ServiceToggleRow: View {
     }
 
     private var isInstalledNatively: Bool {
-        guard let bundleID = nativeBundleID else { return false }
-        return NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) != nil
-    }
-
-    private var nativeBundleID: String? {
-        switch service {
-        case .claude:   return "com.anthropic.claudefordesktop"
-        case .chatgpt:  return "com.openai.chat"
-        default:        return nil
-        }
+        service.isDesktopAppDetected
     }
 }

@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 
 enum ServiceType: String, Codable, CaseIterable, Identifiable {
@@ -39,6 +40,28 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
         }
     }
 
+    var desktopAppBundleIdentifier: String? {
+        switch self {
+        case .claude:
+            return "com.anthropic.claudefordesktop"
+        case .chatgpt:
+            return "com.openai.chat"
+        case .perplexity:
+            return "ai.perplexity.mac"
+        case .claudeCode, .gemini, .kagi, .google, .youtube, .duckduckgo:
+            return nil
+        }
+    }
+
+    var isDesktopAppDetected: Bool {
+        guard let bundleID = desktopAppBundleIdentifier else { return false }
+        return NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) != nil
+    }
+
+    static var desktopAppServices: [ServiceType] {
+        displayOrder.filter { $0.desktopAppBundleIdentifier != nil }
+    }
+
     /// Default display order for enabled services in Settings and the launcher.
     static let displayOrder: [ServiceType] = [
         .claude, .claudeCode, .chatgpt, .gemini, .perplexity,
@@ -52,7 +75,7 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
     var defaultNewConversationKeystroke: LLMKeystroke {
         switch self {
         case .claude:  return .shiftCmdO
-        case .chatgpt: return .cmdN
+        case .chatgpt, .perplexity: return .cmdN
         default:       return .none
         }
     }
@@ -124,7 +147,7 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
     /// ChatGPT needs more time for the fresh thread input to mount than Claude does.
     var newConversationReadyDelay: TimeInterval {
         switch self {
-        case .chatgpt: return 0.85
+        case .chatgpt, .perplexity: return 0.85
         case .claude:  return 0.3
         default:       return 0.3
         }
@@ -134,7 +157,7 @@ enum ServiceType: String, Codable, CaseIterable, Identifiable {
     /// UI animation and renderer startup are both still settling.
     var coldLaunchNewConversationReadyDelay: TimeInterval {
         switch self {
-        case .chatgpt: return 1.4
+        case .chatgpt, .perplexity: return 1.4
         case .claude:  return 1.0
         default:       return 1.0
         }

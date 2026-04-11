@@ -31,10 +31,17 @@ final class LLMService: ServiceProvider {
 
     func dispatch(query: String) async throws {
         let truncated = String(query.prefix(8000))
+        let shouldUseDesktopApps = await MainActor.run { settings?.useDesktopApps ?? true }
 
-        if let bundleID = bundleIdentifier,
+        if shouldUseDesktopApps,
+           let bundleID = bundleIdentifier,
            let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) {
-            try await dispatchNative(query: truncated, bundleID: bundleID, appURL: appURL)
+            try await dispatchNative(
+                query: truncated,
+                bundleID: bundleID,
+                appURL: appURL,
+                allowsBrowserFallback: false
+            )
         } else {
             try await dispatchBrowser(query: truncated)
         }
@@ -110,7 +117,12 @@ final class LLMService: ServiceProvider {
 
     // MARK: - Native app dispatch (AppleScript)
 
-    private func dispatchNative(query: String, bundleID: String, appURL: URL) async throws {
+    private func dispatchNative(
+        query: String,
+        bundleID: String,
+        appURL: URL,
+        allowsBrowserFallback: Bool
+    ) async throws {
         // Resolve keystroke on MainActor before entering background dispatch
         let keystroke = await MainActor.run { type.effectiveKeystroke(settings: settings) }
         let newChatURL = nativeNewChatURLScheme.flatMap { URL(string: $0) }
@@ -121,6 +133,7 @@ final class LLMService: ServiceProvider {
             serviceType: type,
             keystroke: keystroke,
             newChatURL: newChatURL,
+            allowsBrowserFallback: allowsBrowserFallback,
             browserFallback: { [weak self] in
                 guard let self else { return }
                 try await self.dispatchBrowser(query: query)

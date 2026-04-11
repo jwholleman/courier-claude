@@ -13,7 +13,7 @@ The repo at `/Users/John Holleman/repos/Courier-claude/Courier-claude/` is empty
 ---
 
 ## Project Bootstrap
-
+ompt
 The Xcode project is generated from a `project.yml` file using [XcodeGen](https://github.com/yonaskolb/XcodeGen). Install with `brew install xcodegen`, then run `xcodegen generate` in the repo root to produce `Courier.xcodeproj`. Re-run only when `project.yml` changes.
 
 **XcodeGen version pinning**: Pin to a known-good version to avoid breaking changes. Use `brew install xcodegen` (currently resolves to 2.42.0+). If the build breaks after a Homebrew update, check `xcodegen --version` against the `project.yml` spec version.

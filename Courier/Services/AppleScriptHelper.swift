@@ -23,6 +23,7 @@ enum AppleScriptHelper {
         serviceType: ServiceType,
         keystroke: LLMKeystroke? = nil,
         newChatURL: URL? = nil,
+        allowsBrowserFallback: Bool,
         browserFallback: @escaping () async throws -> Void
     ) async throws {
         print("[Courier] Attempting native dispatch to \(bundleID)")
@@ -47,25 +48,43 @@ enum AppleScriptHelper {
                 }
             }
         } catch AppleScriptError.accessibilityDenied {
-            print("[Courier] Accessibility denied — keystrokes blocked, falling back to browser")
+            print("[Courier] Accessibility denied for \(serviceType.displayName)")
             await showAccessibilityAlert()
-            try await browserFallback()
+            if allowsBrowserFallback {
+                try await browserFallback()
+            } else {
+                copyQueryToClipboard(query)
+                await NotificationHelper.showToast("Accessibility permission needed for \(serviceType.displayName). Query is in clipboard.")
+            }
         } catch AppleScriptError.automationDenied(let appName) {
             print("[Courier] Automation denied for \(appName)")
             await showAutomationAlert(appName: appName)
-            try await browserFallback()
+            if allowsBrowserFallback {
+                try await browserFallback()
+            } else {
+                copyQueryToClipboard(query)
+                await NotificationHelper.showToast("Courier needs permission to control \(appName). Query is in clipboard.")
+            }
         } catch AppleScriptError.appLaunchTimeout {
             let appName = serviceType.displayName
             print("[Courier] App launch timeout for \(appName)")
-            await NotificationHelper.showToast("'\(appName)' took too long to launch. Query copied to clipboard.")
-            NSPasteboard.general.clearContents()
-            NSPasteboard.general.setString(query, forType: .string)
-            try await browserFallback()
+            if allowsBrowserFallback {
+                await NotificationHelper.showToast("'\(appName)' took too long to launch. Opening in browser.")
+                try await browserFallback()
+            } else {
+                copyQueryToClipboard(query)
+                await NotificationHelper.showToast("'\(appName)' took too long to launch. Query is in clipboard.")
+            }
         } catch {
             let appName = serviceType.displayName
             print("[Courier] Dispatch error for \(appName): \(error)")
-            await NotificationHelper.showToast("Couldn't paste into \(appName). Query copied to clipboard. Opening in browser.")
-            try await browserFallback()
+            if allowsBrowserFallback {
+                await NotificationHelper.showToast("Couldn't paste into \(appName). Query copied to clipboard. Opening in browser.")
+                try await browserFallback()
+            } else {
+                copyQueryToClipboard(query)
+                await NotificationHelper.showToast("Couldn't paste into \(appName). Query copied to clipboard.")
+            }
         }
     }
 
@@ -361,5 +380,11 @@ enum AppleScriptHelper {
         if !newItems.isEmpty {
             pasteboard.writeObjects(newItems)
         }
+    }
+
+    private static func copyQueryToClipboard(_ query: String) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(query, forType: .string)
     }
 }

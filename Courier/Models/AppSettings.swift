@@ -22,7 +22,7 @@ final class AppSettings {
 
     // MARK: - Settings Version
 
-    private static let currentVersion = 2
+    private static let currentVersion = 3
     private static let defaults = UserDefaults.standard
 
     // MARK: - Properties (cached from UserDefaults)
@@ -50,6 +50,10 @@ final class AppSettings {
     }
 
     var launchAtLogin: Bool {
+        didSet { save() }
+    }
+
+    var useDesktopApps: Bool {
         didSet { save() }
     }
 
@@ -111,6 +115,7 @@ final class AppSettings {
 
         hotKeyShortcut = Self.defaults.string(forKey: "hotKeyShortcut")
         launchAtLogin = Self.defaults.bool(forKey: "launchAtLogin")
+        useDesktopApps = Self.defaults.object(forKey: "useDesktopApps") as? Bool ?? true
         hasCompletedSetup = Self.defaults.bool(forKey: "hasCompletedSetup")
         customSlashCommands = (Self.defaults.dictionary(forKey: "customSlashCommands") as? [String: [String]]) ?? [:]
         keystrokeOverrides = (Self.defaults.dictionary(forKey: "keystrokeOverrides") as? [String: String]) ?? [:]
@@ -149,6 +154,7 @@ final class AppSettings {
         Self.defaults.set(orderedServices.map(\.rawValue), forKey: "serviceOrder")
         Self.defaults.set(hotKeyShortcut, forKey: "hotKeyShortcut")
         Self.defaults.set(launchAtLogin, forKey: "launchAtLogin")
+        Self.defaults.set(useDesktopApps, forKey: "useDesktopApps")
         Self.defaults.set(hasCompletedSetup, forKey: "hasCompletedSetup")
         Self.defaults.set(customSlashCommands, forKey: "customSlashCommands")
         Self.defaults.set(keystrokeOverrides, forKey: "keystrokeOverrides")
@@ -168,6 +174,10 @@ final class AppSettings {
                 overrides[ServiceType.chatgpt.rawValue] = LLMKeystroke.cmdN.rawValue
                 defaults.set(overrides, forKey: "keystrokeOverrides")
             }
+        }
+
+        if oldVersion < 3, defaults.object(forKey: "useDesktopApps") == nil {
+            defaults.set(true, forKey: "useDesktopApps")
         }
 
         defaults.set(newVersion, forKey: "settingsVersion")

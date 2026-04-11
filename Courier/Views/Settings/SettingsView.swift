@@ -29,6 +29,10 @@ struct SettingsView: View {
         settings.enabledServices.count
     }
 
+    private var detectedDesktopApps: [ServiceType] {
+        ServiceType.desktopAppServices.filter(\.isDesktopAppDetected)
+    }
+
     var body: some View {
         generalTab
         .frame(width: 560, height: 500)
@@ -116,6 +120,34 @@ struct SettingsView: View {
                     .background(Color(nsColor: .controlBackgroundColor))
 
                     HStack {
+                        Text("Use desktop apps")
+                            .font(.body)
+                            .accessibilityHidden(true)
+                        Spacer()
+                        Toggle("", isOn: $settings.useDesktopApps)
+                            .toggleStyle(.switch)
+                            .labelsHidden()
+                            .accessibilityLabel("Use desktop apps")
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 9)
+                    .background(Color(nsColor: .controlBackgroundColor))
+
+                    if !detectedDesktopApps.isEmpty {
+                        VStack(alignment: .leading, spacing: 6) {
+                            ForEach(detectedDesktopApps) { service in
+                                Label("\(service.displayName) is detected on your computer", systemImage: "info.circle.fill")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color(nsColor: .controlBackgroundColor))
+                    }
+
+                    HStack {
                         Text("Keyboard shortcut:")
                             .font(.body)
                             .accessibilityHidden(true)
@@ -135,7 +167,7 @@ struct SettingsView: View {
                             .padding(.horizontal, 12)
                             .padding(.vertical, 8)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color(nsColor: .controlBackgroundColor))
+                        .background(Color(nsColor: .controlBackgroundColor))
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 8))

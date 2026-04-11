@@ -34,7 +34,7 @@ struct MenuBarView: View {
         .accessibilityLabel("Show about Courier panel")
 
         Button("Help") {
-            if let url = URL(string: "https://github.com/johnholleman/courier") {
+            if let url = URL(string: "https://github.com/jwholleman/courier") {
                 NSWorkspace.shared.open(url)
             }
         }

@@ -23,7 +23,18 @@
       "Bash(osascript)",
       "Bash(osascript -e 'tell application \"ChatGPT\" to activate')",
       "Bash(grep -E \"^[a-z]$|keyEquivalent|Cmd|⌘|keyboard\")",
-      "Bash(plutil -p /Applications/ChatGPT.app/Contents/Info.plist)"
+      "Bash(plutil -p /Applications/ChatGPT.app/Contents/Info.plist)",
+      "Read(//Users/John Holleman/Library/Developer/Xcode/Archives/**)",
+      "Read(//Users/John Holleman/Desktop/**)",
+      "Bash(codesign -dv --verbose=4 \"/Users/John Holleman/repos/Courier/courier-claude/Courier Launcher.app\")",
+      "Bash(spctl --assess --type execute -v \"/Users/John Holleman/repos/Courier/courier-claude/Courier Launcher.app\")",
+      "Bash(create-dmg --version)",
+      "Bash(brew install:*)",
+      "Bash(xcrun notarytool:*)",
+      "Bash(xcrun stapler:*)",
+      "Bash(osascript -e 'tell application \"Finder\" to get name of startup disk')",
+      "Bash(create-dmg --help)",
+      "Read(//Volumes/Courier/**)"
     ],
     "additionalDirectories": [
       "/Users/John Holleman/Library/Developer/Xcode/DerivedData/Courier-bbrhvhebpowvzugpkzewsghgmepa",

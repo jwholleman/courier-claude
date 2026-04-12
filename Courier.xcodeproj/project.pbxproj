@@ -31,6 +31,7 @@
 		66D4E1617175D8A3ECFEC98D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0860A4EBBFA3AF278407D3F4 /* SettingsView.swift */; };
 		68EBD15324224E2006797DD1 /* ToastPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7AEC35AF82CADA900BD555 /* ToastPanel.swift */; };
 		69B82B8E20190732BE7E7254 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 673FF32B1E8DE8E261D97327 /* KeyboardShortcuts */; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = F2E1D0C9B8A7F6E5D4C3B2A1 /* Sparkle */; };
 		6B1824268A2352F2B25C93B8 /* ServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA96E39F011A2BD69DC0B1 /* ServiceType.swift */; };
 		703551CEBCD7F0D5D2675611 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75603284C3E3297DEE0A917F /* main.swift */; };
 		7A335C7D39D999333CFC359D /* LauncherTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B480FAAFBDC1D3E99539DD /* LauncherTokens.swift */; };
@@ -103,7 +104,7 @@
 		5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		615498E1897DEFA1446B2C9D /* ServiceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceButton.swift; sourceTree = "<group>"; };
 		623A720E6BD4D32A0BEC52DC /* ServiceBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBar.swift; sourceTree = "<group>"; };
-		6D4B3CBCF4A53A44DFA16BB5 /* Courier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Courier.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D4B3CBCF4A53A44DFA16BB5 /* Courier Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Courier Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		75603284C3E3297DEE0A917F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		7878251D2D85E0637A2DD45E /* ClaudeCodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeCodeService.swift; sourceTree = "<group>"; };
 		78BBC80753A959D1B26DC96D /* gemini.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = gemini.svg; sourceTree = "<group>"; };
@@ -149,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				69B82B8E20190732BE7E7254 /* KeyboardShortcuts in Frameworks */,
+				A1B2C3D4E5F6A7B8C9D0E1F2 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +216,7 @@
 		34EBD9B8A57171ECD0C3DEFA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6D4B3CBCF4A53A44DFA16BB5 /* Courier.app */,
+				6D4B3CBCF4A53A44DFA16BB5 /* Courier Launcher.app */,
 				DDC435963B019B86A15BEB91 /* CourierTests.xctest */,
 			);
 			name = Products;
@@ -367,9 +369,10 @@
 			name = Courier;
 			packageProductDependencies = (
 				673FF32B1E8DE8E261D97327 /* KeyboardShortcuts */,
+				F2E1D0C9B8A7F6E5D4C3B2A1 /* Sparkle */,
 			);
 			productName = Courier;
-			productReference = 6D4B3CBCF4A53A44DFA16BB5 /* Courier.app */;
+			productReference = 6D4B3CBCF4A53A44DFA16BB5 /* Courier Launcher.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6707FEEA6645AABFD7037BDC /* CourierTests */ = {
@@ -419,6 +422,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				3DD3CD7657765D628D27DFAC /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				1DBDA0562F8C14B3002F1CB0 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 34EBD9B8A57171ECD0C3DEFA /* Products */;
@@ -540,6 +544,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				PRODUCT_NAME = "Courier Launcher";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -556,6 +561,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				PRODUCT_NAME = "Courier Launcher";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -641,7 +647,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.courier.Courier;
+				PRODUCT_BUNDLE_IDENTIFIER = com.courier.CourierLauncher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -708,7 +714,7 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.courier.Courier;
+				PRODUCT_BUNDLE_IDENTIFIER = com.courier.CourierLauncher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -768,6 +774,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1DBDA0562F8C14B3002F1CB0 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
 		3DD3CD7657765D628D27DFAC /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
@@ -783,6 +797,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3DD3CD7657765D628D27DFAC /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
+		};
+		F2E1D0C9B8A7F6E5D4C3B2A1 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1DBDA0562F8C14B3002F1CB0 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		673FF32B1E8DE8E261D97327 /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;

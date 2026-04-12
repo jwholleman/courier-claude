@@ -3,6 +3,17 @@
 All notable changes to Courier will be documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.1] - 2026-04-12
+
+### Changed
+
+- Increased the menu bar icon size slightly so the toolbar presence reads more clearly
+- Improved setup service icon rendering in dark mode so Kagi stays visible during onboarding
+
+### Fixed
+
+- Removed a Swift accessibility announcement warning from launcher builds
+
 ## [1.0.0] – 2026-04-12
 
 ### Added

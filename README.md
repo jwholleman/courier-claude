@@ -152,7 +152,7 @@ Automated verification currently includes:
 
 ## Installation
 
-1. Download `Courier-1.0.0.dmg` from the [Releases page](https://github.com/jwholleman/courier/releases)
+1. Download `Courier-1.0.1.dmg` from the [Releases page](https://github.com/jwholleman/courier/releases)
 2. Open the dmg and drag **Courier Launcher** to Applications
 3. Launch Courier from Applications — macOS may show a Gatekeeper prompt on first launch; click **Open** to proceed
 4. Complete the setup wizard to configure your hotkey, services, and login item

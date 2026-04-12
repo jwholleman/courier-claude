@@ -98,7 +98,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         if let button = statusItem?.button {
             let image = NSImage(named: "MenuBarIcon")!
-            image.size = NSSize(width: 18, height: 18)
+            image.size = NSSize(width: 19, height: 19)
             image.isTemplate = true
             button.image = image
             button.setAccessibilityLabel("Courier")

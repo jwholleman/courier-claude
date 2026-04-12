@@ -3,14 +3,14 @@
   <channel>
     <title>Courier</title>
     <item>
-      <title>Version 1.0.0</title>
-      <sparkle:version>1</sparkle:version>
-      <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
+      <title>Version 1.0.1</title>
+      <sparkle:version>2</sparkle:version>
+      <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <sparkle:releaseNotesLink>https://github.com/jwholleman/courier/releases/tag/v1.0.0</sparkle:releaseNotesLink>
-      <enclosure url="https://github.com/jwholleman/courier/releases/download/v1.0.0/Courier-1.0.0.dmg"
-                 sparkle:edSignature="oi2P+wVBFAMk7bc07F+vNhfEcXFtMwCsPSBT4/0dZCEpOBBI5PLmo5BObe4BTWkokDLjd3Odtslyu+IESwhPDg=="
-                 length="3273407"
+      <sparkle:releaseNotesLink>https://github.com/jwholleman/courier/releases/tag/v1.0.1</sparkle:releaseNotesLink>
+      <enclosure url="https://github.com/jwholleman/courier/releases/download/v1.0.1/Courier-1.0.1.dmg"
+                 sparkle:edSignature="NTrcHSNfac+8JjA5geFlKW2Go00s+PtCx5LC3utM3ZDMK0xWeLBfULy7eiKC7hvx/8erhAH5b+vXLt+918qMBA=="
+                 length="4271005"
                  type="application/octet-stream" />
     </item>
   </channel>

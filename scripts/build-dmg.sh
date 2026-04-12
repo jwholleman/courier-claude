@@ -14,7 +14,7 @@ set -euo pipefail
 # ── Configuration ────────────────────────────────────────────────────────────
 TEAM_ID="FL2978XX59"
 APP_NAME="Courier Launcher"
-VERSION="1.0.0"
+VERSION="1.0.1"
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 EXPORT_PATH="$REPO_ROOT/build/export/Courier Launcher.app"
 DMG_NAME="Courier-${VERSION}.dmg"

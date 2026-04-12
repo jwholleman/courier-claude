@@ -55,15 +55,16 @@ private struct ServiceTile: View {
 
     // ChatGPT icon is white — use template+primary so it inverts with color scheme
     private var usesChatGPTOverride: Bool { service == .chatgpt }
+    private var usesKagiDarkOverride: Bool { service == .kagi && colorScheme == .dark }
 
     var body: some View {
         Button(action: onTap) {
             VStack(spacing: 8) {
                 Image(service.iconName, bundle: nil)
                     .resizable()
-                    .renderingMode(usesChatGPTOverride ? .template : .original)
+                    .renderingMode((usesChatGPTOverride || usesKagiDarkOverride) ? .template : .original)
                     .frame(width: 28, height: 28)
-                    .foregroundStyle(usesChatGPTOverride ? Color.primary : Color.clear)
+                    .foregroundStyle(iconForegroundColor)
                     .accessibilityHidden(true)
 
                 Text(service.displayName)
@@ -89,5 +90,15 @@ private struct ServiceTile: View {
         .accessibilityLabel(service.displayName)
         .accessibilityHint(isEnabled ? "Tap to deselect" : "Tap to select")
         .accessibilityValue(isEnabled ? "Selected" : "Not selected")
+    }
+
+    private var iconForegroundColor: Color {
+        if usesKagiDarkOverride {
+            return .white
+        }
+        if usesChatGPTOverride {
+            return .primary
+        }
+        return .clear
     }
 }

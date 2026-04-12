@@ -150,10 +150,32 @@ Automated verification currently includes:
 - clipboard save / restore coverage
 - settings persistence and fallback coverage
 
-## Future Documentation
+## Installation
 
-The repo currently does not include a separate user help guide. If needed, the next documentation step would be:
+1. Download `Courier-1.0.0.dmg` from the [Releases page](https://github.com/jwholleman/courier/releases)
+2. Open the dmg and drag **Courier Launcher** to Applications
+3. Launch Courier from Applications — macOS may show a Gatekeeper prompt on first launch; click **Open** to proceed
+4. Complete the setup wizard to configure your hotkey, services, and login item
 
-- installation and onboarding instructions
-- troubleshooting guide
-- screenshots or short usage walkthroughs
+## Permissions
+
+Courier requires two permissions granted during the setup wizard:
+
+- **Accessibility** — required for native dispatch (pasting into Claude, ChatGPT)
+- **Automation** — macOS prompts per-app the first time Courier dispatches to it; click Allow
+
+If a permission was denied, open **System Settings → Privacy & Security → Accessibility** (or **Automation**) and enable Courier.
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| Hotkey doesn't fire | System Settings → Privacy & Security → Accessibility — enable Courier |
+| "Courier Launcher.app can't be opened" on first launch | Right-click → Open, or System Settings → Privacy & Security → click Open Anyway |
+| Query doesn't paste into native app | System Settings → Privacy & Security → Automation → enable Courier → target app |
+| Hotkey conflicts with another app | Courier Settings → General → change the hotkey |
+| ChatGPT conflict with ⌥Space | ChatGPT desktop also uses ⌥Space — change one; Courier warns in Settings when this is detected |
+
+## Screenshots
+
+*(screenshots coming soon)*

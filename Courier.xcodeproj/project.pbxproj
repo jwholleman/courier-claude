@@ -44,7 +44,6 @@
 		8C94A4700AB0D97C200C7776 /* SearchProviderStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D80B1A8CD184B0A1E308BD3 /* SearchProviderStep.swift */; };
 		93022E48CAEC6C63F44E83A9 /* ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A633BAC19461299308D6A373 /* ServiceProtocol.swift */; };
 		9A75F15224EDA3059326EBFE /* SlashCommandStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03411370A9CC58ED68CD976F /* SlashCommandStep.swift */; };
-		CFA7F162EE92B5BAAD489F3D /* ServiceSelectionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218455956EC8A3273FB7CAB0 /* ServiceSelectionStep.swift */; };
 		A0B4E43B10351720C26B92B9 /* HotkeySetupStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8C761BD9E0458E86D51EC6 /* HotkeySetupStep.swift */; };
 		AB0E50E5C451B342B4184C58 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48345AD7CBBC3F15D92CE9AB /* LLMService.swift */; };
 		ACD693F178B1DDE62D35DCDA /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913E7D1E7FDFAB3F0650B1E8 /* LoginItemManager.swift */; };
@@ -68,6 +67,7 @@
 		CA3F00C51BF340C0D453CE9F /* AccessibilityPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */; };
 		CA85E52F510E78574776C365 /* LauncherPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52F5A980156215207341A21 /* LauncherPanel.swift */; };
 		CD0B52A7CA66D6E7101D5580 /* kagi.svg in Resources */ = {isa = PBXBuildFile; fileRef = 19823F6A5DDE7BC086667966 /* kagi.svg */; };
+		CFA7F162EE92B5BAAD489F3D /* ServiceSelectionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218455956EC8A3273FB7CAB0 /* ServiceSelectionStep.swift */; };
 		D0E90CB825437967F5757C59 /* AccessibilityPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70B70EF2F3159095C108C6 /* AccessibilityPermission.swift */; };
 		D227644F7DABD7A18C5291B2 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4306791EEC24A5DB3A5CC3A /* AppSettings.swift */; };
 		D7B0F28A10FA332656C8B6E7 /* ServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA96E39F011A2BD69DC0B1 /* ServiceType.swift */; };
@@ -86,27 +86,27 @@
 		03411370A9CC58ED68CD976F /* SlashCommandStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlashCommandStep.swift; sourceTree = "<group>"; };
 		0860A4EBBFA3AF278407D3F4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0C1919C1D565FF29394C6278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		19823F6A5DDE7BC086667966 /* kagi.svg */ = {isa = PBXFileReference; path = kagi.svg; sourceTree = "<group>"; };
+		19823F6A5DDE7BC086667966 /* kagi.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = kagi.svg; sourceTree = "<group>"; };
 		2011F90D54E9E5A9E20E8759 /* SetupWizardWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWizardWindowController.swift; sourceTree = "<group>"; };
-		225C0F7BF957E75DA61F4A44 /* duckduckgo.svg */ = {isa = PBXFileReference; path = duckduckgo.svg; sourceTree = "<group>"; };
+		218455956EC8A3273FB7CAB0 /* ServiceSelectionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSelectionStep.swift; sourceTree = "<group>"; };
+		225C0F7BF957E75DA61F4A44 /* duckduckgo.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = duckduckgo.svg; sourceTree = "<group>"; };
 		24141858E6F0CBABA361EF37 /* SetupWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWizardView.swift; sourceTree = "<group>"; };
 		2A4CF1B696C1CB7B47451B1A /* CourierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierApp.swift; sourceTree = "<group>"; };
-		3001F3BB90203B069E29A9E8 /* claude.svg */ = {isa = PBXFileReference; path = claude.svg; sourceTree = "<group>"; };
+		3001F3BB90203B069E29A9E8 /* claude.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = claude.svg; sourceTree = "<group>"; };
 		3A95CC58CC3D54AE3E66D8FD /* SlashCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlashCommandTests.swift; sourceTree = "<group>"; };
-		41859AA1EEE7616F5337651F /* youtube.svg */ = {isa = PBXFileReference; path = youtube.svg; sourceTree = "<group>"; };
-		4795C7C07492DB8C2C13A6F5 /* duckduckgo-negative.svg */ = {isa = PBXFileReference; path = "duckduckgo-negative.svg"; sourceTree = "<group>"; };
+		41859AA1EEE7616F5337651F /* youtube.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = youtube.svg; sourceTree = "<group>"; };
+		4795C7C07492DB8C2C13A6F5 /* duckduckgo-negative.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "duckduckgo-negative.svg"; sourceTree = "<group>"; };
 		48345AD7CBBC3F15D92CE9AB /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
 		55B480FAAFBDC1D3E99539DD /* LauncherTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherTokens.swift; sourceTree = "<group>"; };
 		57C8EC6E55DCC0D75C42AA72 /* Courier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Courier.entitlements; sourceTree = "<group>"; };
 		5D80B1A8CD184B0A1E308BD3 /* SearchProviderStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProviderStep.swift; sourceTree = "<group>"; };
-		218455956EC8A3273FB7CAB0 /* ServiceSelectionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSelectionStep.swift; sourceTree = "<group>"; };
 		5FF4C21EEFC1A0B19F3428AB /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		615498E1897DEFA1446B2C9D /* ServiceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceButton.swift; sourceTree = "<group>"; };
 		623A720E6BD4D32A0BEC52DC /* ServiceBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBar.swift; sourceTree = "<group>"; };
 		6D4B3CBCF4A53A44DFA16BB5 /* Courier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Courier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75603284C3E3297DEE0A917F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		7878251D2D85E0637A2DD45E /* ClaudeCodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeCodeService.swift; sourceTree = "<group>"; };
-		78BBC80753A959D1B26DC96D /* gemini.svg */ = {isa = PBXFileReference; path = gemini.svg; sourceTree = "<group>"; };
+		78BBC80753A959D1B26DC96D /* gemini.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = gemini.svg; sourceTree = "<group>"; };
 		7A7AEC35AF82CADA900BD555 /* ToastPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPanel.swift; sourceTree = "<group>"; };
 		7C34D9DA5A69B02A2E9D3EAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		895714AF57464A156FAFCE79 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
@@ -114,11 +114,11 @@
 		8E32568662C61373356FD0E6 /* LauncherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherViewModel.swift; sourceTree = "<group>"; };
 		913E7D1E7FDFAB3F0650B1E8 /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
 		97EC24D44D603D16958C27C4 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
-		A26B7CB7C7A6C9715CCFEC1E /* google.svg */ = {isa = PBXFileReference; path = google.svg; sourceTree = "<group>"; };
+		A26B7CB7C7A6C9715CCFEC1E /* google.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = google.svg; sourceTree = "<group>"; };
 		A633BAC19461299308D6A373 /* ServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProtocol.swift; sourceTree = "<group>"; };
-		AE8FDCD2077AE89C9867C471 /* perplexity.svg */ = {isa = PBXFileReference; path = perplexity.svg; sourceTree = "<group>"; };
+		AE8FDCD2077AE89C9867C471 /* perplexity.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = perplexity.svg; sourceTree = "<group>"; };
 		B324B7F92A57F99B1A802452 /* LauncherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherView.swift; sourceTree = "<group>"; };
-		B3AB23A616311B0C040BD8D7 /* chatgpt.svg */ = {isa = PBXFileReference; path = chatgpt.svg; sourceTree = "<group>"; };
+		B3AB23A616311B0C040BD8D7 /* chatgpt.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = chatgpt.svg; sourceTree = "<group>"; };
 		B52F5A980156215207341A21 /* LauncherPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherPanel.swift; sourceTree = "<group>"; };
 		B8C2F68A847162779FBFAE7F /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		BA36970EBAC5529CEC978813 /* SlashCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlashCommand.swift; sourceTree = "<group>"; };
@@ -127,9 +127,9 @@
 		C00675AC5A37FE6D64EF92E1 /* HotKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyProvider.swift; sourceTree = "<group>"; };
 		C333C9A158A37FBD974CFA0B /* URLEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncodingTests.swift; sourceTree = "<group>"; };
 		C7AA0F043469499A6179DEA8 /* DispatchChainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchChainTests.swift; sourceTree = "<group>"; };
-		D68674DC4FE8A3674D8B342B /* courier.svg */ = {isa = PBXFileReference; path = courier.svg; sourceTree = "<group>"; };
+		D68674DC4FE8A3674D8B342B /* courier.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = courier.svg; sourceTree = "<group>"; };
 		DDC435963B019B86A15BEB91 /* CourierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CourierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E018628493FF9D82B0310D89 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		E018628493FF9D82B0310D89 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		E71519206C85015FE0A5F756 /* ServiceDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDispatcher.swift; sourceTree = "<group>"; };
 		E8BD37508C8391419F6F2196 /* ServiceRegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRegistryTests.swift; sourceTree = "<group>"; };
 		EAC6041C861A9354FEC75C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		F239051016D81D03687F5AEF /* QueryInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInputView.swift; sourceTree = "<group>"; };
 		F2966F52EE5E164C6A998B77 /* CourierTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierTextView.swift; sourceTree = "<group>"; };
 		F4306791EEC24A5DB3A5CC3A /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
-		F95559B5AC908B3131F1E37F /* claudecode.svg */ = {isa = PBXFileReference; path = claudecode.svg; sourceTree = "<group>"; };
+		F95559B5AC908B3131F1E37F /* claudecode.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = claudecode.svg; sourceTree = "<group>"; };
 		FAEA96E39F011A2BD69DC0B1 /* ServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceType.swift; sourceTree = "<group>"; };
 		FB8C761BD9E0458E86D51EC6 /* HotkeySetupStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeySetupStep.swift; sourceTree = "<group>"; };
 		FBFE535BADDDBB8FF5FF527D /* LLMSelectionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMSelectionStep.swift; sourceTree = "<group>"; };
@@ -398,7 +398,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					22E941833B4C67C3A3BD7D5B = {
 						ProvisioningStyle = Automatic;
@@ -534,8 +534,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Courier/Courier.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = Courier/App/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -546,8 +550,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Courier/Courier.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = Courier/App/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -557,6 +565,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -604,11 +613,14 @@
 				CODE_SIGN_ENTITLEMENTS = Courier/Courier.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = FL2978XX59;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -625,12 +637,14 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Courier/App/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.courier.Courier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.9;
@@ -673,11 +687,14 @@
 				CODE_SIGN_ENTITLEMENTS = Courier/Courier.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = FL2978XX59;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -688,11 +705,13 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Courier/App/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.courier.Courier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.9;
@@ -704,6 +723,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

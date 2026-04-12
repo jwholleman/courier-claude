@@ -54,6 +54,7 @@ trap "rm -rf '$STAGING'" EXIT
 
 create-dmg \
     --volname "Courier" \
+    --background "$REPO_ROOT/assets/dmg-background.png" \
     --window-size 540 380 \
     --icon-size 128 \
     --icon "${APP_NAME}.app" 140 190 \

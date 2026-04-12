@@ -31,5 +31,9 @@
     <string>Copyright © 2026 Courier. All rights reserved.</string>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
+    <key>SUPublicEDKey</key>
+    <string>Rlzn97BZiqWJ9ipgQU65PqmOcJJaHqMRL5UFL+hWf54=</string>
+    <key>SUFeedURL</key>
+    <string>https://raw.githubusercontent.com/jwholleman/courier/main/appcast.xml</string>
 </dict>
 </plist>

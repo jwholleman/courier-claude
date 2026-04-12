@@ -1,5 +1,6 @@
 import AppKit
 import KeyboardShortcuts
+import Sparkle
 
 extension KeyboardShortcuts.Name {
     static let toggleCourier = Self("toggleCourier")
@@ -14,6 +15,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var settingsController: SettingsWindowController?
     private var statusItem: NSStatusItem?
 
+    private var updaterController: SPUStandardUpdaterController?
     private let hotKeyProvider: HotKeyProvider = KeyboardShortcutsProvider()
     private var activityToken: NSObjectProtocol?
     private var accessibilityTimer: Timer?
@@ -80,6 +82,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         checkPermissions(notifyOnChangeOnly: false)
 
+        updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+
         setupStatusItem()
     }
 
@@ -123,8 +127,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         menu.addItem(.separator())
 
-        let updatesItem = NSMenuItem(title: "Check for Updates...", action: nil, keyEquivalent: "")
-        updatesItem.isEnabled = false
+        let updatesItem = NSMenuItem(title: "Check for Updates...", action: #selector(SPUStandardUpdaterController.checkForUpdates(_:)), keyEquivalent: "")
+        updatesItem.target = updaterController
         menu.addItem(updatesItem)
 
         menu.addItem(.separator())
